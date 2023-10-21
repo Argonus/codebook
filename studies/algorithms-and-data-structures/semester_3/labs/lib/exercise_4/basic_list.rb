@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require_relative "./node"
+require_relative "./de"
 
 module Exercise4
   class BasicList

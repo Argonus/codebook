@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require_relative "./basic_list"
+require_relative "./sic_list"
 require_relative "./move_to_front_list"
 
 module Exercise4
