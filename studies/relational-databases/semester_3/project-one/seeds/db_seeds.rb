@@ -4,7 +4,7 @@ require "faker"
 require "date"
 require "active_support/all"
 
-require_relative "./01_location_seeds.rb"
+require_relative "./_location_seeds.rb"
 require_relative "./02_location_schedules_seeds"
 require_relative "./03_role_seeds"
 require_relative "./04_number_types_seeds"
