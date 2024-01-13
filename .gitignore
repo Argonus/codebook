@@ -441,3 +441,6 @@ FodyWeavers.xsd
 *.out
 *.app
 
+# R
+.RData
+.Rhistory
