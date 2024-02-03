@@ -1,6 +1,7 @@
 import sympy as sp
 import logging
 
+
 class ContinuedFractions:
     def __init__(self, func, debug=False):
         self.func = func
@@ -15,7 +16,7 @@ class ContinuedFractions:
         r = sp.floor(x)
         chain.append(r)
         # If the number is a perfect square, return the chain.
-        if r*r == d:
+        if r * r == d:
             return chain
         # Otherwise, go through the process of finding the chain.
         else:
@@ -31,6 +32,7 @@ class ContinuedFractions:
                     self.print_final(p, q, a)
                     break
             return chain
+
     def print_debug(self, p, q, a):
         if self.debug:
             print("Pk: ", p, "Qk: ", q, "Ak: ", a)
@@ -38,4 +40,3 @@ class ContinuedFractions:
     def print_final(self, p, q, a):
         if self.debug:
             print("Pf: ", p, "Qf: ", q, "Af: ", a)
-

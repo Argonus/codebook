@@ -1,6 +1,5 @@
-
 class Interpolation:
-    def __init__(self, x_points, y_points, debug = False):
+    def __init__(self, x_points, y_points, debug=False):
         self.x_points = x_points
         self.y_points = y_points
         self.debug = debug
@@ -29,7 +28,7 @@ class Interpolation:
         y = coef[0][0]
         temp = 1
         for i in range(1, n):
-            temp *= (x - self.x_points[i - 1])
+            temp *= x - self.x_points[i - 1]
             y += coef[0][i] * temp
             self.print_debug(y)
         return y
