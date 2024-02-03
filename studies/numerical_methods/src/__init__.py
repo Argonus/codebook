@@ -1,3 +1,4 @@
 from .continuedFractions import ContinuedFractions
+from .interpolation import Interpolation
 
-__all__ = ['ContinuedFractions']
+__all__ = ['ContinuedFractions', 'Interpolation']
