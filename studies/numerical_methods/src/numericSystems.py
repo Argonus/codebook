@@ -37,7 +37,7 @@ class NumericSystems:
     # (()) = 2 ^ 2 ^ 0 = 2 ^ 1 = 2
     # ((())) = 2 ^ 2 ^ 2 ^ 0 = 2 ^ 2 ^ 1 = 2 ^ 2 = 4
     # ()(()) = 2^0 * 2^1 = 1 + 2 = 3
-    # (() ((()))) = (2^0 + 2 ^ 2 ^ 2 ^ 0) = (1 + 4) = 2^5 = 32
+    # (()((()))) = (2^0 + 2 ^ 2 ^ 2 ^ 0) = (1 + 4) = 2^5 = 32
     def bracketsRepresentation(self, brackets):
         return None
 
@@ -49,7 +49,6 @@ class NumericSystems:
     def binaryWithBias(self, number, bias):
         numbers = map(int, [*number])
         numbers = list(numbers).reverse()
-        decimal = numberToDecimal
         value = decimal - bias
 
         return numbers
