@@ -444,3 +444,4 @@ FodyWeavers.xsd
 # R
 .RData
 .Rhistory
+*.egg-info/
