@@ -1,0 +1,2000 @@
+Test run 0 
+For {:access=>252, :insert=>280, :delete=>252} operations
+List B cost: 80057
+List MF cost: 114945
+Test run 1 
+For {:access=>235, :insert=>228, :delete=>217} operations
+List B cost: 59103
+List MF cost: 81592
+Test run 2 
+For {:access=>36, :insert=>39, :delete=>56} operations
+List B cost: 1985
+List MF cost: 2333
+Test run 3 
+For {:access=>19, :insert=>21, :delete=>14} operations
+List B cost: 307
+List MF cost: 384
+Test run 4 
+For {:access=>251, :insert=>253, :delete=>244} operations
+List B cost: 73613
+List MF cost: 101010
+Test run 5 
+For {:access=>306, :insert=>291, :delete=>324} operations
+List B cost: 101705
+List MF cost: 136500
+Test run 6 
+For {:access=>167, :insert=>167, :delete=>139} operations
+List B cost: 27890
+List MF cost: 39664
+Test run 7 
+For {:access=>50, :insert=>66, :delete=>60} operations
+List B cost: 4241
+List MF cost: 6113
+Test run 8 
+For {:access=>240, :insert=>228, :delete=>226} operations
+List B cost: 56075
+List MF cost: 75780
+Test run 9 
+For {:access=>137, :insert=>157, :delete=>145} operations
+List B cost: 25685
+List MF cost: 35833
+Test run 10 
+For {:access=>230, :insert=>200, :delete=>195} operations
+List B cost: 46386
+List MF cost: 61998
+Test run 11 
+For {:access=>84, :insert=>84, :delete=>95} operations
+List B cost: 7978
+List MF cost: 10922
+Test run 12 
+For {:access=>324, :insert=>346, :delete=>315} operations
+List B cost: 135015
+List MF cost: 183876
+Test run 13 
+For {:access=>309, :insert=>323, :delete=>339} operations
+List B cost: 123348
+List MF cost: 165637
+Test run 14 
+For {:access=>184, :insert=>196, :delete=>205} operations
+List B cost: 42194
+List MF cost: 55996
+Test run 15 
+For {:access=>33, :insert=>42, :delete=>40} operations
+List B cost: 1325
+List MF cost: 1959
+Test run 16 
+For {:access=>142, :insert=>141, :delete=>131} operations
+List B cost: 19901
+List MF cost: 27314
+Test run 17 
+For {:access=>191, :insert=>155, :delete=>137} operations
+List B cost: 27429
+List MF cost: 36907
+Test run 18 
+For {:access=>185, :insert=>177, :delete=>206} operations
+List B cost: 35068
+List MF cost: 47558
+Test run 19 
+For {:access=>62, :insert=>52, :delete=>46} operations
+List B cost: 3381
+List MF cost: 4546
+Test run 20 
+For {:access=>46, :insert=>57, :delete=>48} operations
+List B cost: 3856
+List MF cost: 5527
+Test run 21 
+For {:access=>142, :insert=>143, :delete=>157} operations
+List B cost: 23525
+List MF cost: 30656
+Test run 22 
+For {:access=>199, :insert=>187, :delete=>182} operations
+List B cost: 40223
+List MF cost: 54161
+Test run 23 
+For {:access=>62, :insert=>57, :delete=>54} operations
+List B cost: 3613
+List MF cost: 4657
+Test run 24 
+For {:access=>57, :insert=>69, :delete=>71} operations
+List B cost: 4851
+List MF cost: 6354
+Test run 25 
+For {:access=>230, :insert=>218, :delete=>246} operations
+List B cost: 52813
+List MF cost: 71205
+Test run 26 
+For {:access=>270, :insert=>295, :delete=>268} operations
+List B cost: 88198
+List MF cost: 127339
+Test run 27 
+For {:access=>211, :insert=>228, :delete=>203} operations
+List B cost: 52021
+List MF cost: 74926
+Test run 28 
+For {:access=>68, :insert=>76, :delete=>65} operations
+List B cost: 6401
+List MF cost: 8622
+Test run 29 
+For {:access=>79, :insert=>77, :delete=>82} operations
+List B cost: 6762
+List MF cost: 9158
+Test run 30 
+For {:access=>44, :insert=>62, :delete=>55} operations
+List B cost: 3436
+List MF cost: 5146
+Test run 31 
+For {:access=>220, :insert=>216, :delete=>234} operations
+List B cost: 49066
+List MF cost: 69435
+Test run 32 
+For {:access=>307, :insert=>336, :delete=>298} operations
+List B cost: 120348
+List MF cost: 169340
+Test run 33 
+For {:access=>272, :insert=>238, :delete=>279} operations
+List B cost: 69617
+List MF cost: 93386
+Test run 34 
+For {:access=>332, :insert=>302, :delete=>291} operations
+List B cost: 109231
+List MF cost: 148692
+Test run 35 
+For {:access=>337, :insert=>307, :delete=>332} operations
+List B cost: 96104
+List MF cost: 133838
+Test run 36 
+For {:access=>289, :insert=>274, :delete=>290} operations
+List B cost: 86645
+List MF cost: 120496
+Test run 37 
+For {:access=>161, :insert=>152, :delete=>150} operations
+List B cost: 24273
+List MF cost: 34002
+Test run 38 
+For {:access=>101, :insert=>96, :delete=>107} operations
+List B cost: 10954
+List MF cost: 14553
+Test run 39 
+For {:access=>72, :insert=>78, :delete=>85} operations
+List B cost: 7009
+List MF cost: 9272
+Test run 40 
+For {:access=>23, :insert=>15, :delete=>19} operations
+List B cost: 253
+List MF cost: 347
+Test run 41 
+For {:access=>157, :insert=>141, :delete=>161} operations
+List B cost: 24368
+List MF cost: 32272
+Test run 42 
+For {:access=>92, :insert=>100, :delete=>92} operations
+List B cost: 9986
+List MF cost: 12393
+Test run 43 
+For {:access=>210, :insert=>188, :delete=>212} operations
+List B cost: 39336
+List MF cost: 52162
+Test run 44 
+For {:access=>121, :insert=>88, :delete=>99} operations
+List B cost: 9608
+List MF cost: 13028
+Test run 45 
+For {:access=>321, :insert=>312, :delete=>295} operations
+List B cost: 98096
+List MF cost: 136757
+Test run 46 
+For {:access=>145, :insert=>150, :delete=>157} operations
+List B cost: 23311
+List MF cost: 33405
+Test run 47 
+For {:access=>306, :insert=>306, :delete=>305} operations
+List B cost: 96065
+List MF cost: 136449
+Test run 48 
+For {:access=>55, :insert=>66, :delete=>63} operations
+List B cost: 4698
+List MF cost: 6730
+Test run 49 
+For {:access=>92, :insert=>93, :delete=>87} operations
+List B cost: 9054
+List MF cost: 12348
+Test run 50 
+For {:access=>65, :insert=>67, :delete=>56} operations
+List B cost: 5151
+List MF cost: 6593
+Test run 51 
+For {:access=>96, :insert=>118, :delete=>109} operations
+List B cost: 12476
+List MF cost: 18520
+Test run 52 
+For {:access=>132, :insert=>97, :delete=>112} operations
+List B cost: 11844
+List MF cost: 14953
+Test run 53 
+For {:access=>87, :insert=>90, :delete=>88} operations
+List B cost: 8454
+List MF cost: 11526
+Test run 54 
+For {:access=>139, :insert=>158, :delete=>145} operations
+List B cost: 25203
+List MF cost: 36869
+Test run 55 
+For {:access=>232, :insert=>227, :delete=>241} operations
+List B cost: 53979
+List MF cost: 73989
+Test run 56 
+For {:access=>27, :insert=>29, :delete=>33} operations
+List B cost: 785
+List MF cost: 1081
+Test run 57 
+For {:access=>299, :insert=>308, :delete=>288} operations
+List B cost: 103142
+List MF cost: 145058
+Test run 58 
+For {:access=>260, :insert=>248, :delete=>251} operations
+List B cost: 66599
+List MF cost: 90860
+Test run 59 
+For {:access=>252, :insert=>242, :delete=>261} operations
+List B cost: 66530
+List MF cost: 90807
+Test run 60 
+For {:access=>30, :insert=>31, :delete=>29} operations
+List B cost: 1203
+List MF cost: 1546
+Test run 61 
+For {:access=>65, :insert=>94, :delete=>86} operations
+List B cost: 9066
+List MF cost: 13034
+Test run 62 
+For {:access=>302, :insert=>287, :delete=>259} operations
+List B cost: 91025
+List MF cost: 130177
+Test run 63 
+For {:access=>192, :insert=>223, :delete=>215} operations
+List B cost: 50135
+List MF cost: 70552
+Test run 64 
+For {:access=>293, :insert=>282, :delete=>274} operations
+List B cost: 84909
+List MF cost: 116478
+Test run 65 
+For {:access=>213, :insert=>234, :delete=>221} operations
+List B cost: 55776
+List MF cost: 77298
+Test run 66 
+For {:access=>171, :insert=>217, :delete=>161} operations
+List B cost: 43079
+List MF cost: 63477
+Test run 67 
+For {:access=>283, :insert=>278, :delete=>338} operations
+List B cost: 83928
+List MF cost: 115659
+Test run 68 
+For {:access=>49, :insert=>53, :delete=>68} operations
+List B cost: 2904
+List MF cost: 4156
+Test run 69 
+For {:access=>269, :insert=>257, :delete=>254} operations
+List B cost: 70639
+List MF cost: 98021
+Test run 70 
+For {:access=>50, :insert=>82, :delete=>53} operations
+List B cost: 5395
+List MF cost: 7496
+Test run 71 
+For {:access=>6, :insert=>8, :delete=>6} operations
+List B cost: 44
+List MF cost: 70
+Test run 72 
+For {:access=>187, :insert=>219, :delete=>220} operations
+List B cost: 52525
+List MF cost: 72771
+Test run 73 
+For {:access=>17, :insert=>16, :delete=>17} operations
+List B cost: 232
+List MF cost: 344
+Test run 74 
+For {:access=>237, :insert=>220, :delete=>229} operations
+List B cost: 52976
+List MF cost: 73687
+Test run 75 
+For {:access=>173, :insert=>211, :delete=>180} operations
+List B cost: 45871
+List MF cost: 66367
+Test run 76 
+For {:access=>106, :insert=>117, :delete=>108} operations
+List B cost: 13113
+List MF cost: 18904
+Test run 77 
+For {:access=>102, :insert=>114, :delete=>96} operations
+List B cost: 14044
+List MF cost: 19175
+Test run 78 
+For {:access=>61, :insert=>77, :delete=>55} operations
+List B cost: 4922
+List MF cost: 7473
+Test run 79 
+For {:access=>281, :insert=>252, :delete=>243} operations
+List B cost: 72154
+List MF cost: 97547
+Test run 80 
+For {:access=>307, :insert=>271, :delete=>327} operations
+List B cost: 90921
+List MF cost: 121780
+Test run 81 
+For {:access=>232, :insert=>275, :delete=>253} operations
+List B cost: 75593
+List MF cost: 110101
+Test run 82 
+For {:access=>339, :insert=>282, :delete=>289} operations
+List B cost: 92931
+List MF cost: 123535
+Test run 83 
+For {:access=>300, :insert=>308, :delete=>316} operations
+List B cost: 97181
+List MF cost: 133899
+Test run 84 
+For {:access=>126, :insert=>128, :delete=>130} operations
+List B cost: 19203
+List MF cost: 26353
+Test run 85 
+For {:access=>130, :insert=>113, :delete=>129} operations
+List B cost: 15081
+List MF cost: 20551
+Test run 86 
+For {:access=>308, :insert=>300, :delete=>317} operations
+List B cost: 101298
+List MF cost: 139072
+Test run 87 
+For {:access=>120, :insert=>134, :delete=>141} operations
+List B cost: 19883
+List MF cost: 27353
+Test run 88 
+For {:access=>78, :insert=>59, :delete=>80} operations
+List B cost: 4480
+List MF cost: 5812
+Test run 89 
+For {:access=>156, :insert=>164, :delete=>205} operations
+List B cost: 29847
+List MF cost: 40632
+Test run 90 
+For {:access=>223, :insert=>233, :delete=>213} operations
+List B cost: 56684
+List MF cost: 78821
+Test run 91 
+For {:access=>134, :insert=>142, :delete=>102} operations
+List B cost: 18409
+List MF cost: 27364
+Test run 92 
+For {:access=>100, :insert=>103, :delete=>106} operations
+List B cost: 11371
+List MF cost: 15237
+Test run 93 
+For {:access=>220, :insert=>224, :delete=>200} operations
+List B cost: 55405
+List MF cost: 75448
+Test run 94 
+For {:access=>136, :insert=>136, :delete=>125} operations
+List B cost: 18738
+List MF cost: 26265
+Test run 95 
+For {:access=>38, :insert=>58, :delete=>57} operations
+List B cost: 3092
+List MF cost: 4470
+Test run 96 
+For {:access=>104, :insert=>99, :delete=>97} operations
+List B cost: 11191
+List MF cost: 15529
+Test run 97 
+For {:access=>0, :insert=>1, :delete=>0} operations
+List B cost: 1
+List MF cost: 1
+Test run 98 
+For {:access=>108, :insert=>126, :delete=>105} operations
+List B cost: 16814
+List MF cost: 24330
+Test run 99 
+For {:access=>75, :insert=>58, :delete=>64} operations
+List B cost: 3739
+List MF cost: 4927
+Test run 0 
+For {:access=>152, :insert=>152, :delete=>130} operations
+List B cost: 25088 (24907, 152, 29, 0)
+List MF cost: 35530 (25027, 152, 30, 10321)
+Test run 1 
+For {:access=>127, :insert=>166, :delete=>137} operations
+List B cost: 25067 (24869, 166, 32, 0)
+List MF cost: 36520 (25065, 166, 32, 11257)
+Test run 2 
+For {:access=>87, :insert=>87, :delete=>85} operations
+List B cost: 6931 (6826, 87, 18, 0)
+List MF cost: 10295 (7197, 87, 19, 2992)
+Test run 3 
+For {:access=>94, :insert=>90, :delete=>111} operations
+List B cost: 9285 (9177, 90, 18, 0)
+List MF cost: 12608 (9177, 90, 18, 3323)
+Test run 4 
+For {:access=>152, :insert=>134, :delete=>158} operations
+List B cost: 19230 (19059, 134, 37, 0)
+List MF cost: 25421 (18431, 134, 37, 6819)
+Test run 5 
+For {:access=>61, :insert=>57, :delete=>70} operations
+List B cost: 3478 (3408, 57, 13, 0)
+List MF cost: 4549 (3266, 57, 12, 1214)
+Test run 6 
+For {:access=>88, :insert=>60, :delete=>82} operations
+List B cost: 5647 (5576, 60, 11, 0)
+List MF cost: 7339 (5616, 60, 11, 1652)
+Test run 7 
+For {:access=>282, :insert=>280, :delete=>284} operations
+List B cost: 89357 (89027, 280, 50, 0)
+List MF cost: 124232 (89076, 280, 52, 34824)
+Test run 8 
+For {:access=>23, :insert=>17, :delete=>16} operations
+List B cost: 300 (278, 17, 5, 0)
+List MF cost: 461 (322, 17, 5, 117)
+Test run 9 
+For {:access=>307, :insert=>291, :delete=>321} operations
+List B cost: 91033 (90682, 291, 60, 0)
+List MF cost: 124322 (88702, 291, 61, 35268)
+Test run 10 
+For {:access=>242, :insert=>257, :delete=>285} operations
+List B cost: 71018 (70708, 257, 53, 0)
+List MF cost: 96095 (69270, 257, 54, 26514)
+Test run 11 
+For {:access=>112, :insert=>140, :delete=>110} operations
+List B cost: 21245 (21086, 140, 19, 0)
+List MF cost: 28594 (19798, 140, 19, 8637)
+Test run 12 
+For {:access=>231, :insert=>259, :delete=>251} operations
+List B cost: 66967 (66652, 259, 56, 0)
+List MF cost: 95668 (67295, 259, 56, 28058)
+Test run 13 
+For {:access=>256, :insert=>237, :delete=>248} operations
+List B cost: 64282 (63999, 237, 46, 0)
+List MF cost: 88028 (63446, 237, 46, 24299)
+Test run 14 
+For {:access=>135, :insert=>133, :delete=>149} operations
+List B cost: 17127 (16958, 133, 36, 0)
+List MF cost: 23504 (17071, 133, 35, 6265)
+Test run 15 
+For {:access=>240, :insert=>221, :delete=>219} operations
+List B cost: 51305 (51033, 221, 51, 0)
+List MF cost: 70411 (50389, 221, 52, 19749)
+Test run 16 
+For {:access=>55, :insert=>65, :delete=>62} operations
+List B cost: 3966 (3889, 65, 12, 0)
+List MF cost: 5856 (3934, 65, 12, 1845)
+Test run 17 
+For {:access=>35, :insert=>27, :delete=>23} operations
+List B cost: 687 (653, 27, 7, 0)
+List MF cost: 1026 (715, 27, 7, 277)
+Test run 18 
+For {:access=>41, :insert=>41, :delete=>50} operations
+List B cost: 1754 (1703, 41, 10, 0)
+List MF cost: 2228 (1588, 41, 10, 589)
+Test run 19 
+For {:access=>194, :insert=>181, :delete=>205} operations
+List B cost: 39669 (39452, 181, 36, 0)
+List MF cost: 53170 (39252, 181, 36, 13701)
+Test run 20 
+For {:access=>211, :insert=>196, :delete=>201} operations
+List B cost: 43176 (42937, 196, 43, 0)
+List MF cost: 59251 (42728, 196, 43, 16284)
+Test run 21 
+For {:access=>18, :insert=>13, :delete=>9} operations
+List B cost: 151 (135, 13, 3, 0)
+List MF cost: 202 (138, 13, 3, 48)
+Test run 22 
+For {:access=>255, :insert=>243, :delete=>261} operations
+List B cost: 61173 (60876, 243, 54, 0)
+List MF cost: 85138 (60916, 243, 54, 23925)
+Test run 23 
+For {:access=>98, :insert=>97, :delete=>107} operations
+List B cost: 10207 (10084, 97, 26, 0)
+List MF cost: 14374 (10231, 97, 26, 4020)
+Test run 24 
+For {:access=>22, :insert=>18, :delete=>30} operations
+List B cost: 446 (424, 18, 4, 0)
+List MF cost: 602 (456, 18, 4, 124)
+Test run 25 
+For {:access=>45, :insert=>46, :delete=>49} operations
+List B cost: 2129 (2072, 46, 11, 0)
+List MF cost: 2965 (2103, 46, 11, 805)
+Test run 26 
+For {:access=>146, :insert=>137, :delete=>113} operations
+List B cost: 21825 (21664, 137, 24, 0)
+List MF cost: 29180 (20652, 137, 24, 8367)
+Test run 27 
+For {:access=>67, :insert=>80, :delete=>65} operations
+List B cost: 6030 (5935, 80, 15, 0)
+List MF cost: 9161 (6339, 80, 15, 2727)
+Test run 28 
+For {:access=>145, :insert=>169, :delete=>163} operations
+List B cost: 26518 (26314, 169, 35, 0)
+List MF cost: 38688 (26690, 169, 35, 11794)
+Test run 29 
+For {:access=>39, :insert=>28, :delete=>35} operations
+List B cost: 1034 (997, 28, 9, 0)
+List MF cost: 1277 (984, 28, 9, 256)
+Test run 30 
+For {:access=>74, :insert=>95, :delete=>94} operations
+List B cost: 9215 (9100, 95, 20, 0)
+List MF cost: 11740 (8235, 95, 20, 3390)
+Test run 31 
+For {:access=>116, :insert=>101, :delete=>112} operations
+List B cost: 11273 (11153, 101, 19, 0)
+List MF cost: 15352 (11247, 101, 19, 3985)
+Test run 32 
+For {:access=>68, :insert=>58, :delete=>65} operations
+List B cost: 3909 (3841, 58, 10, 0)
+List MF cost: 4817 (3483, 58, 10, 1266)
+Test run 33 
+For {:access=>268, :insert=>282, :delete=>260} operations
+List B cost: 85907 (85578, 282, 47, 0)
+List MF cost: 122436 (85882, 282, 47, 36225)
+Test run 34 
+For {:access=>340, :insert=>316, :delete=>305} operations
+List B cost: 109781 (109413, 316, 52, 0)
+List MF cost: 153705 (109180, 316, 52, 44157)
+Test run 35 
+For {:access=>85, :insert=>78, :delete=>100} operations
+List B cost: 6490 (6387, 78, 25, 0)
+List MF cost: 8535 (6246, 78, 25, 2186)
+Test run 36 
+For {:access=>244, :insert=>273, :delete=>244} operations
+List B cost: 70617 (70286, 273, 58, 0)
+List MF cost: 100218 (70074, 273, 59, 29812)
+Test run 37 
+For {:access=>183, :insert=>162, :delete=>162} operations
+List B cost: 27539 (27348, 162, 29, 0)
+List MF cost: 39700 (27759, 162, 29, 11750)
+Test run 38 
+For {:access=>281, :insert=>271, :delete=>260} operations
+List B cost: 80288 (79961, 271, 56, 0)
+List MF cost: 110225 (78953, 271, 56, 30945)
+Test run 39 
+For {:access=>112, :insert=>152, :delete=>132} operations
+List B cost: 21245 (21057, 152, 36, 0)
+List MF cost: 30299 (20733, 152, 36, 9378)
+Test run 40 
+For {:access=>235, :insert=>266, :delete=>234} operations
+List B cost: 68150 (67830, 266, 54, 0)
+List MF cost: 96476 (67252, 266, 55, 28903)
+Test run 41 
+For {:access=>300, :insert=>329, :delete=>328} operations
+List B cost: 121469 (121078, 329, 62, 0)
+List MF cost: 165744 (118723, 329, 62, 46630)
+Test run 42 
+For {:access=>183, :insert=>187, :delete=>188} operations
+List B cost: 37466 (37236, 187, 43, 0)
+List MF cost: 50630 (36856, 187, 43, 13544)
+Test run 43 
+For {:access=>116, :insert=>105, :delete=>104} operations
+List B cost: 12002 (11872, 105, 25, 0)
+List MF cost: 16128 (11747, 105, 25, 4251)
+Test run 44 
+For {:access=>185, :insert=>185, :delete=>177} operations
+List B cost: 37701 (37484, 185, 32, 0)
+List MF cost: 52403 (37288, 185, 32, 14898)
+Test run 45 
+For {:access=>239, :insert=>206, :delete=>219} operations
+List B cost: 45318 (45055, 206, 57, 0)
+List MF cost: 60900 (44114, 206, 57, 16523)
+Test run 46 
+For {:access=>126, :insert=>107, :delete=>133} operations
+List B cost: 14202 (14073, 107, 22, 0)
+List MF cost: 19573 (14479, 107, 22, 4965)
+Test run 47 
+For {:access=>315, :insert=>322, :delete=>285} operations
+List B cost: 112275 (111892, 322, 61, 0)
+List MF cost: 159024 (112245, 322, 61, 46396)
+Test run 48 
+For {:access=>325, :insert=>310, :delete=>294} operations
+List B cost: 103496 (103123, 310, 63, 0)
+List MF cost: 144188 (102774, 310, 62, 41042)
+Test run 49 
+For {:access=>280, :insert=>272, :delete=>300} operations
+List B cost: 78775 (78431, 272, 72, 0)
+List MF cost: 106534 (77676, 272, 71, 28515)
+Test run 50 
+For {:access=>262, :insert=>248, :delete=>282} operations
+List B cost: 72127 (71829, 248, 50, 0)
+List MF cost: 101476 (74498, 248, 50, 26680)
+Test run 51 
+For {:access=>176, :insert=>164, :delete=>165} operations
+List B cost: 30391 (30192, 164, 35, 0)
+List MF cost: 40442 (29116, 164, 35, 11127)
+Test run 52 
+For {:access=>288, :insert=>289, :delete=>282} operations
+List B cost: 86589 (86236, 289, 64, 0)
+List MF cost: 121103 (86794, 289, 64, 33956)
+Test run 53 
+For {:access=>78, :insert=>94, :delete=>94} operations
+List B cost: 9043 (8929, 94, 20, 0)
+List MF cost: 12892 (9185, 94, 20, 3593)
+Test run 54 
+For {:access=>42, :insert=>31, :delete=>29} operations
+List B cost: 1106 (1070, 31, 5, 0)
+List MF cost: 1605 (1137, 31, 5, 432)
+Test run 55 
+For {:access=>81, :insert=>79, :delete=>89} operations
+List B cost: 6894 (6800, 79, 15, 0)
+List MF cost: 9724 (6987, 79, 15, 2643)
+Test run 56 
+For {:access=>102, :insert=>108, :delete=>105} operations
+List B cost: 14366 (14240, 108, 18, 0)
+List MF cost: 20167 (14564, 108, 18, 5477)
+Test run 57 
+For {:access=>92, :insert=>88, :delete=>96} operations
+List B cost: 9308 (9205, 88, 15, 0)
+List MF cost: 12350 (9012, 88, 15, 3235)
+Test run 58 
+For {:access=>77, :insert=>77, :delete=>91} operations
+List B cost: 6132 (6038, 77, 17, 0)
+List MF cost: 8515 (6108, 77, 18, 2312)
+Test run 59 
+For {:access=>106, :insert=>87, :delete=>80} operations
+List B cost: 8785 (8684, 87, 14, 0)
+List MF cost: 12525 (8932, 87, 14, 3492)
+Test run 60 
+For {:access=>314, :insert=>267, :delete=>315} operations
+List B cost: 81140 (80802, 267, 71, 0)
+List MF cost: 111726 (82278, 267, 71, 29110)
+Test run 61 
+For {:access=>0, :insert=>0, :delete=>2} operations
+List B cost: 0 (0, 0, 0, 0)
+List MF cost: 0 (0, 0, 0, 0)
+Test run 62 
+For {:access=>165, :insert=>168, :delete=>172} operations
+List B cost: 30441 (30236, 168, 37, 0)
+List MF cost: 42560 (30713, 168, 37, 11642)
+Test run 63 
+For {:access=>308, :insert=>270, :delete=>253} operations
+List B cost: 83281 (82966, 270, 45, 0)
+List MF cost: 116649 (82973, 270, 45, 33361)
+Test run 64 
+For {:access=>34, :insert=>35, :delete=>40} operations
+List B cost: 1202 (1158, 35, 9, 0)
+List MF cost: 1585 (1125, 35, 9, 416)
+Test run 65 
+For {:access=>251, :insert=>246, :delete=>220} operations
+List B cost: 67788 (67495, 246, 47, 0)
+List MF cost: 94423 (67009, 246, 48, 27120)
+Test run 66 
+For {:access=>239, :insert=>230, :delete=>247} operations
+List B cost: 57856 (57575, 230, 51, 0)
+List MF cost: 79384 (57152, 230, 50, 21952)
+Test run 67 
+For {:access=>323, :insert=>316, :delete=>347} operations
+List B cost: 110062 (109673, 316, 73, 0)
+List MF cost: 152774 (109043, 316, 74, 43341)
+Test run 68 
+For {:access=>129, :insert=>136, :delete=>142} operations
+List B cost: 20366 (20205, 136, 25, 0)
+List MF cost: 28189 (20024, 136, 25, 8004)
+Test run 69 
+For {:access=>12, :insert=>15, :delete=>19} operations
+List B cost: 290 (272, 15, 3, 0)
+List MF cost: 350 (248, 15, 3, 84)
+Test run 70 
+For {:access=>24, :insert=>31, :delete=>28} operations
+List B cost: 768 (727, 31, 10, 0)
+List MF cost: 982 (673, 31, 9, 269)
+Test run 71 
+For {:access=>151, :insert=>129, :delete=>138} operations
+List B cost: 19561 (19404, 129, 28, 0)
+List MF cost: 26047 (19174, 129, 28, 6716)
+Test run 72 
+For {:access=>179, :insert=>200, :delete=>185} operations
+List B cost: 40443 (40202, 200, 41, 0)
+List MF cost: 56430 (39309, 200, 41, 16880)
+Test run 73 
+For {:access=>287, :insert=>286, :delete=>266} operations
+List B cost: 89977 (89633, 286, 58, 0)
+List MF cost: 122379 (87309, 286, 58, 34726)
+Test run 74 
+For {:access=>299, :insert=>316, :delete=>281} operations
+List B cost: 98234 (97849, 316, 69, 0)
+List MF cost: 139101 (98346, 316, 69, 40370)
+Test run 75 
+For {:access=>113, :insert=>108, :delete=>108} operations
+List B cost: 11277 (11141, 108, 28, 0)
+List MF cost: 14753 (10588, 108, 28, 4029)
+Test run 76 
+For {:access=>141, :insert=>147, :delete=>145} operations
+List B cost: 21580 (21401, 147, 32, 0)
+List MF cost: 30768 (21851, 147, 33, 8737)
+Test run 77 
+For {:access=>212, :insert=>222, :delete=>224} operations
+List B cost: 56836 (56571, 222, 43, 0)
+List MF cost: 78612 (56784, 222, 43, 21563)
+Test run 78 
+For {:access=>85, :insert=>84, :delete=>81} operations
+List B cost: 7716 (7619, 84, 13, 0)
+List MF cost: 10961 (7679, 84, 13, 3185)
+Test run 79 
+For {:access=>221, :insert=>241, :delete=>235} operations
+List B cost: 55393 (55099, 241, 53, 0)
+List MF cost: 77813 (54229, 241, 53, 23290)
+Test run 80 
+For {:access=>290, :insert=>261, :delete=>303} operations
+List B cost: 76613 (76297, 261, 55, 0)
+List MF cost: 108820 (78526, 261, 55, 29978)
+Test run 81 
+For {:access=>189, :insert=>173, :delete=>193} operations
+List B cost: 36802 (36602, 173, 27, 0)
+List MF cost: 50554 (36524, 173, 27, 13830)
+Test run 82 
+For {:access=>57, :insert=>45, :delete=>69} operations
+List B cost: 2904 (2850, 45, 9, 0)
+List MF cost: 3470 (2731, 45, 9, 685)
+Test run 83 
+For {:access=>244, :insert=>281, :delete=>278} operations
+List B cost: 71016 (70664, 281, 71, 0)
+List MF cost: 104060 (72595, 281, 70, 31114)
+Test run 84 
+For {:access=>217, :insert=>223, :delete=>234} operations
+List B cost: 58018 (57740, 223, 55, 0)
+List MF cost: 76349 (55433, 223, 55, 20638)
+Test run 85 
+For {:access=>268, :insert=>260, :delete=>260} operations
+List B cost: 75833 (75515, 260, 58, 0)
+List MF cost: 102205 (73715, 260, 58, 28172)
+Test run 86 
+For {:access=>256, :insert=>256, :delete=>248} operations
+List B cost: 73446 (73148, 256, 42, 0)
+List MF cost: 102837 (73578, 256, 42, 28961)
+Test run 87 
+For {:access=>258, :insert=>251, :delete=>234} operations
+List B cost: 65202 (64892, 251, 59, 0)
+List MF cost: 89833 (63843, 251, 59, 25680)
+Test run 88 
+For {:access=>7, :insert=>5, :delete=>9} operations
+List B cost: 42 (35, 5, 2, 0)
+List MF cost: 51 (36, 5, 2, 8)
+Test run 89 
+For {:access=>24, :insert=>29, :delete=>32} operations
+List B cost: 843 (804, 29, 10, 0)
+List MF cost: 1078 (755, 29, 10, 284)
+Test run 90 
+For {:access=>304, :insert=>301, :delete=>288} operations
+List B cost: 98986 (98627, 301, 58, 0)
+List MF cost: 138109 (98667, 301, 58, 39083)
+Test run 91 
+For {:access=>229, :insert=>204, :delete=>237} operations
+List B cost: 50461 (50215, 204, 42, 0)
+List MF cost: 68617 (49942, 204, 42, 18429)
+Test run 92 
+For {:access=>2, :insert=>2, :delete=>4} operations
+List B cost: 4 (2, 2, 0, 0)
+List MF cost: 5 (2, 2, 0, 1)
+Test run 93 
+For {:access=>95, :insert=>83, :delete=>96} operations
+List B cost: 8924 (8826, 83, 15, 0)
+List MF cost: 11606 (8636, 83, 15, 2872)
+Test run 94 
+For {:access=>137, :insert=>108, :delete=>165} operations
+List B cost: 16381 (16255, 108, 18, 0)
+List MF cost: 21215 (15946, 108, 18, 5143)
+Test run 95 
+For {:access=>64, :insert=>67, :delete=>66} operations
+List B cost: 4306 (4225, 67, 14, 0)
+List MF cost: 6257 (4392, 67, 14, 1784)
+Test run 96 
+For {:access=>173, :insert=>149, :delete=>160} operations
+List B cost: 23589 (23411, 149, 29, 0)
+List MF cost: 32590 (23435, 149, 29, 8977)
+Test run 97 
+For {:access=>100, :insert=>104, :delete=>113} operations
+List B cost: 10748 (10613, 104, 31, 0)
+List MF cost: 14234 (10371, 104, 31, 3728)
+Test run 98 
+For {:access=>32, :insert=>37, :delete=>49} operations
+List B cost: 1470 (1426, 37, 7, 0)
+List MF cost: 2215 (1549, 37, 7, 622)
+Test run 99 
+For {:access=>276, :insert=>256, :delete=>247} operations
+List B cost: 77503 (77202, 256, 45, 0)
+List MF cost: 107333 (77136, 256, 45, 29896)
+Test run 0 
+For {:access=>313, :insert=>331, :delete=>350} operations
+List B cost: 120022 (119615, 331, 76)
+List MF cost: 165436 (123380, 41980, 76)
+Test run 1 
+For {:access=>95, :insert=>95, :delete=>72} operations
+List B cost: 8611 (8496, 95, 20)
+List MF cost: 12455 (8927, 3508, 20)
+Test run 2 
+For {:access=>35, :insert=>34, :delete=>33} operations
+List B cost: 1033 (990, 34, 9)
+List MF cost: 1487 (1064, 414, 9)
+Test run 3 
+For {:access=>126, :insert=>141, :delete=>165} operations
+List B cost: 19375 (19183, 141, 51)
+List MF cost: 25996 (19172, 6773, 51)
+Test run 4 
+For {:access=>1, :insert=>4, :delete=>1} operations
+List B cost: 7 (3, 4, 0)
+List MF cost: 7 (2, 5, 0)
+Test run 5 
+For {:access=>250, :insert=>244, :delete=>257} operations
+List B cost: 65386 (65093, 244, 49)
+List MF cost: 92057 (68169, 23839, 49)
+Test run 6 
+For {:access=>101, :insert=>114, :delete=>118} operations
+List B cost: 12996 (12849, 114, 33)
+List MF cost: 18491 (13619, 4839, 33)
+Test run 7 
+For {:access=>35, :insert=>35, :delete=>38} operations
+List B cost: 1722 (1683, 35, 4)
+List MF cost: 2188 (1657, 527, 4)
+Test run 8 
+For {:access=>283, :insert=>291, :delete=>281} operations
+List B cost: 96419 (96068, 291, 60)
+List MF cost: 131433 (97702, 33671, 60)
+Test run 9 
+For {:access=>191, :insert=>174, :delete=>173} operations
+List B cost: 35035 (34829, 174, 32)
+List MF cost: 48907 (36470, 12405, 32)
+Test run 10 
+For {:access=>74, :insert=>86, :delete=>71} operations
+List B cost: 7106 (7007, 86, 13)
+List MF cost: 10825 (7647, 3165, 13)
+Test run 11 
+For {:access=>298, :insert=>324, :delete=>318} operations
+List B cost: 117060 (116668, 324, 68)
+List MF cost: 158776 (116805, 41903, 68)
+Test run 12 
+For {:access=>13, :insert=>11, :delete=>14} operations
+List B cost: 156 (143, 11, 2)
+List MF cost: 184 (137, 45, 2)
+Test run 13 
+For {:access=>268, :insert=>251, :delete=>241} operations
+List B cost: 67435 (67123, 251, 61)
+List MF cost: 91987 (68109, 23817, 61)
+Test run 14 
+For {:access=>57, :insert=>74, :delete=>71} operations
+List B cost: 5657 (5573, 74, 10)
+List MF cost: 7900 (5675, 2216, 9)
+Test run 15 
+For {:access=>258, :insert=>257, :delete=>275} operations
+List B cost: 72586 (72274, 257, 55)
+List MF cost: 101514 (76038, 25421, 55)
+Test run 16 
+For {:access=>117, :insert=>124, :delete=>138} operations
+List B cost: 16886 (16734, 124, 28)
+List MF cost: 22165 (16342, 5796, 27)
+Test run 17 
+For {:access=>314, :insert=>320, :delete=>328} operations
+List B cost: 111315 (110933, 320, 62)
+List MF cost: 155453 (114773, 40618, 62)
+Test run 18 
+For {:access=>101, :insert=>96, :delete=>122} operations
+List B cost: 9729 (9609, 96, 24)
+List MF cost: 13260 (9835, 3401, 24)
+Test run 19 
+For {:access=>257, :insert=>298, :delete=>265} operations
+List B cost: 91846 (91486, 298, 62)
+List MF cost: 129094 (93488, 35544, 62)
+Test run 20 
+For {:access=>89, :insert=>75, :delete=>67} operations
+List B cost: 6661 (6572, 75, 14)
+List MF cost: 9009 (6787, 2208, 14)
+Test run 21 
+For {:access=>81, :insert=>85, :delete=>93} operations
+List B cost: 7368 (7264, 85, 19)
+List MF cost: 10586 (7856, 2711, 19)
+Test run 22 
+For {:access=>208, :insert=>214, :delete=>205} operations
+List B cost: 50241 (49974, 214, 53)
+List MF cost: 68967 (51340, 17574, 53)
+Test run 23 
+For {:access=>74, :insert=>57, :delete=>60} operations
+List B cost: 3848 (3781, 57, 10)
+List MF cost: 5102 (3823, 1269, 10)
+Test run 24 
+For {:access=>94, :insert=>108, :delete=>86} operations
+List B cost: 12154 (12028, 108, 18)
+List MF cost: 16480 (11993, 4469, 18)
+Test run 25 
+For {:access=>77, :insert=>77, :delete=>83} operations
+List B cost: 6150 (6055, 77, 18)
+List MF cost: 8421 (6191, 2212, 18)
+Test run 26 
+For {:access=>142, :insert=>158, :delete=>139} operations
+List B cost: 23165 (22968, 158, 39)
+List MF cost: 32899 (23638, 9222, 39)
+Test run 27 
+For {:access=>298, :insert=>280, :delete=>282} operations
+List B cost: 91401 (91071, 280, 50)
+List MF cost: 127269 (94590, 32629, 50)
+Test run 28 
+For {:access=>20, :insert=>35, :delete=>35} operations
+List B cost: 1135 (1094, 35, 6)
+List MF cost: 1554 (1061, 487, 6)
+Test run 29 
+For {:access=>105, :insert=>104, :delete=>130} operations
+List B cost: 12005 (11873, 104, 28)
+List MF cost: 15869 (12077, 3763, 29)
+Test run 30 
+For {:access=>57, :insert=>34, :delete=>40} operations
+List B cost: 1552 (1512, 34, 6)
+List MF cost: 1963 (1502, 455, 6)
+Test run 31 
+For {:access=>115, :insert=>157, :delete=>113} operations
+List B cost: 21677 (21494, 157, 26)
+List MF cost: 33029 (23092, 9911, 26)
+Test run 32 
+For {:access=>344, :insert=>336, :delete=>309} operations
+List B cost: 127978 (127583, 336, 59)
+List MF cost: 179674 (133106, 46509, 59)
+Test run 33 
+For {:access=>282, :insert=>322, :delete=>315} operations
+List B cost: 106381 (105992, 322, 67)
+List MF cost: 149543 (110018, 39457, 68)
+Test run 34 
+For {:access=>234, :insert=>218, :delete=>244} operations
+List B cost: 56557 (56297, 218, 42)
+List MF cost: 76568 (57568, 18958, 42)
+Test run 35 
+For {:access=>155, :insert=>156, :delete=>157} operations
+List B cost: 27183 (26990, 156, 37)
+List MF cost: 37154 (27678, 9440, 36)
+Test run 36 
+For {:access=>128, :insert=>152, :delete=>134} operations
+List B cost: 21859 (21670, 152, 37)
+List MF cost: 30889 (22254, 8599, 36)
+Test run 37 
+For {:access=>274, :insert=>289, :delete=>301} operations
+List B cost: 95610 (95265, 289, 56)
+List MF cost: 132957 (97633, 35268, 56)
+Test run 38 
+For {:access=>185, :insert=>194, :delete=>206} operations
+List B cost: 37412 (37171, 194, 47)
+List MF cost: 52311 (38410, 13855, 46)
+Test run 39 
+For {:access=>331, :insert=>296, :delete=>322} operations
+List B cost: 105987 (105637, 296, 54)
+List MF cost: 143530 (108908, 34568, 54)
+Test run 40 
+For {:access=>158, :insert=>161, :delete=>181} operations
+List B cost: 28476 (28287, 161, 28)
+List MF cost: 39073 (28821, 10224, 28)
+Test run 41 
+For {:access=>262, :insert=>237, :delete=>271} operations
+List B cost: 62582 (62286, 237, 59)
+List MF cost: 85580 (65202, 20318, 60)
+Test run 42 
+For {:access=>257, :insert=>235, :delete=>265} operations
+List B cost: 64360 (64070, 235, 55)
+List MF cost: 83850 (63429, 20366, 55)
+Test run 43 
+For {:access=>65, :insert=>58, :delete=>54} operations
+List B cost: 4017 (3947, 58, 12)
+List MF cost: 5332 (3940, 1380, 12)
+Test run 44 
+For {:access=>103, :insert=>91, :delete=>87} operations
+List B cost: 9409 (9307, 91, 11)
+List MF cost: 13211 (9700, 3500, 11)
+Test run 45 
+For {:access=>180, :insert=>168, :delete=>153} operations
+List B cost: 31458 (31254, 168, 36)
+List MF cost: 43371 (32404, 10932, 35)
+Test run 46 
+For {:access=>17, :insert=>20, :delete=>20} operations
+List B cost: 425 (403, 20, 2)
+List MF cost: 568 (411, 155, 2)
+Test run 47 
+For {:access=>232, :insert=>231, :delete=>226} operations
+List B cost: 58026 (57737, 231, 58)
+List MF cost: 78039 (57489, 20491, 59)
+Test run 48 
+For {:access=>106, :insert=>102, :delete=>98} operations
+List B cost: 11496 (11376, 102, 18)
+List MF cost: 14996 (10985, 3993, 18)
+Test run 49 
+For {:access=>276, :insert=>307, :delete=>306} operations
+List B cost: 103066 (102693, 307, 66)
+List MF cost: 140620 (103575, 36979, 66)
+Test run 50 
+For {:access=>115, :insert=>112, :delete=>95} operations
+List B cost: 13713 (13589, 112, 12)
+List MF cost: 19255 (13827, 5416, 12)
+Test run 51 
+For {:access=>118, :insert=>127, :delete=>115} operations
+List B cost: 15981 (15826, 127, 28)
+List MF cost: 22871 (16557, 6286, 28)
+Test run 52 
+For {:access=>140, :insert=>127, :delete=>129} operations
+List B cost: 17723 (17575, 127, 21)
+List MF cost: 24776 (18135, 6620, 21)
+Test run 53 
+For {:access=>213, :insert=>210, :delete=>216} operations
+List B cost: 45029 (44784, 210, 35)
+List MF cost: 62972 (45728, 17209, 35)
+Test run 54 
+For {:access=>108, :insert=>93, :delete=>104} operations
+List B cost: 11804 (11694, 93, 17)
+List MF cost: 15603 (12024, 3563, 16)
+Test run 55 
+For {:access=>171, :insert=>195, :delete=>179} operations
+List B cost: 40049 (39812, 195, 42)
+List MF cost: 55611 (40363, 15206, 42)
+Test run 56 
+For {:access=>295, :insert=>297, :delete=>251} operations
+List B cost: 91921 (91562, 297, 62)
+List MF cost: 127678 (92719, 34897, 62)
+Test run 57 
+For {:access=>263, :insert=>243, :delete=>235} operations
+List B cost: 67632 (67344, 243, 45)
+List MF cost: 92561 (68350, 24166, 45)
+Test run 58 
+For {:access=>42, :insert=>32, :delete=>38} operations
+List B cost: 1199 (1160, 32, 7)
+List MF cost: 1596 (1226, 363, 7)
+Test run 59 
+For {:access=>92, :insert=>86, :delete=>107} operations
+List B cost: 7395 (7282, 86, 27)
+List MF cost: 9626 (7254, 2345, 27)
+Test run 60 
+For {:access=>44, :insert=>24, :delete=>26} operations
+List B cost: 672 (644, 24, 4)
+List MF cost: 965 (706, 255, 4)
+Test run 61 
+For {:access=>132, :insert=>153, :delete=>160} operations
+List B cost: 24386 (24198, 153, 35)
+List MF cost: 34411 (25155, 9221, 35)
+Test run 62 
+For {:access=>264, :insert=>310, :delete=>272} operations
+List B cost: 95344 (94974, 310, 60)
+List MF cost: 134585 (94861, 39664, 60)
+Test run 63 
+For {:access=>327, :insert=>312, :delete=>296} operations
+List B cost: 106458 (106079, 312, 67)
+List MF cost: 147156 (109377, 37712, 67)
+Test run 64 
+For {:access=>189, :insert=>181, :delete=>165} operations
+List B cost: 34270 (34056, 181, 33)
+List MF cost: 48776 (35661, 13082, 33)
+Test run 65 
+For {:access=>172, :insert=>209, :delete=>194} operations
+List B cost: 43169 (42921, 209, 39)
+List MF cost: 64095 (46074, 17982, 39)
+Test run 66 
+For {:access=>223, :insert=>172, :delete=>188} operations
+List B cost: 34693 (34480, 172, 41)
+List MF cost: 44673 (33724, 10908, 41)
+Test run 67 
+For {:access=>9, :insert=>6, :delete=>7} operations
+List B cost: 44 (36, 6, 2)
+List MF cost: 58 (40, 16, 2)
+Test run 68 
+For {:access=>208, :insert=>220, :delete=>236} operations
+List B cost: 53177 (52907, 220, 50)
+List MF cost: 71893 (53888, 17955, 50)
+Test run 69 
+For {:access=>28, :insert=>21, :delete=>19} operations
+List B cost: 508 (486, 21, 1)
+List MF cost: 697 (484, 212, 1)
+Test run 70 
+For {:access=>175, :insert=>169, :delete=>173} operations
+List B cost: 32129 (31925, 169, 35)
+List MF cost: 41402 (30768, 10599, 35)
+Test run 71 
+For {:access=>304, :insert=>288, :delete=>298} operations
+List B cost: 94566 (94207, 288, 71)
+List MF cost: 129934 (97421, 32442, 71)
+Test run 72 
+For {:access=>252, :insert=>260, :delete=>232} operations
+List B cost: 70764 (70451, 260, 53)
+List MF cost: 99694 (72862, 26780, 52)
+Test run 73 
+For {:access=>90, :insert=>108, :delete=>87} operations
+List B cost: 11158 (11034, 108, 16)
+List MF cost: 17117 (12113, 4988, 16)
+Test run 74 
+For {:access=>244, :insert=>255, :delete=>264} operations
+List B cost: 66675 (66357, 255, 63)
+List MF cost: 89492 (65659, 23770, 63)
+Test run 75 
+For {:access=>230, :insert=>228, :delete=>236} operations
+List B cost: 61017 (60752, 228, 37)
+List MF cost: 85183 (63726, 21420, 37)
+Test run 76 
+For {:access=>84, :insert=>80, :delete=>67} operations
+List B cost: 5867 (5763, 80, 24)
+List MF cost: 8078 (6004, 2050, 24)
+Test run 77 
+For {:access=>306, :insert=>307, :delete=>321} operations
+List B cost: 103068 (102712, 307, 49)
+List MF cost: 144995 (105488, 39458, 49)
+Test run 78 
+For {:access=>96, :insert=>96, :delete=>99} operations
+List B cost: 9728 (9616, 96, 16)
+List MF cost: 13526 (9737, 3773, 16)
+Test run 79 
+For {:access=>70, :insert=>56, :delete=>51} operations
+List B cost: 3843 (3778, 56, 9)
+List MF cost: 5215 (3848, 1358, 9)
+Test run 80 
+For {:access=>185, :insert=>176, :delete=>163} operations
+List B cost: 35988 (35781, 176, 31)
+List MF cost: 50697 (37474, 13192, 31)
+Test run 81 
+For {:access=>180, :insert=>181, :delete=>166} operations
+List B cost: 35868 (35646, 181, 41)
+List MF cost: 49789 (37091, 12657, 41)
+Test run 82 
+For {:access=>54, :insert=>38, :delete=>45} operations
+List B cost: 2043 (1998, 38, 7)
+List MF cost: 2593 (1992, 594, 7)
+Test run 83 
+For {:access=>58, :insert=>57, :delete=>52} operations
+List B cost: 3122 (3054, 57, 11)
+List MF cost: 3986 (2900, 1075, 11)
+Test run 84 
+For {:access=>225, :insert=>217, :delete=>210} operations
+List B cost: 50854 (50595, 217, 42)
+List MF cost: 70708 (51934, 18732, 42)
+Test run 85 
+For {:access=>94, :insert=>98, :delete=>98} operations
+List B cost: 10695 (10574, 98, 23)
+List MF cost: 14257 (10735, 3499, 23)
+Test run 86 
+For {:access=>120, :insert=>132, :delete=>136} operations
+List B cost: 18361 (18198, 132, 31)
+List MF cost: 26887 (19820, 7036, 31)
+Test run 87 
+For {:access=>265, :insert=>271, :delete=>265} operations
+List B cost: 81444 (81114, 271, 59)
+List MF cost: 112630 (83581, 28990, 59)
+Test run 88 
+For {:access=>31, :insert=>51, :delete=>28} operations
+List B cost: 1814 (1752, 51, 11)
+List MF cost: 2426 (1629, 786, 11)
+Test run 89 
+For {:access=>134, :insert=>121, :delete=>136} operations
+List B cost: 16198 (16053, 121, 24)
+List MF cost: 21608 (15989, 5595, 24)
+Test run 90 
+For {:access=>178, :insert=>198, :delete=>178} operations
+List B cost: 38608 (38370, 198, 40)
+List MF cost: 56935 (41121, 15775, 39)
+Test run 91 
+For {:access=>107, :insert=>96, :delete=>117} operations
+List B cost: 10533 (10418, 96, 19)
+List MF cost: 13798 (10297, 3482, 19)
+Test run 92 
+For {:access=>76, :insert=>81, :delete=>94} operations
+List B cost: 7237 (7141, 81, 15)
+List MF cost: 9768 (7158, 2595, 15)
+Test run 93 
+For {:access=>164, :insert=>158, :delete=>151} operations
+List B cost: 26507 (26316, 158, 33)
+List MF cost: 36654 (26673, 9948, 33)
+Test run 94 
+For {:access=>91, :insert=>87, :delete=>92} operations
+List B cost: 8932 (8831, 87, 14)
+List MF cost: 11778 (8620, 3144, 14)
+Test run 95 
+For {:access=>128, :insert=>147, :delete=>161} operations
+List B cost: 21747 (21570, 147, 30)
+List MF cost: 29981 (21976, 7975, 30)
+Test run 96 
+For {:access=>106, :insert=>113, :delete=>119} operations
+List B cost: 14815 (14677, 113, 25)
+List MF cost: 20899 (15765, 5108, 26)
+Test run 97 
+For {:access=>204, :insert=>255, :delete=>223} operations
+List B cost: 67389 (67084, 255, 50)
+List MF cost: 95040 (69079, 25911, 50)
+Test run 98 
+For {:access=>223, :insert=>176, :delete=>195} operations
+List B cost: 39083 (38872, 176, 35)
+List MF cost: 52242 (40222, 11985, 35)
+Test run 99 
+For {:access=>62, :insert=>70, :delete=>68} operations
+List B cost: 5890 (5807, 70, 13)
+List MF cost: 7691 (5814, 1864, 13)
+Test run 0 
+For {:access=>94, :insert=>129, :delete=>119} operations
+List B cost: 14816 (14662, 129, 25)
+List MF cost: 22442 (15827, 6590, 25)
+Test run 1 
+For {:access=>161, :insert=>157, :delete=>171} operations
+List B cost: 25735 (25539, 157, 39)
+List MF cost: 36551 (27029, 9483, 39)
+Test run 2 
+For {:access=>243, :insert=>258, :delete=>223} operations
+List B cost: 71962 (71664, 258, 40)
+List MF cost: 100823 (73040, 27743, 40)
+Test run 3 
+For {:access=>5, :insert=>3, :delete=>5} operations
+List B cost: 18 (14, 3, 1)
+List MF cost: 17 (12, 4, 1)
+Test run 4 
+For {:access=>65, :insert=>67, :delete=>57} operations
+List B cost: 4669 (4596, 67, 6)
+List MF cost: 7174 (5207, 1961, 6)
+Test run 5 
+For {:access=>117, :insert=>107, :delete=>113} operations
+List B cost: 12849 (12724, 107, 18)
+List MF cost: 18378 (13694, 4666, 18)
+Test run 6 
+For {:access=>78, :insert=>87, :delete=>75} operations
+List B cost: 7430 (7320, 87, 23)
+List MF cost: 9848 (7080, 2745, 23)
+Test run 7 
+For {:access=>270, :insert=>295, :delete=>269} operations
+List B cost: 88311 (87959, 295, 57)
+List MF cost: 122375 (88614, 33704, 57)
+Test run 8 
+For {:access=>143, :insert=>125, :delete=>137} operations
+List B cost: 17037 (16890, 125, 22)
+List MF cost: 24069 (17878, 6169, 22)
+Test run 9 
+For {:access=>297, :insert=>313, :delete=>319} operations
+List B cost: 101587 (101200, 313, 74)
+List MF cost: 142508 (104683, 37751, 74)
+Test run 10 
+For {:access=>155, :insert=>152, :delete=>141} operations
+List B cost: 23788 (23603, 152, 33)
+List MF cost: 32007 (23655, 8318, 34)
+Test run 11 
+For {:access=>118, :insert=>154, :delete=>107} operations
+List B cost: 22994 (22813, 154, 27)
+List MF cost: 31079 (21966, 9087, 26)
+Test run 12 
+For {:access=>88, :insert=>94, :delete=>113} operations
+List B cost: 10024 (9906, 94, 24)
+List MF cost: 13470 (10098, 3348, 24)
+Test run 13 
+For {:access=>36, :insert=>32, :delete=>45} operations
+List B cost: 1217 (1177, 32, 8)
+List MF cost: 1733 (1333, 392, 8)
+Test run 14 
+For {:access=>257, :insert=>306, :delete=>269} operations
+List B cost: 83380 (82994, 306, 80)
+List MF cost: 124130 (89093, 34957, 80)
+Test run 15 
+For {:access=>117, :insert=>122, :delete=>106} operations
+List B cost: 15548 (15402, 122, 24)
+List MF cost: 22024 (16101, 5899, 24)
+Test run 16 
+For {:access=>81, :insert=>57, :delete=>68} operations
+List B cost: 4397 (4328, 57, 12)
+List MF cost: 5731 (4507, 1212, 12)
+Test run 17 
+For {:access=>321, :insert=>290, :delete=>303} operations
+List B cost: 98623 (98273, 290, 60)
+List MF cost: 134226 (100065, 34101, 60)
+Test run 18 
+For {:access=>130, :insert=>153, :delete=>132} operations
+List B cost: 24335 (24148, 153, 34)
+List MF cost: 33809 (24712, 9063, 34)
+Test run 19 
+For {:access=>55, :insert=>64, :delete=>67} operations
+List B cost: 3767 (3690, 64, 13)
+List MF cost: 5368 (3743, 1612, 13)
+Test run 20 
+For {:access=>240, :insert=>243, :delete=>248} operations
+List B cost: 64086 (63791, 243, 52)
+List MF cost: 86880 (64644, 22184, 52)
+Test run 21 
+For {:access=>241, :insert=>264, :delete=>234} operations
+List B cost: 66333 (66011, 264, 58)
+List MF cost: 94474 (67511, 26905, 58)
+Test run 22 
+For {:access=>25, :insert=>24, :delete=>17} operations
+List B cost: 586 (560, 24, 2)
+List MF cost: 941 (669, 270, 2)
+Test run 23 
+For {:access=>283, :insert=>259, :delete=>293} operations
+List B cost: 78785 (78465, 259, 61)
+List MF cost: 106571 (80379, 26131, 61)
+Test run 24 
+For {:access=>147, :insert=>130, :delete=>128} operations
+List B cost: 19648 (19491, 130, 27)
+List MF cost: 25695 (19433, 6235, 27)
+Test run 25 
+For {:access=>49, :insert=>54, :delete=>61} operations
+List B cost: 2860 (2791, 54, 15)
+List MF cost: 3949 (2854, 1081, 14)
+Test run 26 
+For {:access=>286, :insert=>293, :delete=>302} operations
+List B cost: 96683 (96329, 293, 61)
+List MF cost: 132091 (98133, 33895, 63)
+Test run 27 
+For {:access=>235, :insert=>239, :delete=>255} operations
+List B cost: 62402 (62109, 239, 54)
+List MF cost: 85174 (63149, 21971, 54)
+Test run 28 
+For {:access=>18, :insert=>23, :delete=>18} operations
+List B cost: 555 (527, 23, 5)
+List MF cost: 766 (544, 218, 4)
+Test run 29 
+For {:access=>65, :insert=>62, :delete=>67} operations
+List B cost: 4169 (4092, 62, 15)
+List MF cost: 5550 (4057, 1478, 15)
+Test run 30 
+For {:access=>266, :insert=>246, :delete=>270} operations
+List B cost: 68068 (67763, 246, 59)
+List MF cost: 91842 (68801, 22982, 59)
+Test run 31 
+For {:access=>196, :insert=>185, :delete=>212} operations
+List B cost: 38381 (38163, 185, 33)
+List MF cost: 53569 (39466, 14070, 33)
+Test run 32 
+For {:access=>83, :insert=>88, :delete=>81} operations
+List B cost: 8795 (8696, 88, 11)
+List MF cost: 11545 (8428, 3106, 11)
+Test run 33 
+For {:access=>235, :insert=>248, :delete=>240} operations
+List B cost: 63125 (62827, 248, 50)
+List MF cost: 87668 (63889, 23729, 50)
+Test run 34 
+For {:access=>7, :insert=>7, :delete=>5} operations
+List B cost: 45 (37, 7, 1)
+List MF cost: 46 (29, 16, 1)
+Test run 35 
+For {:access=>307, :insert=>314, :delete=>308} operations
+List B cost: 103464 (103083, 314, 67)
+List MF cost: 143265 (105027, 38171, 67)
+Test run 36 
+For {:access=>134, :insert=>139, :delete=>107} operations
+List B cost: 19983 (19820, 139, 24)
+List MF cost: 27231 (19464, 7743, 24)
+Test run 37 
+For {:access=>19, :insert=>24, :delete=>13} operations
+List B cost: 435 (406, 24, 5)
+List MF cost: 633 (442, 186, 5)
+Test run 38 
+For {:access=>179, :insert=>185, :delete=>170} operations
+List B cost: 37076 (36858, 185, 33)
+List MF cost: 52440 (38414, 13992, 34)
+Test run 39 
+For {:access=>105, :insert=>84, :delete=>92} operations
+List B cost: 8728 (8628, 84, 16)
+List MF cost: 11317 (8493, 2808, 16)
+Test run 40 
+For {:access=>267, :insert=>253, :delete=>274} operations
+List B cost: 70554 (70254, 253, 47)
+List MF cost: 98439 (72783, 25609, 47)
+Test run 41 
+For {:access=>61, :insert=>55, :delete=>76} operations
+List B cost: 3464 (3387, 55, 22)
+List MF cost: 3987 (3084, 882, 21)
+Test run 42 
+For {:access=>127, :insert=>119, :delete=>124} operations
+List B cost: 14711 (14563, 119, 29)
+List MF cost: 19927 (14559, 5339, 29)
+Test run 43 
+For {:access=>92, :insert=>71, :delete=>66} operations
+List B cost: 6392 (6307, 71, 14)
+List MF cost: 7829 (5829, 1986, 14)
+Test run 44 
+For {:access=>239, :insert=>235, :delete=>238} operations
+List B cost: 58632 (58354, 235, 43)
+List MF cost: 81139 (59528, 21568, 43)
+Test run 45 
+For {:access=>229, :insert=>198, :delete=>203} operations
+List B cost: 47414 (47174, 198, 42)
+List MF cost: 63102 (47512, 15549, 41)
+Test run 46 
+For {:access=>303, :insert=>311, :delete=>273} operations
+List B cost: 99704 (99327, 311, 66)
+List MF cost: 136187 (98695, 37426, 66)
+Test run 47 
+For {:access=>191, :insert=>230, :delete=>239} operations
+List B cost: 55825 (55548, 230, 47)
+List MF cost: 75896 (55599, 20250, 47)
+Test run 48 
+For {:access=>335, :insert=>322, :delete=>264} operations
+List B cost: 118003 (117625, 322, 56)
+List MF cost: 165047 (121073, 43918, 56)
+Test run 49 
+For {:access=>322, :insert=>314, :delete=>300} operations
+List B cost: 105421 (105041, 314, 66)
+List MF cost: 148565 (109590, 38909, 66)
+Test run 50 
+For {:access=>244, :insert=>228, :delete=>246} operations
+List B cost: 61249 (60973, 228, 48)
+List MF cost: 84257 (63190, 21018, 49)
+Test run 51 
+For {:access=>20, :insert=>25, :delete=>17} operations
+List B cost: 676 (649, 25, 2)
+List MF cost: 984 (706, 276, 2)
+Test run 52 
+For {:access=>133, :insert=>134, :delete=>117} operations
+List B cost: 18774 (18615, 134, 25)
+List MF cost: 26260 (18948, 7287, 25)
+Test run 53 
+For {:access=>117, :insert=>132, :delete=>124} operations
+List B cost: 17260 (17101, 132, 27)
+List MF cost: 23732 (17270, 6434, 28)
+Test run 54 
+For {:access=>293, :insert=>275, :delete=>310} operations
+List B cost: 83822 (83483, 275, 64)
+List MF cost: 113109 (84908, 28137, 64)
+Test run 55 
+For {:access=>128, :insert=>125, :delete=>150} operations
+List B cost: 17330 (17179, 125, 26)
+List MF cost: 24403 (18261, 6116, 26)
+Test run 56 
+For {:access=>192, :insert=>190, :delete=>188} operations
+List B cost: 40901 (40674, 190, 37)
+List MF cost: 55837 (40996, 14804, 37)
+Test run 57 
+For {:access=>146, :insert=>148, :delete=>151} operations
+List B cost: 22818 (22639, 148, 31)
+List MF cost: 31030 (22826, 8172, 32)
+Test run 58 
+For {:access=>274, :insert=>254, :delete=>269} operations
+List B cost: 72232 (71928, 254, 50)
+List MF cost: 99677 (74375, 25252, 50)
+Test run 59 
+For {:access=>115, :insert=>131, :delete=>115} operations
+List B cost: 16578 (16421, 131, 26)
+List MF cost: 23530 (16904, 6600, 26)
+Test run 60 
+For {:access=>305, :insert=>333, :delete=>300} operations
+List B cost: 126474 (126084, 333, 57)
+List MF cost: 175757 (128890, 46809, 58)
+Test run 61 
+For {:access=>284, :insert=>290, :delete=>261} operations
+List B cost: 83826 (83465, 290, 71)
+List MF cost: 113790 (83448, 30271, 71)
+Test run 62 
+For {:access=>26, :insert=>23, :delete=>29} operations
+List B cost: 503 (471, 23, 9)
+List MF cost: 722 (536, 177, 9)
+Test run 63 
+For {:access=>209, :insert=>202, :delete=>183} operations
+List B cost: 44955 (44721, 202, 32)
+List MF cost: 63946 (46861, 17052, 33)
+Test run 64 
+For {:access=>238, :insert=>238, :delete=>263} operations
+List B cost: 64433 (64153, 238, 42)
+List MF cost: 88654 (66047, 22565, 42)
+Test run 65 
+For {:access=>90, :insert=>108, :delete=>116} operations
+List B cost: 11563 (11439, 108, 16)
+List MF cost: 17589 (12732, 4841, 16)
+Test run 66 
+For {:access=>108, :insert=>103, :delete=>80} operations
+List B cost: 12264 (12147, 103, 14)
+List MF cost: 16597 (11953, 4630, 14)
+Test run 67 
+For {:access=>223, :insert=>225, :delete=>243} operations
+List B cost: 46279 (45996, 225, 58)
+List MF cost: 65570 (47636, 17876, 58)
+Test run 68 
+For {:access=>94, :insert=>81, :delete=>87} operations
+List B cost: 8760 (8666, 81, 13)
+List MF cost: 11628 (8774, 2841, 13)
+Test run 69 
+For {:access=>276, :insert=>257, :delete=>267} operations
+List B cost: 76537 (76227, 257, 53)
+List MF cost: 104732 (79120, 25559, 53)
+Test run 70 
+For {:access=>286, :insert=>272, :delete=>255} operations
+List B cost: 82573 (82253, 272, 48)
+List MF cost: 117252 (86491, 30713, 48)
+Test run 71 
+For {:access=>92, :insert=>100, :delete=>84} operations
+List B cost: 9921 (9807, 100, 14)
+List MF cost: 14150 (10088, 4049, 13)
+Test run 72 
+For {:access=>176, :insert=>223, :delete=>225} operations
+List B cost: 47330 (47058, 223, 49)
+List MF cost: 65338 (46957, 18333, 48)
+Test run 73 
+For {:access=>263, :insert=>313, :delete=>331} operations
+List B cost: 104287 (103906, 313, 68)
+List MF cost: 148117 (109375, 38674, 68)
+Test run 74 
+For {:access=>233, :insert=>236, :delete=>265} operations
+List B cost: 61311 (61023, 236, 52)
+List MF cost: 82485 (61356, 21077, 52)
+Test run 75 
+For {:access=>237, :insert=>222, :delete=>245} operations
+List B cost: 59665 (59402, 222, 41)
+List MF cost: 77807 (58565, 19201, 41)
+Test run 76 
+For {:access=>62, :insert=>76, :delete=>60} operations
+List B cost: 6219 (6131, 76, 12)
+List MF cost: 8460 (6064, 2384, 12)
+Test run 77 
+For {:access=>272, :insert=>293, :delete=>271} operations
+List B cost: 84579 (84224, 293, 62)
+List MF cost: 122960 (89414, 33484, 62)
+Test run 78 
+For {:access=>301, :insert=>303, :delete=>286} operations
+List B cost: 100401 (100046, 303, 52)
+List MF cost: 139916 (101929, 37936, 51)
+Test run 79 
+For {:access=>285, :insert=>304, :delete=>283} operations
+List B cost: 91677 (91311, 304, 62)
+List MF cost: 128614 (92534, 36018, 62)
+Test run 80 
+For {:access=>133, :insert=>144, :delete=>138} operations
+List B cost: 20267 (20090, 144, 33)
+List MF cost: 28259 (20748, 7477, 34)
+Test run 81 
+For {:access=>312, :insert=>294, :delete=>263} operations
+List B cost: 90863 (90509, 294, 60)
+List MF cost: 125314 (91232, 34022, 60)
+Test run 82 
+For {:access=>198, :insert=>196, :delete=>193} operations
+List B cost: 44336 (44104, 196, 36)
+List MF cost: 61762 (45698, 16028, 36)
+Test run 83 
+For {:access=>143, :insert=>161, :delete=>139} operations
+List B cost: 25753 (25561, 161, 31)
+List MF cost: 34652 (25025, 9596, 31)
+Test run 84 
+For {:access=>13, :insert=>13, :delete=>12} operations
+List B cost: 168 (152, 13, 3)
+List MF cost: 257 (185, 69, 3)
+Test run 85 
+For {:access=>268, :insert=>244, :delete=>255} operations
+List B cost: 70561 (70263, 244, 54)
+List MF cost: 96095 (72819, 23221, 55)
+Test run 86 
+For {:access=>129, :insert=>134, :delete=>121} operations
+List B cost: 20323 (20167, 134, 22)
+List MF cost: 28149 (20802, 7324, 23)
+Test run 87 
+For {:access=>290, :insert=>325, :delete=>322} operations
+List B cost: 104891 (104490, 325, 76)
+List MF cost: 146756 (107231, 39449, 76)
+Test run 88 
+For {:access=>34, :insert=>31, :delete=>41} operations
+List B cost: 1328 (1292, 31, 5)
+List MF cost: 1731 (1309, 417, 5)
+Test run 89 
+For {:access=>100, :insert=>97, :delete=>98} operations
+List B cost: 9278 (9159, 97, 22)
+List MF cost: 12886 (9440, 3424, 22)
+Test run 90 
+For {:access=>71, :insert=>50, :delete=>68} operations
+List B cost: 3332 (3272, 50, 10)
+List MF cost: 4169 (3221, 938, 10)
+Test run 91 
+For {:access=>164, :insert=>171, :delete=>169} operations
+List B cost: 33945 (33745, 171, 29)
+List MF cost: 45463 (33536, 11898, 29)
+Test run 92 
+For {:access=>64, :insert=>69, :delete=>67} operations
+List B cost: 4557 (4472, 69, 16)
+List MF cost: 6127 (4439, 1672, 16)
+Test run 93 
+For {:access=>250, :insert=>255, :delete=>239} operations
+List B cost: 66821 (66510, 255, 56)
+List MF cost: 92520 (67894, 24569, 57)
+Test run 94 
+For {:access=>67, :insert=>65, :delete=>59} operations
+List B cost: 4442 (4364, 65, 13)
+List MF cost: 6036 (4366, 1657, 13)
+Test run 95 
+For {:access=>83, :insert=>78, :delete=>66} operations
+List B cost: 5804 (5712, 78, 14)
+List MF cost: 8240 (5883, 2343, 14)
+Test run 96 
+For {:access=>166, :insert=>135, :delete=>162} operations
+List B cost: 24597 (24442, 135, 20)
+List MF cost: 33914 (25838, 8056, 20)
+Test run 97 
+For {:access=>30, :insert=>40, :delete=>24} operations
+List B cost: 1352 (1304, 40, 8)
+List MF cost: 1831 (1255, 568, 8)
+Test run 98 
+For {:access=>280, :insert=>292, :delete=>324} operations
+List B cost: 89211 (88850, 292, 69)
+List MF cost: 122693 (90629, 31995, 69)
+Test run 99 
+For {:access=>278, :insert=>263, :delete=>298} operations
+List B cost: 83772 (83455, 263, 54)
+List MF cost: 113967 (85289, 28623, 55)
+Test run 0 
+For {:access=>302, :insert=>307, :delete=>341} operations
+List B cost: 109361 (108988, 307, 66)
+List MF cost: 145822 (109701, 36056, 65)
+Test run 1 
+For {:access=>168, :insert=>194, :delete=>158} operations
+List B cost: 37277 (37042, 194, 41)
+List MF cost: 53064 (38044, 14978, 42)
+Test run 2 
+For {:access=>326, :insert=>282, :delete=>309} operations
+List B cost: 101787 (101446, 282, 59)
+List MF cost: 135215 (102704, 32452, 59)
+Test run 3 
+For {:access=>213, :insert=>216, :delete=>238} operations
+List B cost: 55113 (54857, 216, 40)
+List MF cost: 75229 (56864, 18325, 40)
+Test run 4 
+For {:access=>175, :insert=>209, :delete=>186} operations
+List B cost: 41552 (41295, 209, 48)
+List MF cost: 58778 (42514, 16214, 50)
+Test run 5 
+For {:access=>76, :insert=>77, :delete=>67} operations
+List B cost: 6045 (5955, 77, 13)
+List MF cost: 8294 (5991, 2290, 13)
+Test run 6 
+For {:access=>153, :insert=>147, :delete=>189} operations
+List B cost: 26119 (25937, 147, 35)
+List MF cost: 35885 (27225, 8625, 35)
+Test run 7 
+For {:access=>286, :insert=>318, :delete=>308} operations
+List B cost: 112456 (112079, 318, 59)
+List MF cost: 154504 (113646, 40799, 59)
+Test run 8 
+For {:access=>98, :insert=>89, :delete=>108} operations
+List B cost: 9680 (9570, 89, 21)
+List MF cost: 12937 (9848, 3068, 21)
+Test run 9 
+For {:access=>68, :insert=>69, :delete=>69} operations
+List B cost: 5124 (5046, 69, 9)
+List MF cost: 7050 (5114, 1927, 9)
+Test run 10 
+For {:access=>270, :insert=>256, :delete=>271} operations
+List B cost: 76727 (76426, 256, 45)
+List MF cost: 104771 (77837, 26889, 45)
+Test run 11 
+For {:access=>84, :insert=>87, :delete=>93} operations
+List B cost: 8195 (8090, 87, 18)
+List MF cost: 11212 (8180, 3015, 17)
+Test run 12 
+For {:access=>215, :insert=>212, :delete=>182} operations
+List B cost: 47563 (47310, 212, 41)
+List MF cost: 67044 (49608, 17395, 41)
+Test run 13 
+For {:access=>253, :insert=>309, :delete=>298} operations
+List B cost: 97300 (96924, 309, 67)
+List MF cost: 136670 (99072, 37531, 67)
+Test run 14 
+For {:access=>98, :insert=>73, :delete=>105} operations
+List B cost: 6536 (6438, 73, 25)
+List MF cost: 8525 (6689, 1811, 25)
+Test run 15 
+For {:access=>6, :insert=>7, :delete=>10} operations
+List B cost: 52 (41, 7, 4)
+List MF cost: 63 (42, 17, 4)
+Test run 16 
+For {:access=>184, :insert=>160, :delete=>191} operations
+List B cost: 31790 (31596, 160, 34)
+List MF cost: 41698 (31940, 9725, 33)
+Test run 17 
+For {:access=>30, :insert=>39, :delete=>35} operations
+List B cost: 1526 (1482, 39, 5)
+List MF cost: 2308 (1630, 673, 5)
+Test run 18 
+For {:access=>119, :insert=>105, :delete=>126} operations
+List B cost: 12188 (12059, 105, 24)
+List MF cost: 17066 (12995, 4047, 24)
+Test run 19 
+For {:access=>51, :insert=>66, :delete=>64} operations
+List B cost: 4013 (3932, 66, 15)
+List MF cost: 6052 (4369, 1668, 15)
+Test run 20 
+For {:access=>319, :insert=>329, :delete=>331} operations
+List B cost: 118349 (117943, 329, 77)
+List MF cost: 160961 (118836, 42048, 77)
+Test run 21 
+For {:access=>219, :insert=>197, :delete=>199} operations
+List B cost: 45576 (45342, 197, 37)
+List MF cost: 63840 (48264, 15539, 37)
+Test run 22 
+For {:access=>68, :insert=>64, :delete=>68} operations
+List B cost: 4934 (4855, 64, 15)
+List MF cost: 6535 (4920, 1600, 15)
+Test run 23 
+For {:access=>236, :insert=>235, :delete=>248} operations
+List B cost: 61255 (60974, 235, 46)
+List MF cost: 85605 (63481, 22078, 46)
+Test run 24 
+For {:access=>304, :insert=>273, :delete=>288} operations
+List B cost: 86869 (86540, 273, 56)
+List MF cost: 118628 (88501, 30071, 56)
+Test run 25 
+For {:access=>190, :insert=>173, :delete=>186} operations
+List B cost: 35645 (35438, 173, 34)
+List MF cost: 49314 (37152, 12127, 35)
+Test run 26 
+For {:access=>306, :insert=>304, :delete=>293} operations
+List B cost: 101963 (101603, 304, 56)
+List MF cost: 145724 (107244, 38424, 56)
+Test run 27 
+For {:access=>255, :insert=>226, :delete=>214} operations
+List B cost: 55412 (55135, 226, 51)
+List MF cost: 75784 (56440, 19293, 51)
+Test run 28 
+For {:access=>167, :insert=>143, :delete=>154} operations
+List B cost: 28143 (27977, 143, 23)
+List MF cost: 35617 (27320, 8274, 23)
+Test run 29 
+For {:access=>288, :insert=>281, :delete=>239} operations
+List B cost: 83709 (83378, 281, 50)
+List MF cost: 118909 (87104, 31755, 50)
+Test run 30 
+For {:access=>216, :insert=>250, :delete=>256} operations
+List B cost: 62904 (62602, 250, 52)
+List MF cost: 87729 (64003, 23674, 52)
+Test run 31 
+For {:access=>273, :insert=>271, :delete=>279} operations
+List B cost: 76920 (76581, 271, 68)
+List MF cost: 104897 (77890, 26938, 69)
+Test run 32 
+For {:access=>237, :insert=>253, :delete=>245} operations
+List B cost: 66570 (66274, 253, 43)
+List MF cost: 91504 (66455, 25006, 43)
+Test run 33 
+For {:access=>40, :insert=>37, :delete=>33} operations
+List B cost: 1305 (1261, 37, 7)
+List MF cost: 1938 (1388, 543, 7)
+Test run 34 
+For {:access=>282, :insert=>253, :delete=>304} operations
+List B cost: 72197 (71879, 253, 65)
+List MF cost: 91550 (69030, 22455, 65)
+Test run 35 
+For {:access=>94, :insert=>108, :delete=>103} operations
+List B cost: 10876 (10744, 108, 24)
+List MF cost: 14609 (10452, 4133, 24)
+Test run 36 
+For {:access=>229, :insert=>206, :delete=>205} operations
+List B cost: 49610 (49357, 206, 47)
+List MF cost: 68072 (51043, 16981, 48)
+Test run 37 
+For {:access=>90, :insert=>94, :delete=>89} operations
+List B cost: 9171 (9059, 94, 18)
+List MF cost: 12312 (8871, 3423, 18)
+Test run 38 
+For {:access=>288, :insert=>280, :delete=>285} operations
+List B cost: 89831 (89496, 280, 55)
+List MF cost: 122241 (90864, 31321, 56)
+Test run 39 
+For {:access=>41, :insert=>39, :delete=>42} operations
+List B cost: 1738 (1689, 39, 10)
+List MF cost: 2266 (1692, 564, 10)
+Test run 40 
+For {:access=>143, :insert=>130, :delete=>126} operations
+List B cost: 19252 (19093, 130, 29)
+List MF cost: 25669 (19080, 6560, 29)
+Test run 41 
+For {:access=>309, :insert=>304, :delete=>331} operations
+List B cost: 93157 (92779, 304, 74)
+List MF cost: 129176 (95281, 33821, 74)
+Test run 42 
+For {:access=>70, :insert=>85, :delete=>89} operations
+List B cost: 7012 (6901, 85, 26)
+List MF cost: 9328 (6838, 2465, 25)
+Test run 43 
+For {:access=>215, :insert=>222, :delete=>212} operations
+List B cost: 52546 (52280, 222, 44)
+List MF cost: 72950 (53606, 19300, 44)
+Test run 44 
+For {:access=>145, :insert=>151, :delete=>156} operations
+List B cost: 23751 (23565, 151, 35)
+List MF cost: 33668 (24945, 8688, 35)
+Test run 45 
+For {:access=>294, :insert=>285, :delete=>306} operations
+List B cost: 88184 (87830, 285, 69)
+List MF cost: 121980 (90684, 31227, 69)
+Test run 46 
+For {:access=>292, :insert=>301, :delete=>297} operations
+List B cost: 95041 (94679, 301, 61)
+List MF cost: 135521 (99066, 36394, 61)
+Test run 47 
+For {:access=>260, :insert=>270, :delete=>253} operations
+List B cost: 80373 (80049, 270, 54)
+List MF cost: 111352 (82010, 29288, 54)
+Test run 48 
+For {:access=>23, :insert=>44, :delete=>39} operations
+List B cost: 1491 (1436, 44, 11)
+List MF cost: 2137 (1410, 716, 11)
+Test run 49 
+For {:access=>304, :insert=>315, :delete=>302} operations
+List B cost: 118808 (118422, 315, 71)
+List MF cost: 165229 (124392, 40766, 71)
+Test run 50 
+For {:access=>44, :insert=>45, :delete=>48} operations
+List B cost: 2320 (2266, 45, 9)
+List MF cost: 3286 (2426, 851, 9)
+Test run 51 
+For {:access=>129, :insert=>136, :delete=>135} operations
+List B cost: 21341 (21181, 136, 24)
+List MF cost: 28565 (21019, 7522, 24)
+Test run 52 
+For {:access=>62, :insert=>64, :delete=>60} operations
+List B cost: 3729 (3651, 64, 14)
+List MF cost: 5821 (4276, 1531, 14)
+Test run 53 
+For {:access=>247, :insert=>267, :delete=>251} operations
+List B cost: 75060 (74739, 267, 54)
+List MF cost: 104104 (76454, 27596, 54)
+Test run 54 
+For {:access=>36, :insert=>26, :delete=>30} operations
+List B cost: 1002 (971, 26, 5)
+List MF cost: 1265 (972, 288, 5)
+Test run 55 
+For {:access=>311, :insert=>310, :delete=>311} operations
+List B cost: 102685 (102300, 310, 75)
+List MF cost: 140496 (103769, 36652, 75)
+Test run 56 
+For {:access=>115, :insert=>107, :delete=>107} operations
+List B cost: 13710 (13585, 107, 18)
+List MF cost: 18802 (13824, 4960, 18)
+Test run 57 
+For {:access=>279, :insert=>288, :delete=>289} operations
+List B cost: 87428 (87078, 288, 62)
+List MF cost: 124525 (91868, 32595, 62)
+Test run 58 
+For {:access=>132, :insert=>156, :delete=>160} operations
+List B cost: 24349 (24162, 156, 31)
+List MF cost: 33877 (24865, 8981, 31)
+Test run 59 
+For {:access=>310, :insert=>313, :delete=>330} operations
+List B cost: 108231 (107851, 313, 67)
+List MF cost: 146487 (108490, 37930, 67)
+Test run 60 
+For {:access=>123, :insert=>102, :delete=>99} operations
+List B cost: 10976 (10855, 102, 19)
+List MF cost: 15448 (11462, 3967, 19)
+Test run 61 
+For {:access=>16, :insert=>19, :delete=>22} operations
+List B cost: 281 (259, 19, 3)
+List MF cost: 380 (253, 124, 3)
+Test run 62 
+For {:access=>264, :insert=>287, :delete=>258} operations
+List B cost: 89207 (88858, 287, 62)
+List MF cost: 123439 (90972, 32405, 62)
+Test run 63 
+For {:access=>308, :insert=>283, :delete=>276} operations
+List B cost: 85683 (85340, 283, 60)
+List MF cost: 117497 (86943, 30494, 60)
+Test run 64 
+For {:access=>203, :insert=>243, :delete=>222} operations
+List B cost: 56661 (56365, 243, 53)
+List MF cost: 80844 (57785, 23005, 54)
+Test run 65 
+For {:access=>125, :insert=>127, :delete=>134} operations
+List B cost: 16976 (16821, 127, 28)
+List MF cost: 24748 (18452, 6268, 28)
+Test run 66 
+For {:access=>196, :insert=>200, :delete=>209} operations
+List B cost: 43723 (43475, 200, 48)
+List MF cost: 60048 (44716, 15285, 47)
+Test run 67 
+For {:access=>267, :insert=>245, :delete=>300} operations
+List B cost: 70037 (69736, 245, 56)
+List MF cost: 93003 (70402, 22544, 57)
+Test run 68 
+For {:access=>180, :insert=>190, :delete=>184} operations
+List B cost: 37308 (37072, 190, 46)
+List MF cost: 51941 (38544, 13351, 46)
+Test run 69 
+For {:access=>122, :insert=>114, :delete=>112} operations
+List B cost: 15175 (15035, 114, 26)
+List MF cost: 19535 (14655, 4854, 26)
+Test run 70 
+For {:access=>79, :insert=>73, :delete=>68} operations
+List B cost: 4805 (4712, 73, 20)
+List MF cost: 7038 (5119, 1899, 20)
+Test run 71 
+For {:access=>31, :insert=>39, :delete=>39} operations
+List B cost: 1294 (1245, 39, 10)
+List MF cost: 1721 (1223, 488, 10)
+Test run 72 
+For {:access=>308, :insert=>304, :delete=>302} operations
+List B cost: 102426 (102064, 304, 58)
+List MF cost: 143622 (106014, 37550, 58)
+Test run 73 
+For {:access=>244, :insert=>240, :delete=>269} operations
+List B cost: 68108 (67815, 240, 53)
+List MF cost: 89607 (67420, 22133, 54)
+Test run 74 
+For {:access=>82, :insert=>95, :delete=>83} operations
+List B cost: 8892 (8780, 95, 17)
+List MF cost: 11936 (8565, 3354, 17)
+Test run 75 
+For {:access=>148, :insert=>160, :delete=>169} operations
+List B cost: 26469 (26275, 160, 34)
+List MF cost: 37249 (27101, 10114, 34)
+Test run 76 
+For {:access=>87, :insert=>98, :delete=>110} operations
+List B cost: 10232 (10102, 98, 32)
+List MF cost: 13617 (10192, 3393, 32)
+Test run 77 
+For {:access=>311, :insert=>325, :delete=>327} operations
+List B cost: 118096 (117719, 325, 52)
+List MF cost: 167044 (123183, 43808, 53)
+Test run 78 
+For {:access=>316, :insert=>310, :delete=>311} operations
+List B cost: 102548 (102171, 310, 67)
+List MF cost: 142021 (105371, 36583, 67)
+Test run 79 
+For {:access=>92, :insert=>126, :delete=>107} operations
+List B cost: 13429 (13275, 126, 28)
+List MF cost: 20878 (14438, 6412, 28)
+Test run 80 
+For {:access=>211, :insert=>229, :delete=>208} operations
+List B cost: 53313 (53032, 229, 52)
+List MF cost: 72500 (52797, 19651, 52)
+Test run 81 
+For {:access=>106, :insert=>83, :delete=>100} operations
+List B cost: 9729 (9630, 83, 16)
+List MF cost: 11689 (9058, 2615, 16)
+Test run 82 
+For {:access=>311, :insert=>283, :delete=>289} operations
+List B cost: 92013 (91677, 283, 53)
+List MF cost: 127698 (95960, 31685, 53)
+Test run 83 
+For {:access=>23, :insert=>18, :delete=>19} operations
+List B cost: 292 (268, 18, 6)
+List MF cost: 423 (297, 120, 6)
+Test run 84 
+For {:access=>77, :insert=>84, :delete=>86} operations
+List B cost: 7356 (7260, 84, 12)
+List MF cost: 11157 (8147, 2998, 12)
+Test run 85 
+For {:access=>8, :insert=>11, :delete=>14} operations
+List B cost: 117 (102, 11, 4)
+List MF cost: 110 (77, 29, 4)
+Test run 86 
+For {:access=>232, :insert=>254, :delete=>278} operations
+List B cost: 71163 (70864, 254, 45)
+List MF cost: 96483 (71316, 25122, 45)
+Test run 87 
+For {:access=>218, :insert=>224, :delete=>227} operations
+List B cost: 54863 (54591, 224, 48)
+List MF cost: 74470 (54683, 19739, 48)
+Test run 88 
+For {:access=>165, :insert=>136, :delete=>147} operations
+List B cost: 23614 (23456, 136, 22)
+List MF cost: 32191 (24266, 7903, 22)
+Test run 89 
+For {:access=>20, :insert=>15, :delete=>23} operations
+List B cost: 357 (339, 15, 3)
+List MF cost: 470 (375, 92, 3)
+Test run 90 
+For {:access=>154, :insert=>130, :delete=>163} operations
+List B cost: 17522 (17358, 130, 34)
+List MF cost: 24399 (18305, 6060, 34)
+Test run 91 
+For {:access=>84, :insert=>73, :delete=>82} operations
+List B cost: 5096 (5007, 73, 16)
+List MF cost: 7790 (5742, 2032, 16)
+Test run 92 
+For {:access=>242, :insert=>221, :delete=>218} operations
+List B cost: 57399 (57135, 221, 43)
+List MF cost: 75660 (56286, 19332, 42)
+Test run 93 
+For {:access=>147, :insert=>165, :delete=>197} operations
+List B cost: 28182 (27979, 165, 38)
+List MF cost: 38739 (28220, 10481, 38)
+Test run 94 
+For {:access=>144, :insert=>197, :delete=>167} operations
+List B cost: 36176 (35944, 197, 35)
+List MF cost: 52051 (36557, 15459, 35)
+Test run 95 
+For {:access=>131, :insert=>110, :delete=>117} operations
+List B cost: 15108 (14980, 110, 18)
+List MF cost: 19178 (14645, 4515, 18)
+Test run 96 
+For {:access=>107, :insert=>124, :delete=>146} operations
+List B cost: 17271 (17125, 124, 22)
+List MF cost: 23318 (17715, 5580, 23)
+Test run 97 
+For {:access=>116, :insert=>127, :delete=>128} operations
+List B cost: 16295 (16140, 127, 28)
+List MF cost: 22172 (16162, 5982, 28)
+Test run 98 
+For {:access=>133, :insert=>126, :delete=>131} operations
+List B cost: 18683 (18526, 126, 31)
+List MF cost: 23486 (17658, 5797, 31)
+Test run 99 
+For {:access=>182, :insert=>179, :delete=>204} operations
+List B cost: 40019 (39807, 179, 33)
+List MF cost: 52949 (40151, 12765, 33)
