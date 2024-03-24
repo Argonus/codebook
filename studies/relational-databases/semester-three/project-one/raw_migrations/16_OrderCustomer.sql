@@ -1,0 +1,10 @@
+USE FoodCourt
+GO
+
+BEGIN TRANSACTION T1
+ALTER TABLE Orders.Orders 
+ADD CustomerID INT NULL;
+
+ALTER TABLE Orders.Orders 
+ADD CONSTRAINT FK_Orders_Orders_Customers FOREIGN KEY (CustomerID) REFERENCES Clients.Customers (ID)
+COMMIT TRANSACTION T1

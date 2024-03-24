@@ -1,0 +1,25 @@
+USE FoodCourt
+Go
+
+BEGIN TRANSACTION T1
+ALTER TABLE Orders.Orders 
+ADD RequestedDateTime DATETIME NULL;
+
+ALTER TABLE Orders.Orders
+DROP CONSTRAINT CK_Orders_Orders_DeliveryTime; 
+
+ALTER TABLE Orders.Orders 
+DROP COLUMN OrderDateTime;
+
+ALTER TABLE Orders.Orders
+DROP COLUMN DeliveryDateTime;
+
+CREATE TABLE Orders.DeliveryTimes (
+  ID INT IDENTITY(1,1) PRIMARY KEY,
+  DeliveryID INT NOT NULL,
+  DeliveredTime DATETIME NULL,
+  /* Timestamps */
+  CreatedAt DATETIME2 DEFAULT GETDATE() NOT NULL,
+  UpdatedAt DATETIME2 DEFAULT GETDATE() NOT NULL
+)
+COMMIT TRANSACTION T1;

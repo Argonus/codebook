@@ -1,1 +1,0 @@
-FLIBS=-L/usr/local/gfortran/lib

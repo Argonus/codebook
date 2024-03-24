@@ -1,0 +1,28 @@
+USE FoodCourt
+GO
+
+CREATE SCHEMA GlobalConfig
+GO
+
+BEGIN TRANSACTION T1
+CREATE TABLE GlobalConfig.States (
+  /* Table Data */
+  ID INT IDENTITY(1,1) PRIMARY KEY,
+  Name VARCHAR(255) NOT NULL,
+  /* Timestamps */
+  CreatedAt DATETIME2 DEFAULT GETDATE() NOT NULL,
+  UpdatedAt DATETIME2 DEFAULT GETDATE() NOT NULL,
+)
+
+CREATE TABLE GlobalConfig.Cities (
+  /* Table Data */
+  ID INT IDENTITY(1,1) PRIMARY KEY,
+  StateId INT NOT NULL,
+  Name VARCHAR(255) NOT NULL,
+  /* Timestamps */
+  CreatedAt DATETIME2 DEFAULT GETDATE() NOT NULL,
+  UpdatedAt DATETIME2 DEFAULT GETDATE() NOT NULL,
+  /* Foreign Keys */
+  CONSTRAINT FK_GlobalConfig_Cities_States FOREIGN KEY (StateId) REFERENCES GlobalConfig.States (ID),
+)
+COMMIT TRANSACTION T1

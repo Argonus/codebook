@@ -1,0 +1,17 @@
+USE FoodCourt
+Go
+
+BEGIN TRANSACTION T1
+CREATE TABLE Resources.DishTypes (
+	Type VARCHAR(25) PRIMARY KEY
+	/* Timestamps */
+    , CreatedAt DATETIME2 DEFAULT GETDATE() NOT NULL
+	, UpdatedAt DATETIME2 DEFAULT GETDATE() NOT NULL
+)
+
+ALTER TABLE Resources.Dishes 
+ADD DishType VARCHAR(25) NOT NULL;
+
+ALTER TABLE Resources.Dishes
+ADD CONSTRAINT FK_Resources_Dishes_DishTypes FOREIGN KEY (DishType) REFERENCES Resources.DishTypes(Type);
+COMMIT TRANSACTION T1

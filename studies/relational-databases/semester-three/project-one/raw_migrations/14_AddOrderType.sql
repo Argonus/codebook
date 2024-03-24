@@ -1,0 +1,10 @@
+USE FoodCourt
+Go
+
+BEGIN TRANSACTION T1
+ALTER TABLE Orders.Orders 
+ADD OrderType VARCHAR(25) NOT NULL;
+
+ALTER TABLE Orders.Orders
+ADD CONSTRAINT FK_Orders_Orders_OrderTypes FOREIGN KEY (OrderType) REFERENCES Orders.OrderTypes(Type);
+COMMIT TRANSACTION T1

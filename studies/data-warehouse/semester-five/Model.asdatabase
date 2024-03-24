@@ -1,0 +1,1345 @@
+{
+  "name": "FoodCourtReports",
+  "compatibilityLevel": 1500,
+  "model": {
+    "culture": "pl-PL",
+    "dataSources": [
+      {
+        "type": "structured",
+        "name": "SQL/LAPTOP-TVR18281;Modeled",
+        "connectionDetails": {
+          "protocol": "tds",
+          "address": {
+            "server": "LAPTOP-TVR18281",
+            "database": "Modeled"
+          },
+          "authentication": null,
+          "query": null
+        },
+        "credential": {
+          "AuthenticationKind": "ServiceAccount",
+          "kind": "SQL",
+          "path": "laptop-tvr18281;Modeled",
+          "EncryptConnection": false
+        }
+      }
+    ],
+    "tables": [
+      {
+        "name": "Reports MDL_CalendarDateDim",
+        "columns": [
+          {
+            "name": "calendarDate",
+            "dataType": "dateTime",
+            "sourceColumn": "calendarDate"
+          },
+          {
+            "name": "Year",
+            "dataType": "int64",
+            "sourceColumn": "Year"
+          },
+          {
+            "name": "Month",
+            "dataType": "int64",
+            "sourceColumn": "Month"
+          },
+          {
+            "name": "Day",
+            "dataType": "int64",
+            "sourceColumn": "Day"
+          },
+          {
+            "name": "Quarter",
+            "dataType": "int64",
+            "sourceColumn": "Quarter"
+          },
+          {
+            "name": "Holiday",
+            "dataType": "string",
+            "sourceColumn": "Holiday"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Partition",
+            "dataView": "full",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = #\"SQL/LAPTOP-TVR18281;Modeled\",",
+                "    Reports_MDL_CalendarDateDim = Source{[Schema=\"Reports\",Item=\"MDL_CalendarDateDim\"]}[Data]",
+                "in",
+                "    Reports_MDL_CalendarDateDim"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "Reports MDL_CustomerAddressesDim",
+        "columns": [
+          {
+            "name": "AddressID",
+            "dataType": "int64",
+            "sourceColumn": "AddressID"
+          },
+          {
+            "name": "CustomerAddress",
+            "dataType": "string",
+            "sourceColumn": "CustomerAddress"
+          },
+          {
+            "name": "ZipCode",
+            "dataType": "string",
+            "sourceColumn": "ZipCode"
+          },
+          {
+            "name": "CityName",
+            "dataType": "string",
+            "sourceColumn": "CityName"
+          },
+          {
+            "name": "StateName",
+            "dataType": "string",
+            "sourceColumn": "StateName"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Partition",
+            "dataView": "full",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = #\"SQL/LAPTOP-TVR18281;Modeled\",",
+                "    Reports_MDL_CustomerAddressesDim = Source{[Schema=\"Reports\",Item=\"MDL_CustomerAddressesDim\"]}[Data]",
+                "in",
+                "    Reports_MDL_CustomerAddressesDim"
+              ]
+            }
+          }
+        ],
+        "hierarchies": [
+          {
+            "name": "H_Geo",
+            "levels": [
+              {
+                "name": "StateName",
+                "ordinal": 0,
+                "column": "StateName"
+              },
+              {
+                "name": "CityName",
+                "ordinal": 1,
+                "column": "CityName"
+              },
+              {
+                "name": "ZipCode",
+                "ordinal": 2,
+                "column": "ZipCode"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Reports MDL_CustomersDim",
+        "columns": [
+          {
+            "name": "CustomerID",
+            "dataType": "int64",
+            "sourceColumn": "CustomerID"
+          },
+          {
+            "name": "Title",
+            "dataType": "string",
+            "sourceColumn": "Title"
+          },
+          {
+            "name": "FirstName",
+            "dataType": "string",
+            "sourceColumn": "FirstName"
+          },
+          {
+            "name": "Blocked",
+            "dataType": "boolean",
+            "sourceColumn": "Blocked"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Partition",
+            "dataView": "full",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = #\"SQL/LAPTOP-TVR18281;Modeled\",",
+                "    Reports_MDL_CustomersDim = Source{[Schema=\"Reports\",Item=\"MDL_CustomersDim\"]}[Data]",
+                "in",
+                "    Reports_MDL_CustomersDim"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "Reports MDL_DishProductDim",
+        "columns": [
+          {
+            "name": "ID",
+            "dataType": "int64",
+            "sourceColumn": "ID"
+          },
+          {
+            "name": "DishID",
+            "dataType": "int64",
+            "sourceColumn": "DishID"
+          },
+          {
+            "name": "Name",
+            "dataType": "string",
+            "sourceColumn": "Name"
+          },
+          {
+            "name": "ProductPrice",
+            "dataType": "int64",
+            "sourceColumn": "ProductPrice"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Partition",
+            "dataView": "full",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = #\"SQL/LAPTOP-TVR18281;Modeled\",",
+                "    Reports_MDL_DishProductDim = Source{[Schema=\"Reports\",Item=\"MDL_DishProductDim\"]}[Data]",
+                "in",
+                "    Reports_MDL_DishProductDim"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "Reports MDL_LocationsDim",
+        "columns": [
+          {
+            "name": "LocationID",
+            "dataType": "int64",
+            "sourceColumn": "LocationID"
+          },
+          {
+            "name": "LocationAddress",
+            "dataType": "string",
+            "sourceColumn": "LocationAddress"
+          },
+          {
+            "name": "ZipCode",
+            "dataType": "string",
+            "sourceColumn": "ZipCode"
+          },
+          {
+            "name": "CityName",
+            "dataType": "string",
+            "sourceColumn": "CityName"
+          },
+          {
+            "name": "StateName",
+            "dataType": "string",
+            "sourceColumn": "StateName"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Partition",
+            "dataView": "full",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = #\"SQL/LAPTOP-TVR18281;Modeled\",",
+                "    Reports_MDL_LocationsDim = Source{[Schema=\"Reports\",Item=\"MDL_LocationsDim\"]}[Data]",
+                "in",
+                "    Reports_MDL_LocationsDim"
+              ]
+            }
+          }
+        ],
+        "hierarchies": [
+          {
+            "name": "H_Geo",
+            "levels": [
+              {
+                "name": "StateName",
+                "ordinal": 0,
+                "column": "StateName"
+              },
+              {
+                "name": "CityName",
+                "ordinal": 1,
+                "column": "CityName"
+              },
+              {
+                "name": "ZipCode",
+                "ordinal": 2,
+                "column": "ZipCode"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Reports MDL_OrderItemFacts",
+        "columns": [
+          {
+            "name": "OrderItemId",
+            "dataType": "int64",
+            "sourceColumn": "OrderItemId"
+          },
+          {
+            "name": "DishID",
+            "dataType": "int64",
+            "sourceColumn": "DishID"
+          },
+          {
+            "name": "LocationID",
+            "dataType": "int64",
+            "sourceColumn": "LocationID"
+          },
+          {
+            "name": "CustomerID",
+            "dataType": "int64",
+            "sourceColumn": "CustomerID"
+          },
+          {
+            "name": "Quantity",
+            "dataType": "int64",
+            "sourceColumn": "Quantity"
+          },
+          {
+            "name": "UnitPrice",
+            "dataType": "decimal",
+            "sourceColumn": "UnitPrice"
+          },
+          {
+            "name": "OrderType",
+            "dataType": "string",
+            "sourceColumn": "OrderType"
+          },
+          {
+            "name": "OrderDate",
+            "dataType": "dateTime",
+            "sourceColumn": "OrderDate"
+          },
+          {
+            "name": "OrderTime",
+            "dataType": "dateTime",
+            "sourceColumn": "OrderTime"
+          },
+          {
+            "type": "calculated",
+            "name": "OrderYear",
+            "dataType": "int64",
+            "isDataTypeInferred": true,
+            "expression": "YEAR([OrderDate])"
+          },
+          {
+            "type": "calculated",
+            "name": "OrderMonth",
+            "dataType": "int64",
+            "isDataTypeInferred": true,
+            "expression": "MONTH([OrderDate])"
+          },
+          {
+            "type": "calculated",
+            "name": "OrderDay",
+            "dataType": "int64",
+            "isDataTypeInferred": true,
+            "expression": "DAY([OrderDate])"
+          },
+          {
+            "type": "calculated",
+            "name": "OrderHour",
+            "dataType": "int64",
+            "isDataTypeInferred": true,
+            "expression": "Hour([OrderTime])"
+          },
+          {
+            "type": "calculated",
+            "name": "FullPrice",
+            "dataType": "decimal",
+            "isDataTypeInferred": true,
+            "expression": "'Reports MDL_OrderItemFacts'[UnitPrice]*'Reports MDL_OrderItemFacts'[Quantity]",
+            "formatString": "#,0.00 \"zł\";-#,0.00 \"zł\";#,0.00 \"zł\"",
+            "annotations": [
+              {
+                "name": "Format",
+                "value": "<Format Format=\"Currency\" Accuracy=\"2\" ThousandSeparator=\"True\"><Currency LCID=\"1045\" DisplayName=\"zł Polski (Polska)\" Symbol=\"zł\" PositivePattern=\"3\" NegativePattern=\"8\" /></Format>"
+              }
+            ]
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Partition",
+            "dataView": "full",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = #\"SQL/LAPTOP-TVR18281;Modeled\",",
+                "    Reports_MDL_OrderItemFacts = Source{[Schema=\"Reports\",Item=\"MDL_OrderItemFacts\"]}[Data]",
+                "in",
+                "    Reports_MDL_OrderItemFacts"
+              ]
+            }
+          }
+        ],
+        "measures": [
+          {
+            "name": "MinOrderItemsQuantity",
+            "expression": "MIN('Reports MDL_OrderItemFacts'[Quantity])"
+          },
+          {
+            "name": "MaxOrderItemsQuantity",
+            "expression": "(MAX('Reports MDL_OrderItemFacts'[Quantity]))"
+          },
+          {
+            "name": "AvgOrderItemsQuantity",
+            "expression": "AVERAGE('Reports MDL_OrderItemFacts'[Quantity])"
+          },
+          {
+            "name": "MinOrderItemsPrice",
+            "expression": "MIN('Reports MDL_OrderItemFacts'[UnitPrice])"
+          },
+          {
+            "name": "MaxOrderItemsPrice",
+            "expression": "MAX('Reports MDL_OrderItemFacts'[UnitPrice])"
+          },
+          {
+            "name": "AvgOrderItemsPrice",
+            "expression": "AVERAGE('Reports MDL_OrderItemFacts'[UnitPrice])"
+          },
+          {
+            "name": "MinOrderItemsFullPrice",
+            "expression": "MIN('Reports MDL_OrdersFacts'[FullPrice])"
+          },
+          {
+            "name": "MaxOrderItemsFullPrice",
+            "expression": "MAX('Reports MDL_OrderItemFacts'[FullPrice])"
+          },
+          {
+            "name": "AvgOrderItemsFullPrice",
+            "expression": "AVERAGE('Reports MDL_OrderItemFacts'[FullPrice])"
+          }
+        ],
+        "hierarchies": [
+          {
+            "name": "H_Date",
+            "levels": [
+              {
+                "name": "OrderYear",
+                "ordinal": 0,
+                "column": "OrderYear"
+              },
+              {
+                "name": "OrderMonth",
+                "ordinal": 1,
+                "column": "OrderMonth"
+              },
+              {
+                "name": "OrderDay",
+                "ordinal": 2,
+                "column": "OrderDay"
+              },
+              {
+                "name": "OrderHour",
+                "ordinal": 3,
+                "column": "OrderHour"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Reports MDL_OrdersFacts",
+        "columns": [
+          {
+            "name": "OrderID",
+            "dataType": "int64",
+            "sourceColumn": "OrderID"
+          },
+          {
+            "name": "LocationID",
+            "dataType": "int64",
+            "sourceColumn": "LocationID"
+          },
+          {
+            "name": "CustomerID",
+            "dataType": "int64",
+            "sourceColumn": "CustomerID"
+          },
+          {
+            "name": "IsReservation",
+            "dataType": "int64",
+            "sourceColumn": "IsReservation"
+          },
+          {
+            "name": "OrderStatus",
+            "dataType": "string",
+            "sourceColumn": "OrderStatus"
+          },
+          {
+            "name": "OrderType",
+            "dataType": "string",
+            "sourceColumn": "OrderType"
+          },
+          {
+            "name": "DishesBought",
+            "dataType": "int64",
+            "sourceColumn": "DishesBought"
+          },
+          {
+            "name": "FullPrice",
+            "dataType": "decimal",
+            "sourceColumn": "FullPrice"
+          },
+          {
+            "name": "OrderDate",
+            "dataType": "dateTime",
+            "sourceColumn": "OrderDate"
+          },
+          {
+            "name": "OrderTime",
+            "dataType": "dateTime",
+            "sourceColumn": "OrderTime"
+          },
+          {
+            "type": "calculated",
+            "name": "OrderYear",
+            "dataType": "int64",
+            "isDataTypeInferred": true,
+            "expression": "YEAR([OrderDate])"
+          },
+          {
+            "type": "calculated",
+            "name": "OrderMonth",
+            "dataType": "int64",
+            "isDataTypeInferred": true,
+            "expression": "MONTH([OrderDate])"
+          },
+          {
+            "type": "calculated",
+            "name": "OrderDay",
+            "dataType": "int64",
+            "isDataTypeInferred": true,
+            "expression": "DAY([OrderDate])"
+          },
+          {
+            "type": "calculated",
+            "name": "OrderHour",
+            "dataType": "int64",
+            "isDataTypeInferred": true,
+            "expression": "HOUR([OrderTime])"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Partition",
+            "dataView": "full",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = #\"SQL/LAPTOP-TVR18281;Modeled\",",
+                "    Reports_MDL_OrdersFacts = Source{[Schema=\"Reports\",Item=\"MDL_OrdersFacts\"]}[Data]",
+                "in",
+                "    Reports_MDL_OrdersFacts"
+              ]
+            }
+          }
+        ],
+        "measures": [
+          {
+            "name": "SumOrderFullPrice",
+            "expression": "SUM('Reports MDL_OrdersFacts'[FullPrice])"
+          },
+          {
+            "name": "AvgOrderFullPrice",
+            "expression": "AVERAGE('Reports MDL_OrdersFacts'[FullPrice])"
+          },
+          {
+            "name": "MinOrderFullPrice",
+            "expression": "MIN('Reports MDL_OrderItemFacts'[UnitPrice])"
+          },
+          {
+            "name": "MaxOrderFullPrice",
+            "expression": "MAX([FullPrice])"
+          },
+          {
+            "name": "MostPopularDate",
+            "expression": " CALCULATE(MAX('Reports MDL_OrdersFacts'[OrderDate]), ALLEXCEPT('Reports MDL_OrdersFacts', 'Reports MDL_OrdersFacts'[OrderDate]))"
+          },
+          {
+            "name": "CountOrderReady",
+            "expression": " COUNTROWS(FILTER('Reports MDL_OrdersFacts', 'Reports MDL_OrdersFacts'[OrderStatus] = \"Ready\"))"
+          },
+          {
+            "name": "CountOrderCompleted",
+            "expression": " COUNTROWS(FILTER('Reports MDL_OrdersFacts', 'Reports MDL_OrdersFacts'[OrderStatus] = \"Completed\"))"
+          },
+          {
+            "name": "MostPopularOrderHour",
+            "expression": " CALCULATE(MAX('Reports MDL_OrdersFacts'[OrderHour]), ALLEXCEPT('Reports MDL_OrdersFacts', 'Reports MDL_OrdersFacts'[OrderHour]))"
+          }
+        ],
+        "hierarchies": [
+          {
+            "name": "H_Date",
+            "levels": [
+              {
+                "name": "OrderYear",
+                "ordinal": 0,
+                "column": "OrderYear"
+              },
+              {
+                "name": "OrderMonth",
+                "ordinal": 1,
+                "column": "OrderMonth"
+              },
+              {
+                "name": "OrderDay",
+                "ordinal": 2,
+                "column": "OrderDay"
+              },
+              {
+                "name": "OrderHour",
+                "ordinal": 3,
+                "column": "OrderHour"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Reports MDL_WeatherDim",
+        "columns": [
+          {
+            "name": "date",
+            "dataType": "dateTime",
+            "sourceColumn": "date"
+          },
+          {
+            "name": "CityID",
+            "dataType": "int64",
+            "sourceColumn": "CityID"
+          },
+          {
+            "name": "Weather",
+            "dataType": "string",
+            "sourceColumn": "Weather"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Partition",
+            "dataView": "full",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = #\"SQL/LAPTOP-TVR18281;Modeled\",",
+                "    Reports_MDL_WeatherDim = Source{[Schema=\"Reports\",Item=\"MDL_WeatherDim\"]}[Data]",
+                "in",
+                "    Reports_MDL_WeatherDim"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "Reports MDL_DeliveryFacts",
+        "columns": [
+          {
+            "name": "DeliveryID",
+            "dataType": "int64",
+            "sourceColumn": "DeliveryID"
+          },
+          {
+            "name": "LocationID",
+            "dataType": "int64",
+            "sourceColumn": "LocationID"
+          },
+          {
+            "name": "DeliveryEmployeeID",
+            "dataType": "int64",
+            "sourceColumn": "DeliveryEmployeeID"
+          },
+          {
+            "name": "CustomerID",
+            "dataType": "int64",
+            "sourceColumn": "CustomerID"
+          },
+          {
+            "name": "DeliveryStatus",
+            "dataType": "string",
+            "sourceColumn": "DeliveryStatus"
+          },
+          {
+            "name": "DeliveryAddressId",
+            "dataType": "int64",
+            "sourceColumn": "DeliveryAddressId"
+          },
+          {
+            "name": "FullPrice",
+            "dataType": "decimal",
+            "sourceColumn": "Price"
+          },
+          {
+            "name": "Quantity",
+            "dataType": "int64",
+            "sourceColumn": "Quantity"
+          },
+          {
+            "name": "DelliveredTime",
+            "dataType": "dateTime",
+            "sourceColumn": "DelliveredTime"
+          },
+          {
+            "type": "calculated",
+            "name": "DeliveryDate",
+            "dataType": "dateTime",
+            "isDataTypeInferred": true,
+            "expression": "DATE(YEAR([DelliveredTime]),MONTH([DelliveredTime]),DAY([DelliveredTime]))"
+          },
+          {
+            "type": "calculated",
+            "name": "DeliveryYear",
+            "dataType": "int64",
+            "isDataTypeInferred": true,
+            "expression": "YEAR([DeliveryDate])"
+          },
+          {
+            "type": "calculated",
+            "name": "DevlieryMonth",
+            "dataType": "int64",
+            "isDataTypeInferred": true,
+            "expression": "MONTH([DeliveryDate])"
+          },
+          {
+            "type": "calculated",
+            "name": "DeliveryDay",
+            "dataType": "int64",
+            "isDataTypeInferred": true,
+            "expression": "DAY([DeliveryDate])"
+          },
+          {
+            "type": "calculated",
+            "name": "UnitPrice",
+            "dataType": "decimal",
+            "isDataTypeInferred": true,
+            "expression": "[FullPrice]/[Quantity]",
+            "formatString": "#,0.00 \"zł\";-#,0.00 \"zł\";#,0.00 \"zł\"",
+            "annotations": [
+              {
+                "name": "Format",
+                "value": "<Format Format=\"Currency\" Accuracy=\"2\" ThousandSeparator=\"True\"><Currency LCID=\"1045\" DisplayName=\"zł Polski (Polska)\" Symbol=\"zł\" PositivePattern=\"3\" NegativePattern=\"8\" /></Format>"
+              }
+            ]
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Partition",
+            "dataView": "full",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = #\"SQL/LAPTOP-TVR18281;Modeled\",",
+                "    Reports_MDL_DeliveryFacts = Source{[Schema=\"Reports\",Item=\"MDL_DeliveryFacts\"]}[Data]",
+                "in",
+                "    Reports_MDL_DeliveryFacts"
+              ]
+            }
+          }
+        ],
+        "measures": [
+          {
+            "name": "MinDeliveryFullPrice",
+            "expression": "MIN('Reports MDL_DeliveryFacts'[FullPrice])"
+          },
+          {
+            "name": "MaxDeliveryFullPrice",
+            "expression": "MAX('Reports MDL_DeliveryFacts'[FullPrice])"
+          },
+          {
+            "name": "AvgDeliveryFullPrice",
+            "expression": "AVERAGE('Reports MDL_DeliveryFacts'[FullPrice])"
+          },
+          {
+            "name": "MinDeliveryQuantity",
+            "expression": "MIN('Reports MDL_DeliveryFacts'[Quantity])"
+          },
+          {
+            "name": "MaxDeliveryQuantity",
+            "expression": "MAX('Reports MDL_DeliveryFacts'[Quantity])"
+          },
+          {
+            "name": "AvgDeliveryQuantity",
+            "expression": "AVERAGE('Reports MDL_DeliveryFacts'[Quantity])"
+          },
+          {
+            "name": "MinDeliveryUnitPrice",
+            "expression": "MIN('Reports MDL_DeliveryFacts'[UnitPrice])"
+          },
+          {
+            "name": "MaxDeliveryUnitPrice",
+            "expression": "MAX('Reports MDL_DeliveryFacts'[UnitPrice])"
+          },
+          {
+            "name": "AvgDeliveryUnitPrice",
+            "expression": "AVERAGE('Reports MDL_DeliveryFacts'[UnitPrice])"
+          }
+        ],
+        "hierarchies": [
+          {
+            "name": "H_Date",
+            "levels": [
+              {
+                "name": "DeliveryYear",
+                "ordinal": 0,
+                "column": "DeliveryYear"
+              },
+              {
+                "name": "DevlieryMonth",
+                "ordinal": 1,
+                "column": "DevlieryMonth"
+              },
+              {
+                "name": "DeliveryDay",
+                "ordinal": 2,
+                "column": "DeliveryDay"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Reports MDL_DeliveryItemFacts",
+        "columns": [
+          {
+            "name": "DeliveryItemId",
+            "dataType": "int64",
+            "sourceColumn": "DeliveryItemId"
+          },
+          {
+            "name": "DishID",
+            "dataType": "int64",
+            "sourceColumn": "DishID"
+          },
+          {
+            "name": "DeliveryDriverID",
+            "dataType": "int64",
+            "sourceColumn": "DeliveryDriverID"
+          },
+          {
+            "name": "DeliveryQuantity",
+            "dataType": "int64",
+            "sourceColumn": "DeliveryQuantity"
+          },
+          {
+            "name": "ExepctedQuantity",
+            "dataType": "int64",
+            "sourceColumn": "ExepctedQuantity"
+          },
+          {
+            "name": "CancelledAt",
+            "dataType": "dateTime",
+            "sourceColumn": "CancelledAt"
+          },
+          {
+            "name": "FullPrice",
+            "dataType": "decimal",
+            "sourceColumn": "FullPrice"
+          },
+          {
+            "type": "calculated",
+            "name": "UnitPrice",
+            "dataType": "decimal",
+            "isDataTypeInferred": true,
+            "expression": "'Reports MDL_DeliveryItemFacts'[FullPrice]/'Reports MDL_DeliveryItemFacts'[DeliveryQuantity]",
+            "formatString": "#,0.00 \"zł\";-#,0.00 \"zł\";#,0.00 \"zł\"",
+            "annotations": [
+              {
+                "name": "Format",
+                "value": "<Format Format=\"Currency\" Accuracy=\"2\" ThousandSeparator=\"True\"><Currency LCID=\"1045\" DisplayName=\"zł Polski (Polska)\" Symbol=\"zł\" PositivePattern=\"3\" NegativePattern=\"8\" /></Format>"
+              }
+            ]
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Partition",
+            "dataView": "full",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = #\"SQL/LAPTOP-TVR18281;Modeled\",",
+                "    Reports_MDL_DeliveryItemFacts = Source{[Schema=\"Reports\",Item=\"MDL_DeliveryItemFacts\"]}[Data]",
+                "in",
+                "    Reports_MDL_DeliveryItemFacts"
+              ]
+            }
+          }
+        ],
+        "measures": [
+          {
+            "name": "MinDeliveryItemsQuantity",
+            "expression": "MIN([DeliveryQuantity])"
+          },
+          {
+            "name": "MaxDeliveryItemsQuantity",
+            "expression": "MAX([DeliveryQuantity])"
+          },
+          {
+            "name": "AvgDeliveryItemsQuantity",
+            "expression": "(ROUND(AVERAGE('Reports MDL_DeliveryItemFacts'[DeliveryQuantity]),0))"
+          },
+          {
+            "name": "MinDeliveryItemsExpectedQuantity",
+            "expression": "MIN('Reports MDL_DeliveryItemFacts'[ExepctedQuantity])"
+          },
+          {
+            "name": "MaxDeliveryItemsExpectedQuantity",
+            "expression": "MAX('Reports MDL_DeliveryItemFacts'[ExepctedQuantity])"
+          },
+          {
+            "name": "AvgDeliveryItemsExpectedQuantity",
+            "expression": "ROUND(AVERAGE('Reports MDL_DeliveryItemFacts'[ExepctedQuantity]), 0)"
+          },
+          {
+            "name": "MinDeliveryItemsPrice",
+            "expression": "MIN('Reports MDL_DeliveryItemFacts'[UnitPrice])"
+          },
+          {
+            "name": "MaxDeliveryItemsPrice",
+            "expression": "MAX('Reports MDL_DeliveryItemFacts'[UnitPrice])"
+          },
+          {
+            "name": "AvgDeliveryItemsPrice",
+            "expression": "AVERAGE('Reports MDL_DeliveryItemFacts'[UnitPrice])"
+          }
+        ]
+      },
+      {
+        "name": "Reports MDL_LocationMenuFacts",
+        "columns": [
+          {
+            "name": "ID",
+            "dataType": "int64",
+            "sourceColumn": "ID"
+          },
+          {
+            "name": "LocationID",
+            "dataType": "int64",
+            "sourceColumn": "LocationID"
+          },
+          {
+            "name": "MenuID",
+            "dataType": "int64",
+            "sourceColumn": "MenuID"
+          },
+          {
+            "name": "MenuValidFrom",
+            "dataType": "dateTime",
+            "sourceColumn": "MenuValidFrom"
+          },
+          {
+            "name": "MenuValidTo",
+            "dataType": "dateTime",
+            "sourceColumn": "MenuValidTo"
+          },
+          {
+            "name": "IntroductionDelay",
+            "dataType": "int64",
+            "sourceColumn": "IntroductionDelay"
+          },
+          {
+            "name": "ExecutiveChefID",
+            "dataType": "int64",
+            "sourceColumn": "ExecutiveChefID"
+          },
+          {
+            "name": "DishesCount",
+            "dataType": "int64",
+            "sourceColumn": "DishesCount"
+          },
+          {
+            "name": "AppetizersCount",
+            "dataType": "int64",
+            "sourceColumn": "AppetizersCount"
+          },
+          {
+            "name": "DessertsCount",
+            "dataType": "int64",
+            "sourceColumn": "DessertsCount"
+          },
+          {
+            "name": "DrinksCount",
+            "dataType": "int64",
+            "sourceColumn": "DrinksCount"
+          },
+          {
+            "name": "MainCoursesCount",
+            "dataType": "int64",
+            "sourceColumn": "MainCoursesCount"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Partition",
+            "dataView": "full",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = #\"SQL/LAPTOP-TVR18281;Modeled\",",
+                "    Reports_MDL_LocationMenuFacts = Source{[Schema=\"Reports\",Item=\"MDL_LocationMenuFacts\"]}[Data]",
+                "in",
+                "    Reports_MDL_LocationMenuFacts"
+              ]
+            }
+          }
+        ],
+        "measures": [
+          {
+            "name": "MinDishesCount",
+            "expression": "MIN('Reports MDL_LocationMenuFacts'[DishesCount])"
+          },
+          {
+            "name": "MaxDishesCount",
+            "expression": "MAX('Reports MDL_LocationMenuFacts'[DishesCount])"
+          },
+          {
+            "name": "AvgDishesCount",
+            "expression": "AVERAGE('Reports MDL_LocationMenuFacts'[DishesCount])"
+          },
+          {
+            "name": "MinIntroductionDelay",
+            "expression": "MIN('Reports MDL_LocationMenuFacts'[IntroductionDelay])"
+          },
+          {
+            "name": "MaxIntroductionDelay",
+            "expression": "MAX('Reports MDL_LocationMenuFacts'[IntroductionDelay])"
+          },
+          {
+            "name": "AvgIntroductionDelay",
+            "expression": "AVERAGE('Reports MDL_LocationMenuFacts'[IntroductionDelay])"
+          }
+        ]
+      },
+      {
+        "name": "Reports MDL_ReservationFacts",
+        "columns": [
+          {
+            "name": "ReservationID",
+            "dataType": "int64",
+            "sourceColumn": "ReservationID"
+          },
+          {
+            "name": "CustomerID",
+            "dataType": "int64",
+            "sourceColumn": "CustomerID"
+          },
+          {
+            "name": "LocationID",
+            "dataType": "int64",
+            "sourceColumn": "LocationID"
+          },
+          {
+            "name": "Seats",
+            "dataType": "int64",
+            "sourceColumn": "Seats"
+          },
+          {
+            "name": "ReservationDate",
+            "dataType": "dateTime",
+            "sourceColumn": "ReservationDate"
+          },
+          {
+            "name": "ReservationHour",
+            "dataType": "dateTime",
+            "sourceColumn": "ReservationHour"
+          },
+          {
+            "name": "CancelledAt",
+            "dataType": "dateTime",
+            "sourceColumn": "CancelledAt"
+          },
+          {
+            "name": "CreatedAt",
+            "dataType": "dateTime",
+            "sourceColumn": "CreatedAt"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Partition",
+            "dataView": "full",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = #\"SQL/LAPTOP-TVR18281;Modeled\",",
+                "    Reports_MDL_ReservationFacts = Source{[Schema=\"Reports\",Item=\"MDL_ReservationFacts\"]}[Data]",
+                "in",
+                "    Reports_MDL_ReservationFacts"
+              ]
+            }
+          }
+        ],
+        "measures": [
+          {
+            "name": "MinReservationSeats",
+            "expression": "MIN('Reports MDL_ReservationFacts'[Seats])"
+          },
+          {
+            "name": "MaxReservationSeats",
+            "expression": "MAX('Reports MDL_ReservationFacts'[Seats])"
+          },
+          {
+            "name": "AvgReservationSeats",
+            "expression": "AVERAGE('Reports MDL_ReservationFacts'[Seats])"
+          }
+        ]
+      },
+      {
+        "name": "Reports MLD_EmployeesDim",
+        "columns": [
+          {
+            "name": "EmployeeID",
+            "dataType": "int64",
+            "sourceColumn": "EmployeeID"
+          },
+          {
+            "name": "FirstName",
+            "dataType": "string",
+            "sourceColumn": "FirstName"
+          },
+          {
+            "name": "LastName",
+            "dataType": "string",
+            "sourceColumn": "LastName"
+          },
+          {
+            "name": "BirthDate",
+            "dataType": "dateTime",
+            "sourceColumn": "BirthDate"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Partition",
+            "dataView": "full",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = #\"SQL/LAPTOP-TVR18281;Modeled\",",
+                "    Reports_MLD_EmployeesDim = Source{[Schema=\"Reports\",Item=\"MLD_EmployeesDim\"]}[Data]",
+                "in",
+                "    Reports_MLD_EmployeesDim"
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "relationships": [
+      {
+        "name": "45ed5145-d6ab-491b-93b8-a13c28ffb8a2",
+        "fromTable": "Reports MDL_OrdersFacts",
+        "fromColumn": "LocationID",
+        "toTable": "Reports MDL_LocationsDim",
+        "toColumn": "LocationID"
+      },
+      {
+        "name": "faa09518-809e-4b0a-a216-5a5d0ce26a94",
+        "fromTable": "Reports MDL_OrdersFacts",
+        "fromColumn": "CustomerID",
+        "toTable": "Reports MDL_CustomersDim",
+        "toColumn": "CustomerID"
+      },
+      {
+        "name": "9d76dc24-69d7-4866-ab0a-288cebb296a0",
+        "toCardinality": "many",
+        "fromTable": "Reports MDL_OrdersFacts",
+        "fromColumn": "OrderDate",
+        "toTable": "Reports MDL_WeatherDim",
+        "toColumn": "date"
+      },
+      {
+        "name": "18f92bdb-428c-42b3-a228-01097fe4637e",
+        "fromTable": "Reports MDL_OrderItemFacts",
+        "fromColumn": "LocationID",
+        "toTable": "Reports MDL_LocationsDim",
+        "toColumn": "LocationID"
+      },
+      {
+        "name": "ab19be67-f3ef-4ca7-b1ed-756579e36af8",
+        "fromTable": "Reports MDL_OrderItemFacts",
+        "fromColumn": "CustomerID",
+        "toTable": "Reports MDL_CustomersDim",
+        "toColumn": "CustomerID"
+      },
+      {
+        "name": "db55fcf2-438d-4b9f-a557-f62879ae276b",
+        "toCardinality": "many",
+        "fromTable": "Reports MDL_OrderItemFacts",
+        "fromColumn": "DishID",
+        "toTable": "Reports MDL_DishProductDim",
+        "toColumn": "DishID",
+        "crossFilteringBehavior": "bothDirections"
+      },
+      {
+        "name": "e9baa11a-a0c8-4ff5-8132-bf4fcb0a0583",
+        "fromTable": "Reports MDL_OrdersFacts",
+        "fromColumn": "OrderDate",
+        "toTable": "Reports MDL_CalendarDateDim",
+        "toColumn": "calendarDate"
+      },
+      {
+        "name": "6809a643-8882-4062-8499-06586fb16508",
+        "fromTable": "Reports MDL_OrderItemFacts",
+        "fromColumn": "OrderDate",
+        "toTable": "Reports MDL_CalendarDateDim",
+        "toColumn": "calendarDate"
+      },
+      {
+        "name": "74ded6ca-89f7-4abd-9602-167da962af09",
+        "fromTable": "Reports MDL_DeliveryFacts",
+        "fromColumn": "LocationID",
+        "toTable": "Reports MDL_LocationsDim",
+        "toColumn": "LocationID"
+      },
+      {
+        "name": "27e99af9-83fe-4f76-a6e7-d0b92e0916ab",
+        "fromTable": "Reports MDL_DeliveryFacts",
+        "fromColumn": "DeliveryAddressId",
+        "toTable": "Reports MDL_CustomerAddressesDim",
+        "toColumn": "AddressID"
+      },
+      {
+        "name": "496d1e1d-57a3-46cc-9785-6dc45c905310",
+        "fromTable": "Reports MDL_DeliveryFacts",
+        "fromColumn": "DeliveryDate",
+        "toTable": "Reports MDL_CalendarDateDim",
+        "toColumn": "calendarDate"
+      },
+      {
+        "name": "5ae77899-1ad5-4522-b539-208e036d9df4",
+        "toCardinality": "many",
+        "fromTable": "Reports MDL_DeliveryFacts",
+        "fromColumn": "DeliveryDay",
+        "toTable": "Reports MDL_WeatherDim",
+        "toColumn": "date"
+      },
+      {
+        "name": "948491c9-0887-437c-8e0a-dd59674fa96b",
+        "fromTable": "Reports MDL_DeliveryFacts",
+        "fromColumn": "DeliveryEmployeeID",
+        "toTable": "Reports MLD_EmployeesDim",
+        "toColumn": "EmployeeID"
+      },
+      {
+        "name": "adad5f08-df97-452b-bffc-d5846cc4c245",
+        "toCardinality": "many",
+        "fromTable": "Reports MDL_DeliveryItemFacts",
+        "fromColumn": "DishID",
+        "toTable": "Reports MDL_DishProductDim",
+        "toColumn": "DishID",
+        "crossFilteringBehavior": "bothDirections"
+      },
+      {
+        "name": "f0f5077d-fcc4-4af4-95cf-ae68f2537a1a",
+        "fromTable": "Reports MDL_DeliveryItemFacts",
+        "fromColumn": "DeliveryDriverID",
+        "toTable": "Reports MLD_EmployeesDim",
+        "toColumn": "EmployeeID"
+      },
+      {
+        "name": "b431a4cc-9fde-42f4-8325-fc62abd46da4",
+        "fromTable": "Reports MDL_DeliveryItemFacts",
+        "fromColumn": "CancelledAt",
+        "toTable": "Reports MDL_CalendarDateDim",
+        "toColumn": "calendarDate",
+        "isActive": false
+      },
+      {
+        "name": "9a1e02ea-4ca1-41f2-a31a-cdd73d5cf818",
+        "toCardinality": "many",
+        "fromTable": "Reports MDL_DeliveryItemFacts",
+        "fromColumn": "CancelledAt",
+        "toTable": "Reports MDL_WeatherDim",
+        "toColumn": "date"
+      },
+      {
+        "name": "16f8f67d-eeb5-45e5-ab47-72500bbc8a0e",
+        "fromTable": "Reports MDL_LocationMenuFacts",
+        "fromColumn": "LocationID",
+        "toTable": "Reports MDL_LocationsDim",
+        "toColumn": "LocationID"
+      },
+      {
+        "name": "3316d872-2c13-441e-9877-412fdbc547b2",
+        "fromTable": "Reports MDL_LocationMenuFacts",
+        "fromColumn": "MenuValidFrom",
+        "toTable": "Reports MDL_CalendarDateDim",
+        "toColumn": "calendarDate"
+      },
+      {
+        "name": "cce853a4-71a7-4a92-aedd-fd3c62a09272",
+        "fromTable": "Reports MDL_LocationMenuFacts",
+        "fromColumn": "MenuValidTo",
+        "toTable": "Reports MDL_CalendarDateDim",
+        "toColumn": "calendarDate",
+        "isActive": false
+      },
+      {
+        "name": "de1ad458-c7ac-442a-8f70-b2daf05b6a55",
+        "fromTable": "Reports MDL_LocationMenuFacts",
+        "fromColumn": "ExecutiveChefID",
+        "toTable": "Reports MLD_EmployeesDim",
+        "toColumn": "EmployeeID"
+      },
+      {
+        "name": "ad960a6f-fc9c-48fc-9b67-b51334c4494a",
+        "fromTable": "Reports MDL_ReservationFacts",
+        "fromColumn": "CustomerID",
+        "toTable": "Reports MDL_CustomersDim",
+        "toColumn": "CustomerID"
+      },
+      {
+        "name": "4e234166-c63d-479d-828e-8f3b1390ec9f",
+        "fromTable": "Reports MDL_ReservationFacts",
+        "fromColumn": "LocationID",
+        "toTable": "Reports MDL_LocationsDim",
+        "toColumn": "LocationID"
+      }
+    ],
+    "annotations": [
+      {
+        "name": "ClientCompatibilityLevel",
+        "value": "600"
+      }
+    ]
+  }
+}
