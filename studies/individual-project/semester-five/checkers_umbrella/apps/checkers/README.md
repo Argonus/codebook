@@ -1,0 +1,3 @@
+# Checkers
+
+**TODO: Add description**
