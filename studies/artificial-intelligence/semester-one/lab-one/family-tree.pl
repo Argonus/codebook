@@ -48,3 +48,10 @@ father(X,Y):- parent(X,Y),man(Y).
 grandchild(X,Y):- child(D, Y),child(X,D).
 grandfather(X,Y):- child(Y, F),child(F,X).
 grandmother(X,B):- grandfather(D,X),marriage(B,D),woman(B).
+
+% Lvl N
+descendant(X,Y):- child(X,Y).
+descendant(X,Y):- child(D,Y),descendant(X,D).
+
+ancestor(X,Y):- parent(X,Y).
+ancestor(X,Y):- parent(D,Y),ancestor(X,D).
