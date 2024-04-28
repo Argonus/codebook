@@ -49,5 +49,6 @@ defmodule CheckersWeb.Endpoint do
   plug Plug.MethodOverride
   plug Plug.Head
   plug Plug.Session, @session_options
+  plug Pow.Plug.Session, otp_app: :checkers_web
   plug CheckersWeb.Router
 end

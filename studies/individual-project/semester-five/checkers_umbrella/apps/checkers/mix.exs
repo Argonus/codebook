@@ -37,6 +37,7 @@ defmodule Checkers.MixProject do
   defp deps do
     [
       {:dns_cluster, "~> 0.1.1"},
+      {:pow, "~> 1.0.38"},
       {:phoenix_pubsub, "~> 2.1"},
       {:ecto_sql, "~> 3.10"},
       {:postgrex, ">= 0.0.0"},

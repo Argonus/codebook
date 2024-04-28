@@ -65,6 +65,9 @@ config :checkers_web, CheckersWeb.Endpoint,
 # Enable dev routes for dashboard and mailbox
 config :checkers_web, dev_routes: true
 
+# Configure the Logger
+config :logger, level: :debug
+
 # Do not include metadata nor timestamps in development logs
 config :logger, :console, format: "[$level] $message\n"
 
