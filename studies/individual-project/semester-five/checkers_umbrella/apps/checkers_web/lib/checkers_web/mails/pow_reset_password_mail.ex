@@ -1,4 +1,7 @@
 defmodule CheckersWeb.PowResetPasswordMail do
+  @moduledoc """
+  Pow reset password mail.
+  """
   use CheckersWeb, :mail
 
   def reset_password(assigns) do

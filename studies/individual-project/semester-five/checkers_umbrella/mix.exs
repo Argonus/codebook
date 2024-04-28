@@ -3,11 +3,18 @@ defmodule Checkers.Umbrella.MixProject do
 
   def project do
     [
+      name: :checkers_umbrella,
       apps_path: "apps",
       version: "0.1.0",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
-      aliases: aliases()
+      aliases: aliases(),
+      preferred_cli_env: [
+        check: :test,
+        credo: :dev,
+        dialyzer: :dev,
+        sobelow: :dev
+      ]
     ]
   end
 
@@ -26,7 +33,14 @@ defmodule Checkers.Umbrella.MixProject do
   defp deps do
     [
       # Required to run "mix format" on ~H/.heex files from the umbrella root
-      {:phoenix_live_view, ">= 0.0.0"}
+      {:phoenix_live_view, ">= 0.0.0"},
+      {:ex_check, "~> 0.16.0", only: [:dev, :test], runtime: false},
+      # Check Deps
+      {:credo, "~> 1.7", only: [:dev], runtime: false},
+      {:gettext, "~> 0.20"},
+      {:dialyxir, "~> 1.4", only: [:dev], runtime: false},
+      {:ex_doc, "~> 0.32", only: [:dev], runtime: false},
+      {:sobelow, "~> 0.13.0", only: [:dev], runtime: false}
     ]
   end
 
