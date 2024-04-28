@@ -68,9 +68,14 @@ config :logger, :console,
 config :phoenix, :json_library, Jason
 
 config :checkers_web, :pow,
+  web_mailer_module: CheckersWeb,
   web_module: CheckersWeb,
+  extensions: [PowResetPassword],
+  mailer_backend: CheckersWeb.Pow.Mailer,
   user: Checkers.Schemas.User,
   repo: Checkers.Repo
+
+config :checkers_web, CheckersWeb.Pow.Mailer, adapter: Swoosh.Adapters.Local
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

@@ -5,6 +5,7 @@ defmodule Checkers.Schemas.User do
   """
   use Ecto.Schema
   use Pow.Ecto.Schema
+  use Pow.Extension.Ecto.Schema, extensions: [PowResetPassword]
 
   import Ecto.Changeset
 
@@ -24,6 +25,7 @@ defmodule Checkers.Schemas.User do
   def changeset(user_or_changeset, attrs) do
     user_or_changeset
     |> pow_changeset(attrs)
+    |> pow_extension_changeset(attrs)
     |> cast(attrs, [:login])
     |> validate_required([:login])
   end
