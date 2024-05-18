@@ -36,6 +36,7 @@ defmodule Checkers.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:ex_machina, "~> 2.7.0"},
       {:dns_cluster, "~> 0.1.1"},
       {:pow, "~> 1.0.38"},
       {:phoenix_pubsub, "~> 2.1"},
