@@ -23,6 +23,8 @@ config :checkers_web, CheckersWeb.Endpoint,
 # Print only warnings and errors during test
 config :logger, level: :warning
 
+config :checkers, matches_impl: Checkers.MatchesMock
+
 # In test we don't send emails.
 config :checkers, Checkers.Mailer, adapter: Swoosh.Adapters.Test
 

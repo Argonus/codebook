@@ -43,7 +43,9 @@ defmodule Checkers.MixProject do
       {:postgrex, ">= 0.0.0"},
       {:jason, "~> 1.2"},
       {:swoosh, "~> 1.5"},
-      {:finch, "~> 0.13"}
+      {:finch, "~> 0.13"},
+      {:hammox, "~> 0.7", only: :test},
+      {:typed_struct, "~> 0.3.0"}
     ]
   end
 

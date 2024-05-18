@@ -51,6 +51,7 @@ defmodule CheckersWeb.MixProject do
       {:telemetry_poller, "~> 1.0"},
       {:gettext, "~> 0.20"},
       {:checkers, in_umbrella: true},
+      {:hammox, "~> 0.7", only: :test},
       {:jason, "~> 1.2"},
       {:bandit, "~> 1.2"}
     ]
