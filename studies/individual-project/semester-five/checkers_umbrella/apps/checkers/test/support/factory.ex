@@ -1,6 +1,6 @@
 defmodule Checkers.Factory do
   @moduledoc false
-  use ExMachina.Ecto, repo: StaffWorkingHours.Repo
+  use ExMachina.Ecto, repo: Checkers.Repo
   alias Checkers.Schemas
 
   def user_factory do
@@ -14,7 +14,8 @@ defmodule Checkers.Factory do
     %Schemas.Match{
       id: Ecto.UUID.generate(),
       host_id: sequence("host_id", &(&1 + 1)),
-      status: :initialized
+      status: :initialized,
+      moves: %{}
     }
   end
 end

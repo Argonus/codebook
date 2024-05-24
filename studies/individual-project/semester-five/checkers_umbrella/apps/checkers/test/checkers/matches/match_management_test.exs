@@ -1,5 +1,6 @@
 defmodule Checkers.Matches.MatchManagementTest do
   use Checkers.DataCase, async: true
+  import Checkers.Factory
 
   use Hammox.Protect,
     module: Checkers.Matches.MatchManagement,
@@ -13,6 +14,30 @@ defmodule Checkers.Matches.MatchManagementTest do
       assert match.id
       assert match.host_id == 1
       assert match.status == :initialized
+    end
+  end
+
+  describe "join_match/2" do
+    test "assigns new user to match" do
+      match = insert(:match)
+      {:ok, updated_match} = join_match(match.id, 2)
+
+      assert updated_match.player_id == 2
+    end
+
+    test "does not change other match data" do
+      match = insert(:match)
+      {:ok, updated_match} = join_match(match.id, 2)
+
+      assert updated_match.id == match.id
+      assert updated_match.host_id == match.host_id
+      assert updated_match.status == :initialized
+    end
+
+    test "returns error when match not found" do
+      {:error, error_code} = join_match(Ecto.UUID.generate(), 2)
+
+      assert error_code == :not_found
     end
   end
 end

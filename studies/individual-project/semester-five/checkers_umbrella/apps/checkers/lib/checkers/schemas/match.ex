@@ -33,4 +33,14 @@ defmodule Checkers.Schemas.Match do
     |> cast(%{moves: %{}}, [:moves])
     |> validate_required(@required_attributes)
   end
+
+  @doc """
+  Assigns new user to match
+  """
+  @spec join_changeset(__MODULE__.t(), non_neg_integer) :: Ecto.Changeset.t()
+  def join_changeset(match, user_id) do
+    match
+    |> cast(%{player_id: user_id}, [:player_id])
+    |> validate_required([:player_id])
+  end
 end
