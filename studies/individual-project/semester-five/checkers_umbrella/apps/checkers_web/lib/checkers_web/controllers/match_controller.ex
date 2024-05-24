@@ -22,6 +22,28 @@ defmodule CheckersWeb.MatchController do
     end
   end
 
+  def join(conn, params) do
+    current_user = Pow.Plug.current_user(conn)
+    match_id = Map.get(params, "match_id")
+
+    case Matches.join_match(match_id, current_user.id) do
+      {:ok, _match} ->
+        conn
+        |> put_flash(:info, "Match created")
+        |> redirect(to: Routes.page_path(conn, :home))
+
+      {:error, :not_found} ->
+        conn
+        |> put_flash(:info, "Match not found")
+        |> redirect(to: Routes.page_path(conn, :home))
+
+      {:error, _reason} ->
+        conn
+        |> put_flash(:error, "Failed to join to match")
+        |> redirect(to: Routes.page_path(conn, :home))
+    end
+  end
+
   # Private
   defp require_authenticated_user(conn, _opts) do
     if Pow.Plug.current_user(conn) do

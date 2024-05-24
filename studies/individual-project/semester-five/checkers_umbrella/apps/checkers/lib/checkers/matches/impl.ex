@@ -6,4 +6,7 @@ defmodule Checkers.Matches.Impl do
 
   @impl true
   defdelegate create_match(host_id), to: MatchManagement
+
+  @impl true
+  defdelegate join_match(match_id, player_id), to: MatchManagement
 end

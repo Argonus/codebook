@@ -27,7 +27,9 @@ defmodule CheckersWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+
     resources "/matches", MatchController, only: [:create]
+    patch "/matches/:match_id/join", MatchController, :join
   end
 
   # Other scopes may use custom stacks.
