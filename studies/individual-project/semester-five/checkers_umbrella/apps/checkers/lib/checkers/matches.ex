@@ -5,6 +5,9 @@ defmodule Checkers.Matches do
   @behaviour Checkers.Matches.Behaviour
 
   @impl true
+  def get_match(match_id), do: impl().get_match(match_id)
+
+  @impl true
   def create_match(host_id), do: impl().create_match(host_id)
 
   @impl true

@@ -2,10 +2,27 @@ defmodule Checkers.Matches.MatchManagementTest do
   use Checkers.DataCase, async: true
   import Checkers.Factory
 
+  alias Checkers.Matches.MatchStruct
+
   use Hammox.Protect,
     module: Checkers.Matches.MatchManagement,
-    behaviour: Checkers.Matches.Behaviour,
-    functions: [:create_match]
+    behaviour: Checkers.Matches.Behaviour
+
+  describe "get_match/1" do
+    test "returns match if exists" do
+      match = insert(:match)
+
+      {:ok, result} = get_match(match.id)
+
+      assert result == MatchStruct.build_from_schema(match)
+    end
+
+    test "returns error when match not found" do
+      {:error, error_code} = get_match(Ecto.UUID.generate())
+
+      assert error_code == :not_found
+    end
+  end
 
   describe "create_match/1" do
     test "creates a match" do

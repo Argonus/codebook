@@ -5,6 +5,9 @@ defmodule Checkers.Matches.Impl do
   alias Checkers.Matches.MatchManagement
 
   @impl true
+  defdelegate get_match(match_id), to: MatchManagement
+
+  @impl true
   defdelegate create_match(host_id), to: MatchManagement
 
   @impl true

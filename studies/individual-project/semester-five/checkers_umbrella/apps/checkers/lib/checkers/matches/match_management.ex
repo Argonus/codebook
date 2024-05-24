@@ -5,6 +5,13 @@ defmodule Checkers.Matches.MatchManagement do
   alias Checkers.Repo
   alias Checkers.Schemas.Match, as: MatchSchema
 
+  def get_match(match_id) do
+    case Repo.get_by(MatchSchema, id: match_id) do
+      nil -> {:error, :not_found}
+      match -> {:ok, MatchStruct.build_from_schema(match)}
+    end
+  end
+
   def create_match(host_id) do
     host_id
     |> MatchSchema.init_changeset()

@@ -7,6 +7,11 @@ defmodule Checkers.Matches.Behaviour do
   @type match :: Checkers.Matches.MatchStruct.t()
 
   @doc """
+  Returns match if exists
+  """
+  @callback get_match(match_id) :: {:ok, match} | {:error, :not_found}
+
+  @doc """
   Creates a match for given host.
   Match is created with basic attributes
   """
