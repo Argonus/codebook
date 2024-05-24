@@ -3,6 +3,8 @@ defmodule Checkers.Matches.MatchManagementTest do
   import Checkers.Factory
 
   alias Checkers.Matches.MatchStruct
+  alias Checkers.Repo
+  alias Checkers.Schemas.Match, as: MatchSchema
 
   use Hammox.Protect,
     module: Checkers.Matches.MatchManagement,
@@ -53,6 +55,31 @@ defmodule Checkers.Matches.MatchManagementTest do
 
     test "returns error when match not found" do
       {:error, error_code} = join_match(Ecto.UUID.generate(), 2)
+
+      assert error_code == :not_found
+    end
+  end
+
+  describe "delete_match/2" do
+    test "deletes existing match" do
+      match = insert(:match)
+
+      :ok = delete_match(match.id, match.host_id)
+
+      refute Repo.get_by(MatchSchema, id: match.id)
+    end
+
+    test "returns error when player is not host" do
+      match = insert(:match)
+
+      {:error, error_code} = delete_match(match.id, match.host_id + 1)
+
+      assert error_code == :forbbiden
+      assert Repo.get_by(MatchSchema, id: match.id)
+    end
+
+    test "returns error when match not found" do
+      {:error, error_code} = delete_match(Ecto.UUID.generate(), 1)
 
       assert error_code == :not_found
     end

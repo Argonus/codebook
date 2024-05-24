@@ -21,4 +21,9 @@ defmodule Checkers.Matches.Behaviour do
   Assigns another player to match
   """
   @callback join_match(match_id, user_id) :: {:ok, match} | {:error, :not_found | Ecto.Changeset.t()}
+
+  @doc """
+  Deletes existing match if user_id is same as host_id
+  """
+  @callback delete_match(match_id, user_id) :: :ok | {:error, :not_found | :forbbiden}
 end

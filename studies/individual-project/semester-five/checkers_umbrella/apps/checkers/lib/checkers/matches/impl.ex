@@ -12,4 +12,7 @@ defmodule Checkers.Matches.Impl do
 
   @impl true
   defdelegate join_match(match_id, player_id), to: MatchManagement
+
+  @impl true
+  defdelegate delete_match(match_id, user_id), to: MatchManagement
 end

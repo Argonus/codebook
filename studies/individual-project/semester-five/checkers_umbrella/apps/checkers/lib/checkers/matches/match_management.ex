@@ -32,6 +32,20 @@ defmodule Checkers.Matches.MatchManagement do
     end
   end
 
+  def delete_match(match_id, user_id) do
+    case Repo.get_by(MatchSchema, id: match_id) do
+      nil ->
+        {:error, :not_found}
+
+      %{host_id: id} when id != user_id ->
+        {:error, :forbbiden}
+
+      match ->
+        Repo.delete!(match)
+        :ok
+    end
+  end
+
   # ----------------------------------------------------------------
   defp parse_repo_response({:ok, match}), do: {:ok, MatchStruct.build_from_schema(match)}
   defp parse_repo_response({:error, error}), do: {:error, error}

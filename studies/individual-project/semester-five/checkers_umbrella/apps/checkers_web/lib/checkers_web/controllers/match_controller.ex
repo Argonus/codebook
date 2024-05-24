@@ -44,6 +44,28 @@ defmodule CheckersWeb.MatchController do
     end
   end
 
+  def delete(conn, params) do
+    current_user = Pow.Plug.current_user(conn)
+    match_id = Map.get(params, "id")
+
+    case Matches.delete_match(match_id, current_user.id) do
+      :ok ->
+        conn
+        |> put_flash(:info, "Match deleted")
+        |> redirect(to: Routes.page_path(conn, :home))
+
+      {:error, :not_found} ->
+        conn
+        |> put_flash(:info, "Match not found")
+        |> redirect(to: Routes.page_path(conn, :home))
+
+      {:error, :forbbiden} ->
+        conn
+        |> put_flash(:error, "Action not allowed")
+        |> redirect(to: Routes.page_path(conn, :home))
+    end
+  end
+
   # Private
   defp require_authenticated_user(conn, _opts) do
     if Pow.Plug.current_user(conn) do
