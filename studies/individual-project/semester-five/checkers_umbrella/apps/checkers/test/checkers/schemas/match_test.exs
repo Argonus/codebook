@@ -53,4 +53,29 @@ defmodule Checkers.Schemas.MatchTest do
       assert {"can't be blank", [validation: :required]} = changeset.errors[:player_id]
     end
   end
+
+  describe "assign_colors_changeset/2" do
+    test "assigns valid color to host" do
+      match = insert(:match)
+      changeset = Match.assign_color_changeset(match, :black)
+
+      assert changeset.valid?
+    end
+
+    test "updates match with valid attributes" do
+      match = insert(:match)
+      changeset = Match.assign_color_changeset(match, :black)
+      match = Repo.update!(changeset)
+
+      assert match.host_color == :black
+    end
+
+    test "return error when color is invalid" do
+      match = insert(:match)
+      changeset = Match.assign_color_changeset(match, :blue)
+
+      {:error, changeset} = Repo.update(changeset)
+      assert {"is invalid", _} = changeset.errors[:host_color]
+    end
+  end
 end

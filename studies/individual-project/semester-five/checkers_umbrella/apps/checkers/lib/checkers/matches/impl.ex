@@ -15,4 +15,7 @@ defmodule Checkers.Matches.Impl do
 
   @impl true
   defdelegate delete_match(match_id, user_id), to: MatchManagement
+
+  @impl true
+  defdelegate assign_color(match_id, user_id, color), to: MatchManagement
 end

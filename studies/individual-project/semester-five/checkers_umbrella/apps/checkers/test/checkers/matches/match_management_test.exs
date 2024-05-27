@@ -84,4 +84,48 @@ defmodule Checkers.Matches.MatchManagementTest do
       assert error_code == :not_found
     end
   end
+
+  describe "assign_color/3" do
+    test "test assigns selected color if user is host" do
+      match = insert(:match, host_id: 123)
+
+      {:ok, match} = assign_color(match.id, match.host_id, :black)
+
+      assert match.host_color == :black
+      assert match.player_color == :white
+    end
+
+    test "test assigns opposite color if user is host" do
+      match = insert(:match, host_id: 123, player_id: 321)
+
+      {:ok, match} = assign_color(match.id, match.player_id, :white)
+
+      assert match.host_color == :black
+      assert match.player_color == :white
+    end
+
+    test "moves match to pending status" do
+      match = insert(:match, host_id: 123)
+
+      {:ok, match} = assign_color(match.id, match.host_id, :black)
+
+      assert match.status == :pending
+    end
+
+    test "returns error when match is not found" do
+      match = insert(:match, host_id: 123)
+
+      {:error, error_code} = assign_color(Ecto.UUID.generate(), match.host_id, :black)
+
+      assert error_code == :not_found
+    end
+
+    test "returns error when match does not belong to host" do
+      match = insert(:match, host_id: 123, player_id: 321)
+
+      {:error, error_code} = assign_color(match.id, 111, :black)
+
+      assert error_code == :forbbiden
+    end
+  end
 end
