@@ -25,6 +25,8 @@ config :logger, level: :warning
 
 config :checkers, matches_impl: Checkers.MatchesMock
 
+config :checkers, :seasons_impl, Checkers.SeasonsMock
+
 # In test we don't send emails.
 config :checkers, Checkers.Mailer, adapter: Swoosh.Adapters.Test
 

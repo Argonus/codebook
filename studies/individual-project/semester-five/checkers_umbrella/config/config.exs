@@ -69,6 +69,8 @@ config :phoenix, :json_library, Jason
 
 config :checkers, :matches_impl, Checkers.Matches.Impl
 
+config :checkers, :seasons_impl, Checkers.Seasons.Impl
+
 config :checkers_web, :pow,
   web_mailer_module: CheckersWeb,
   web_module: CheckersWeb,

@@ -46,6 +46,7 @@ defmodule Checkers.MixProject do
       {:swoosh, "~> 1.5"},
       {:finch, "~> 0.13"},
       {:hammox, "~> 0.7", only: :test},
+      {:timex, "~> 3.7"},
       {:typed_struct, "~> 0.3.0"}
     ]
   end

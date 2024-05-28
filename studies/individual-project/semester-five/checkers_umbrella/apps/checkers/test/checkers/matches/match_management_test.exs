@@ -1,6 +1,7 @@
 defmodule Checkers.Matches.MatchManagementTest do
   use Checkers.DataCase, async: true
   import Checkers.Factory
+  import Hammox
 
   alias Checkers.Matches.MatchStruct
   alias Checkers.Repo
@@ -27,7 +28,17 @@ defmodule Checkers.Matches.MatchManagementTest do
   end
 
   describe "create_match/1" do
-    test "creates a match" do
+    setup do
+      season = insert(:season)
+
+      {:ok, season: season}
+    end
+
+    test "creates a match", %{season: season} do
+      expect(Checkers.SeasonsMock, :get_current_season, fn ->
+        {:ok, Checkers.Seasons.SeasonStruct.build(season)}
+      end)
+
       {:ok, match} = create_match(1)
 
       assert match.id

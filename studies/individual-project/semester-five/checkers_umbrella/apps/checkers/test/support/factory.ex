@@ -5,6 +5,7 @@ defmodule Checkers.Factory do
 
   def user_factory do
     %Schemas.User{
+      login: "example",
       email: "example@example.com",
       password_hash: "random-hash"
     }
@@ -16,6 +17,15 @@ defmodule Checkers.Factory do
       host_id: sequence("host_id", &(&1 + 1)),
       status: :initialized,
       moves: %{}
+    }
+  end
+
+  def season_factory do
+    %Schemas.Season{
+      id: Ecto.UUID.generate(),
+      season_number: sequence("season_number", &(&1 + 1)),
+      start_datetime_utc: DateTime.utc_now(),
+      end_datetime_utc: DateTime.utc_now() |> DateTime.add(1, :day)
     }
   end
 end

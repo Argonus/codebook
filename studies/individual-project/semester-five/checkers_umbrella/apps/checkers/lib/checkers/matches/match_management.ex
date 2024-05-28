@@ -4,7 +4,9 @@ defmodule Checkers.Matches.MatchManagement do
 
   alias Checkers.Matches.MatchStruct
   alias Checkers.Repo
+
   alias Checkers.Schemas.Match, as: MatchSchema
+  alias Checkers.Schemas.MatchSeason, as: MatchSeasonSchema
 
   def get_match(match_id) do
     case Repo.get_by(MatchSchema, id: match_id) do
@@ -14,11 +16,17 @@ defmodule Checkers.Matches.MatchManagement do
   end
 
   def create_match(host_id) do
-    host_id
-    |> MatchSchema.init_changeset()
-    |> Repo.insert()
+    Ecto.Multi.new()
+    |> Ecto.Multi.insert(:match, MatchSchema.init_changeset(host_id))
+    |> Ecto.Multi.insert(:season_assignment, fn %{match: match} ->
+      {:ok, current_season} = Checkers.Seasons.get_current_season()
+      MatchSeasonSchema.changeset(%{match_id: match.id, season_id: current_season.season_id})
+    end)
+    |> Repo.transaction()
     |> parse_repo_response()
   end
+
+  # ----------------------------------------------------------------
 
   def join_match(match_id, user_id) do
     case Repo.get_by(MatchSchema, id: match_id) do
@@ -66,6 +74,7 @@ defmodule Checkers.Matches.MatchManagement do
   end
 
   # ----------------------------------------------------------------
+  defp parse_repo_response({:ok, %{match: match}}), do: {:ok, MatchStruct.build_from_schema(match)}
   defp parse_repo_response({:ok, match}), do: {:ok, MatchStruct.build_from_schema(match)}
   defp parse_repo_response({:error, error}), do: {:error, error}
 end
