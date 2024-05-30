@@ -10,7 +10,9 @@ defmodule CheckersWeb.MatchController do
     current_user = Pow.Plug.current_user(conn)
 
     case Matches.create_match(current_user.id) do
-      {:ok, _match} ->
+      {:ok, match} ->
+        {:ok, current_season} = get_current_season()
+
         conn
         |> put_flash(:info, "Match created")
         |> redirect(to: Routes.page_path(conn, :home))

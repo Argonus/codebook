@@ -1,1 +1,28 @@
-Hello World
+<div class="container mx-auto mt-10">
+    <%= if @current_user do %>
+     <div class="flex">
+         <!-- Left Section: Active Matches -->
+         <div class="w-1/2 p-4">
+           <h2 class="text-2xl font-bold mb-4">Active Matches</h2>
+           <ul>
+             <%= for match <- @active_matches do %>
+             <% end %>
+           </ul>
+         </div>
+         <!-- Right Section: Create Match -->
+         <div class="w-1/2 p-4">
+            <h2 class="text-2xl font-bold mb-4">Create a Match</h2>
+            <form action="/matches" method="post">
+              <input type="hidden" name="_csrf_token" value={ get_csrf_token() }>
+              <button type="submit" class="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600">
+                Create Match
+              </button>
+            </form>
+        </div>
+    </div>
+    <% else %>
+      <div class="flex justify-center items-center h-screen">
+        <a href="/registration/new" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 text-3xl">Sign up</a>
+      </div>
+    <% end %>
+</div>

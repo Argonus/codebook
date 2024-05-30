@@ -15,6 +15,19 @@ defmodule Checkers.Matches.MatchManagement do
     end
   end
 
+  def get_season_matches(season_id) do
+    import Ecto.Query
+
+    from(
+      m in MatchSchema,
+      inner_join: ms in MatchSeasonSchema,
+      on: m.id == ms.match_id,
+      where: ms.season_id == ^season_id
+    )
+    |> Repo.all()
+    |> Enum.map(&MatchStruct.build_from_schema/1)
+  end
+
   def create_match(host_id) do
     Ecto.Multi.new()
     |> Ecto.Multi.insert(:match, MatchSchema.init_changeset(host_id))

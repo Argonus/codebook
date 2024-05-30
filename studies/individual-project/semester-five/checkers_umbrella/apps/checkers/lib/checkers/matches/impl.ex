@@ -8,6 +8,9 @@ defmodule Checkers.Matches.Impl do
   defdelegate get_match(match_id), to: MatchManagement
 
   @impl true
+  defdelegate get_season_matches(season_id), to: MatchManagement
+
+  @impl true
   defdelegate create_match(host_id), to: MatchManagement
 
   @impl true

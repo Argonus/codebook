@@ -4,6 +4,7 @@ defmodule Checkers.Matches.Behaviour do
   """
   @type user_id :: non_neg_integer()
   @type match_id :: String.t()
+  @type season_id :: String.t()
   @type match :: Checkers.Matches.MatchStruct.t()
   @type color :: :black | :white
 
@@ -11,6 +12,11 @@ defmodule Checkers.Matches.Behaviour do
   Returns match if exists
   """
   @callback get_match(match_id) :: {:ok, match} | {:error, :not_found}
+
+  @doc """
+  Returns all matches for given season
+  """
+  @callback get_season_matches(season_id) :: [match]
 
   @doc """
   Creates a match for given host.

@@ -8,6 +8,9 @@ defmodule Checkers.Matches do
   def get_match(match_id), do: impl().get_match(match_id)
 
   @impl true
+  def get_season_matches(season_id), do: impl().get_season_matches(season_id)
+
+  @impl true
   def create_match(host_id), do: impl().create_match(host_id)
 
   @impl true
