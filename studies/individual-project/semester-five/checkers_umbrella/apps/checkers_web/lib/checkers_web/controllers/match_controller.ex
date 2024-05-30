@@ -11,8 +11,6 @@ defmodule CheckersWeb.MatchController do
 
     case Matches.create_match(current_user.id) do
       {:ok, match} ->
-        {:ok, current_season} = get_current_season()
-
         conn
         |> put_flash(:info, "Match created")
         |> redirect(to: Routes.page_path(conn, :home))
@@ -31,19 +29,25 @@ defmodule CheckersWeb.MatchController do
     case Matches.join_match(match_id, current_user.id) do
       {:ok, _match} ->
         conn
-        |> put_flash(:info, "Match created")
+        |> put_flash(:info, "Joined to match")
         |> redirect(to: Routes.page_path(conn, :home))
 
       {:error, :not_found} ->
         conn
-        |> put_flash(:info, "Match not found")
+        |> put_flash(:error, "Match not found")
         |> redirect(to: Routes.page_path(conn, :home))
 
-      {:error, _reason} ->
+      {:error, changeset = %Ecto.Changeset{}} ->
+        error = fetch_changeset_errors(changeset)
+
         conn
-        |> put_flash(:error, "Failed to join to match")
+        |> put_flash(:error, error)
         |> redirect(to: Routes.page_path(conn, :home))
     end
+  end
+
+  defp fetch_changeset_errors(changeset) do
+    changeset.errors |> hd |> elem(1) |> elem(0)
   end
 
   def delete(conn, params) do

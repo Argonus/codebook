@@ -22,7 +22,7 @@ defmodule Checkers.Matches.Behaviour do
   Creates a match for given host.
   Match is created with basic attributes
   """
-  @callback create_match(user_id) :: {:ok, match} | {:error, Ecto.Changeset.t()}
+  @callback create_match(user_id) :: {:ok, match} | {:error, :no_current_season | Ecto.Changeset.t()}
 
   @doc """
   Assigns another player to match

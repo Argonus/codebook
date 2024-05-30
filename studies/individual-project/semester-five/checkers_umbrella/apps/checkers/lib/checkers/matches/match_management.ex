@@ -16,27 +16,26 @@ defmodule Checkers.Matches.MatchManagement do
   end
 
   def get_season_matches(season_id) do
-    import Ecto.Query
+    import Ecto.Query, only: [from: 2]
 
-    from(
-      m in MatchSchema,
-      inner_join: ms in MatchSeasonSchema,
-      on: m.id == ms.match_id,
-      where: ms.season_id == ^season_id
-    )
+    from(m in MatchSchema, where: m.season_id == ^season_id)
     |> Repo.all()
     |> Enum.map(&MatchStruct.build_from_schema/1)
   end
 
   def create_match(host_id) do
-    Ecto.Multi.new()
-    |> Ecto.Multi.insert(:match, MatchSchema.init_changeset(host_id))
-    |> Ecto.Multi.insert(:season_assignment, fn %{match: match} ->
-      {:ok, current_season} = Checkers.Seasons.get_current_season()
-      MatchSeasonSchema.changeset(%{match_id: match.id, season_id: current_season.season_id})
-    end)
-    |> Repo.transaction()
-    |> parse_repo_response()
+    case Checkers.Seasons.get_current_season() do
+      {:error, _} ->
+        {:error, :no_current_season}
+
+      {:ok, season} ->
+        season_id = season.season_id
+
+        host_id
+        |> MatchSchema.init_changeset(season_id)
+        |> Repo.insert()
+        |> parse_repo_response()
+    end
   end
 
   # ----------------------------------------------------------------

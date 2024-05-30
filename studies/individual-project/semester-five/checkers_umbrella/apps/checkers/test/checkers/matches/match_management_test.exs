@@ -27,6 +27,31 @@ defmodule Checkers.Matches.MatchManagementTest do
     end
   end
 
+  describe "get_season_matches/1" do
+    setup do
+      season = insert(:season)
+
+      {:ok, season: season}
+    end
+
+    test "returns all matches for a season", %{season: season} do
+      match = insert(:match, season_id: season.id)
+      [result] = get_season_matches(season.id)
+
+      assert result == MatchStruct.build_from_schema(match)
+    end
+
+    test "returns empty list when no matches for a season", %{season: season} do
+      assert get_season_matches(season.id) == []
+    end
+
+    test "filters matches by season", %{season: season} do
+      other_season = insert(:season)
+      _match = insert(:match, season_id: other_season.id)
+      assert get_season_matches(season.id) == []
+    end
+  end
+
   describe "create_match/1" do
     setup do
       season = insert(:season)

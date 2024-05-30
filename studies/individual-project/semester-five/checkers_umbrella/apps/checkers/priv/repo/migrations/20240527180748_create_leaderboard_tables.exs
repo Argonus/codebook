@@ -14,6 +14,12 @@ defmodule Checkers.Repo.Migrations.CreateLeaderboardTables do
     create index(:seasons, [:start_datetime_utc, "end_datetime_utc DESC"])
     create index(:seasons, :season_number, unique: true)
 
+    alter table(:matches) do
+      add :season_id, references(:seasons, type: :uuid)
+    end
+
+    create index(:matches, :season_id)
+
     # References as this is required
     create table(:user_seasons, primary_key: false) do
       add :user_id, references(:users), primary_key: true
@@ -24,13 +30,5 @@ defmodule Checkers.Repo.Migrations.CreateLeaderboardTables do
     end
 
     create index(:user_seasons, :rating)
-
-    # References as this is required
-    create table(:match_seasons, primary_key: false) do
-      add :match_id, references(:matches, type: :uuid), primary_key: true
-      add :season_id, references(:seasons, type: :uuid), primary_key: true
-
-      timestamps()
-    end
   end
 end

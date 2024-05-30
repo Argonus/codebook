@@ -6,14 +6,19 @@ defmodule Checkers.Schemas.MatchTest do
   alias Checkers.Schemas.Match
 
   describe "init_changeset/1" do
-    test "returns a changeset with the correct attributes" do
-      changeset = Match.init_changeset(1)
+    setup do
+      season = insert(:season)
+      {:ok, season_id: season.id}
+    end
+
+    test "returns a changeset with the correct attributes", %{season_id: season_id} do
+      changeset = Match.init_changeset(1, season_id)
 
       assert changeset.valid?
     end
 
-    test "creates match with valid attributes" do
-      changeset = Match.init_changeset(2)
+    test "creates match with valid attributes", %{season_id: season_id} do
+      changeset = Match.init_changeset(2, season_id)
       match = Repo.insert!(changeset)
 
       assert match.host_id == 2
@@ -21,11 +26,18 @@ defmodule Checkers.Schemas.MatchTest do
       assert match.moves == %{}
     end
 
-    test "return error when host_id is nil" do
-      changeset = Match.init_changeset(nil)
+    test "return error when host_id is nil", %{season_id: season_id} do
+      changeset = Match.init_changeset(nil, season_id)
 
       {:error, changeset} = Repo.insert(changeset)
       assert {"can't be blank", [validation: :required]} = changeset.errors[:host_id]
+    end
+
+    test "return error when season_id is nil" do
+      changeset = Match.init_changeset(1, nil)
+
+      {:error, changeset} = Repo.insert(changeset)
+      assert {"can't be blank", [validation: :required]} = changeset.errors[:season_id]
     end
   end
 

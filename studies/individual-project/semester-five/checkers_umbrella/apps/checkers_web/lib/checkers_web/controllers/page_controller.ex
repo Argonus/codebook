@@ -1,6 +1,6 @@
 defmodule CheckersWeb.PageController do
   use CheckersWeb, :controller
-
+  require Logger
   alias Checkers.Matches
   alias Checkers.Seasons
 

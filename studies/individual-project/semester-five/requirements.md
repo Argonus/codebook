@@ -19,8 +19,8 @@ Kod programów, skrypty, itp. może zostać spakowany zip. Pefix nazwy archiwum 
 Na ocenę bardzo dobrą dodatkowe zadania opisane poniżej
 
 *******************Na ocenę dst****************************************************************************
-Nazwa projektu
-Spis wymagań funkcjonalnych i pozafunkcjonalnych
+[x] Nazwa projektu
+[x] Spis wymagań funkcjonalnych i pozafunkcjonalnych 
 
 Przygotowanie projektu obejmującego diagramy: przypadków użycia DCU , przepływu danych DFD, związków encji ERD.
 Diagramy można przygotować np. w Visio,
@@ -28,13 +28,13 @@ https://www.diagrams.net
 https://www.umlet.com
 https://pl.wikipedia.org/wiki/Lista_narz%C4%99dzi_UML#Narz%C4%99dzia_UML
 
-Na podstawie wymagań funkcjonalnych należy przygotować diagram przypadków użycia CUD
+[x] Na podstawie wymagań funkcjonalnych należy przygotować diagram przypadków użycia CUD
 https://pl.wikipedia.org/wiki/Diagram_przypadk%C3%B3w_u%C5%BCycia
 
-Na podstawie diagramu przypadków użycia należy przygotować diagram przepływu danych DFD (kontekstowy, poziomu 0 i diagramy DFD uszczegółowienia przepływów z diagramu 0)
+[x] Na podstawie diagramu przypadków użycia należy przygotować diagram przepływu danych DFD (kontekstowy, poziomu 0 i diagramy DFD uszczegółowienia przepływów z diagramu 0)
 https://pl.wikipedia.org/wiki/Diagram_przep%C5%82ywu_danych
 
-Na podstawie magazynów w diagramach przepływu danych należy przygotować diagram związków encji ERD
+[x] Na podstawie magazynów w diagramach przepływu danych należy przygotować diagram związków encji ERD
 https://pl.wikipedia.org/wiki/Diagram_zwi%C4%85zk%C3%B3w_encji
 
 Istnieje możliwość przygotowania minimum trzech innych diagramów po wcześniejszym uzyskaniu zgody wykładowcy.

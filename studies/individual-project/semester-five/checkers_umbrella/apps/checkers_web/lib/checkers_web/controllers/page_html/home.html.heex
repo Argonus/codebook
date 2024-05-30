@@ -6,6 +6,13 @@
            <h2 class="text-2xl font-bold mb-4">Active Matches</h2>
            <ul>
              <%= for match <- @active_matches do %>
+                <form action={"/matches/#{match.id}/join"} method="post">
+                  <input type="hidden" name="_method" value="patch">
+                  <input type="hidden" name="_csrf_token" value={ get_csrf_token() }>
+                  <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-green-600">
+                    Join Match
+                  </button>
+                </form>
              <% end %>
            </ul>
          </div>

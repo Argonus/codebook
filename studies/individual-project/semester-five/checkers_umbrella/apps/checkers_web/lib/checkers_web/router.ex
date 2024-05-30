@@ -28,8 +28,9 @@ defmodule CheckersWeb.Router do
 
     get "/", PageController, :home
 
-    resources "/matches", MatchController, only: [:new, :create, :delete]
-    patch "/matches/:match_id/join", MatchController, :join
+    resources "/matches", MatchController, only: [:new, :create, :delete] do
+      patch "/join", MatchController, :join
+    end
   end
 
   # Other scopes may use custom stacks.
