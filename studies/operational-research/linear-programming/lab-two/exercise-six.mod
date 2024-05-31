@@ -63,7 +63,7 @@ var zJ >= 0, <= tJ - pJ integer;
 
 
 # Part One
-minimize Koszt: cMax;
+minimize TimeAndCost: T + 0.001 * cMax;
 # A related
 subject to req_xB: xB >= xA + tA - zA;
 subject to req_xF: xF >= xA + tA - zA;
@@ -88,6 +88,5 @@ subject to req_xD: xD >= xE + tE - zE;
 subject to req_T1: T >= xD + tD - zD;
 subject to req_T2: T >= xJ + tJ - zJ;
 # Cost
-subject to req_T: T = 33;
-subject to req_C: cMax = zA * cA + zB * cB + zC * cC + zD * cD + zE * cE + zF * cF + zG * cG + zH * cH + zI * cI + zJ * cJ;
-
+subject to req_T: T = 13;
+subject to req_cMax: cMax = zA * cA + zB * cB + zC * cC + zD * cD + zE * cE + zF * cF + zG * cG + zH * cH + zI * cI + zJ * cJ;
