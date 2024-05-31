@@ -31,6 +31,9 @@ defmodule CheckersWeb.Router do
     resources "/matches", MatchController, only: [:new, :create, :delete] do
       patch "/join", MatchController, :join
     end
+
+    live "/matches/:id", MatchLive.Show, :show
+    live "/matches/:id/show/edit", MatchLive.Show, :edit
   end
 
   # Other scopes may use custom stacks.

@@ -10,7 +10,7 @@ defmodule CheckersWeb.MatchController do
     current_user = Pow.Plug.current_user(conn)
 
     case Matches.create_match(current_user.id) do
-      {:ok, match} ->
+      {:ok, _match} ->
         conn
         |> put_flash(:info, "Match created")
         |> redirect(to: Routes.page_path(conn, :home))
@@ -27,10 +27,10 @@ defmodule CheckersWeb.MatchController do
     match_id = Map.get(params, "match_id")
 
     case Matches.join_match(match_id, current_user.id) do
-      {:ok, _match} ->
+      {:ok, match} ->
         conn
         |> put_flash(:info, "Joined to match")
-        |> redirect(to: Routes.page_path(conn, :home))
+        |> redirect(to: Routes.match_show_path(conn, :show, match.id))
 
       {:error, :not_found} ->
         conn
