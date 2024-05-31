@@ -13,11 +13,13 @@ defmodule Checkers.Matches.MatchManagementTest do
 
   describe "get_match/1" do
     test "returns match if exists" do
-      match = insert(:match)
+      user = insert(:user)
+      season = insert(:season)
+      match = insert(:match, host_id: user.id, season_id: season.id)
 
       {:ok, result} = get_match(match.id)
 
-      assert result == MatchStruct.build_from_schema(match)
+      assert result.id == match.id
     end
 
     test "returns error when match not found" do

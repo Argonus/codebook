@@ -4,15 +4,26 @@ defmodule Checkers.Matches.MatchManagement do
 
   alias Checkers.Matches.MatchStruct
   alias Checkers.Repo
-
   alias Checkers.Schemas.Match, as: MatchSchema
-  alias Checkers.Schemas.MatchSeason, as: MatchSeasonSchema
 
   def get_match(match_id) do
-    case Repo.get_by(MatchSchema, id: match_id) do
+    case Repo.one(match_query(match_id)) do
       nil -> {:error, :not_found}
       match -> {:ok, MatchStruct.build_from_schema(match)}
     end
+  end
+
+  defp match_query(match_id) do
+    import Ecto.Query, only: [from: 2]
+
+    from(
+      m in MatchSchema,
+      inner_join: s in assoc(m, :season),
+      inner_join: h in assoc(m, :host),
+      left_join: p in assoc(m, :player),
+      preload: [host: h, player: p, season: s],
+      where: m.id == ^match_id
+    )
   end
 
   def get_season_matches(season_id) do

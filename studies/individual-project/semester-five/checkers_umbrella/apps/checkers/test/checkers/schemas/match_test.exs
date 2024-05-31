@@ -43,14 +43,16 @@ defmodule Checkers.Schemas.MatchTest do
 
   describe "join_changeset/2" do
     test "creates valid changeset" do
-      match = insert(:match)
+      user = insert(:user)
+      match = insert(:match, host_id: user.id)
       changeset = Match.join_changeset(match, 2)
 
       assert changeset.valid?
     end
 
     test "updates match with valid attributes" do
-      match = insert(:match)
+      user = insert(:user)
+      match = insert(:match, host_id: user.id)
       changeset = Match.join_changeset(match, 2)
       match = Repo.update!(changeset)
 

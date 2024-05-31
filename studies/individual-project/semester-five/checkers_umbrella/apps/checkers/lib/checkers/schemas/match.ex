@@ -11,10 +11,11 @@ defmodule Checkers.Schemas.Match do
   @primary_key {:id, :binary_id, autogenerate: true}
   schema "matches" do
     # Relationships
-    field :host_id, :integer
-    field :player_id, :integer
+    belongs_to :host, Checkers.Schemas.User
+    belongs_to :player, Checkers.Schemas.User
+    belongs_to :season, Checkers.Schemas.Season, foreign_key: :season_id, references: :id, type: :binary_id
+
     field :winner_id, :integer
-    field :season_id, :binary_id
     # Game State
     field :status, Ecto.Enum, values: ~w(initialized pending completed)a
     field :host_color, Ecto.Enum, values: ~w(black white)a
@@ -49,7 +50,7 @@ defmodule Checkers.Schemas.Match do
       cond do
         new_val == match.host_id -> [player_id: "Player cannot be the same as host"]
         !is_nil(match.player_id) -> [player_id: "Player already assigned"]
-        true -> :ok
+        true -> []
       end
     end)
     |> validate_required([:player_id])
