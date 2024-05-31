@@ -113,7 +113,9 @@ defmodule CheckersWeb.AuthHelper do
     case Pow.Store.CredentialsCache.get([backend: backend], key) do
       {user, _} ->
         {:ok, user}
-      _ -> :not_found
+
+      _ ->
+        :not_found
     end
   end
 end
