@@ -10,7 +10,7 @@
         <%= for cell <- row do %>
           <td id={ cell.id } class={ "#{cell.color}_square"} >
             <%= if cell.pawn do %>
-              <img src={ "/images/#{ .png" } alt={ cell.piece } />
+              <img src={ "/images/#{cell.pawn}_pawn.png" } alt={ cell.pawn } />
             <% end %>
           </td>
         <% end %>

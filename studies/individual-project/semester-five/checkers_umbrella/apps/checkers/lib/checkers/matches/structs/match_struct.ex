@@ -8,7 +8,9 @@ defmodule Checkers.Matches.MatchStruct do
   @type color :: :black | :white | nil
   @type status :: :initialized | :pending | nil
   @type name :: String.t() | nil
-  @type board :: any()
+  @type pawn :: :black | :white | nil
+  @type field :: %{id: String.t(), color: color, pawn: pawn}
+  @type board :: list(list(field))
 
   typedstruct do
     @typedoc "A match"
@@ -37,7 +39,7 @@ defmodule Checkers.Matches.MatchStruct do
       player_name: fetch_login(match_schema.player),
       player_color: opposite_color(match_schema.host_color),
       status: match_schema.status,
-      board: build_board()
+      board: build_board(match_schema.moves)
     }
   end
 
@@ -47,16 +49,5 @@ defmodule Checkers.Matches.MatchStruct do
   defp fetch_login(%{login: login}), do: login
   defp fetch_login(_), do: nil
 
-  defp build_board() do
-    Enum.map(0..7, fn row ->
-      Enum.map(0..7, fn col ->
-        color = calculate_color(row, col)
-        field(row, col, color)
-      end)
-    end)
-  end
-
-  defp calculate_color(row, col), do: if((row + col) |> rem(2) == 0, do: :black, else: :white)
-
-  defp field(row, col, color), do: %{id: "#{row}x#{col}", color: color, pawn: nil}
+  defp build_board(map) when map_size(map) == 0, do: draw_initial_board()
 end
