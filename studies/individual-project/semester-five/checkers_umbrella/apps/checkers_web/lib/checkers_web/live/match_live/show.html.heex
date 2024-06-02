@@ -1,0 +1,20 @@
+<.header>
+  Season <%= @match.season_number %>
+  <:subtitle>Match between <%= @match.host_name %> and <%= @match.player_name || "Unknown" %>.</:subtitle>
+</.header>
+
+<div id="match-table">
+  <table class="w-[40rem] mt-11 sm:w-full">
+    <%= for row <- @match.board do %>
+      <tr>
+        <%= for cell <- row do %>
+          <td id={ cell.id } class={ "#{cell.color}_square"} >
+            <%= if cell.pawn do %>
+              <img src={ "/images/#{cell.pawn}_pawn.png" } alt={ cell.pawn } />
+            <% end %>
+          </td>
+        <% end %>
+      </tr>
+    <% end %>
+  </table>
+</div>
