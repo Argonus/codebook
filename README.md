@@ -9,3 +9,6 @@ Languages is whatever I'd like to use, core here is materials & exercises about 
 
 ## Studies
 Exercises I've done for WWSI studies. 
+
+ta - za = pa
+ta - pa = za
