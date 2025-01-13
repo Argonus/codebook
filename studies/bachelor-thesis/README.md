@@ -11,10 +11,11 @@ Folder `data-analysis` contains the Jupyter Notebooks used to analyze the data a
 that can be used in the study later. Thanks to this, we can easily find outliers, missing data, and other
 data issues that may affect the study.
 
-#### Run the Jupyter
+#### Run Data Analysis
 
 To run the Jupyter Notebooks, you need to have Python installed on your machine.
 
 ```bash
-
+$ cd data-analysis
+$ python -m notebook
 ```
