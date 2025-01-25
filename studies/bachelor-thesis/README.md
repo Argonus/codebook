@@ -19,3 +19,10 @@ To run the Jupyter Notebooks, you need to have Python installed on your machine.
 $ cd data-analysis
 $ python -m notebook
 ```
+
+### Run Data Preparations
+
+This chapter covers data preprocesings:
+- Filtering based on data analysis results
+- Transforming to TF record 
+- Storing in new format
