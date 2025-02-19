@@ -1,7 +1,7 @@
 import os
 import numpy as np
 
-from src.image_utils import get_image_array, get_image_bytes, calculate_ssim, resize_image
+from src.data.image_utils import get_image_array, get_image_bytes, calculate_ssim, resize_image
 
 def test_get_image_array():
     dirname = os.path.dirname(__file__)

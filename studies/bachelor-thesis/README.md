@@ -1,28 +1,49 @@
+# Chest X-Ray Image Classification
+
 ## Overview
 
-### Data
+This project implements a deep learning system for automated chest X-ray image classification using TensorFlow. The system is designed to identify multiple pathological conditions from X-ray images using state-of-the-art deep learning techniques.
 
-Folder `data` contains the data used in the study, coming from `nih-dataset` repository, which
-is one of the biggest open source available data repositories for medical images.
+## Project Structure
 
-### Data Analysis
-
-Folder `data-analysis` contains the Jupyter Notebooks used to analyze the data and generate the plots
-that can be used in the study later. Thanks to this, we can easily find outliers, missing data, and other
-data issues that may affect the study.
-
-#### Run Data Analysis
-
-To run the Jupyter Notebooks, you need to have Python installed on your machine.
-
-```bash
-$ cd data-analysis
-$ python -m notebook
+```
+├── src/                    # Source code
+│   ├── tensorflow_utils.py # TensorFlow utilities and data processing
+│   ├── image_utils.py      # Image processing utilities
+│   ├── data_entry_utils.py # Data entry and preprocessing
+│   └── consts.py           # Project constants
+├── datasets/               # Dataset directory
+│   ├── raw-data/           # Original NIH dataset
+│   ├── cleared-data/       # Preprocessed dataset
+│   └── tfrecord-dataset/   # TFRecord format dataset
+└── notebooks/          # Jupyter notebooks
+    ├── DataAnalysis.ipynb # Jupyter notebook for data analysis
+    ├── DataFiltering.ipynb # Jupyter notebook for data filtering
+    ├── DataStorage.ipynb # Jupyter notebook for data storage
+    ├── ModelTraining.ipynb # Jupyter notebook for model training
 ```
 
-### Run Data Preparations
+## Features
 
-This chapter covers data preprocesings:
-- Filtering based on data analysis results
-- Transforming to TF record 
-- Storing in new format
+- Data Analysis and Visualization of findings in raw dataset
+- Data Filtering and Preprocessing of a dataset to match model needs
+- Data Storage as TFRecord format for model training
+- Model Training and Evaluation
+
+## Prerequisites
+
+- Python 3.8+
+- TensorFlow 2.x
+
+## Installation
+
+1. Clone the repository:
+```bash
+git clone [repository-url]
+cd [repository-name]
+```
+
+## Data
+
+The project uses the NIH Chest X-ray Dataset, one of the largest publicly available collections of chest X-ray images. The dataset contains over 100,000 X-ray images with multiple pathological conditions.
+

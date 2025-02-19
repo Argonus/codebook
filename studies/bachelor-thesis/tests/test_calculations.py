@@ -1,4 +1,4 @@
-from src.calculations import standard_deviation_bounds
+from src.utils.calculations import standard_deviation_bounds
 import pytest
 
 def test_three_standard_deviation_bounds():

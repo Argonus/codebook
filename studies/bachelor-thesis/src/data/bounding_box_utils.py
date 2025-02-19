@@ -7,10 +7,10 @@ def extract_bbox_data(bounding_boxes_df: pd.DataFrame, image_index: str) -> dict
         box_label = bbox["Finding Label"].iloc[0]
         return {
             "bbox_finding_label": box_label,
-            "x_coords": float(bbox["x"].iloc[0]),
-            "y_coords": float(bbox["y"].iloc[0]),
-            "widths": float(bbox["w"].iloc[0]),
-            "heights": float(bbox["h"].iloc[0])
+            "x": float(bbox["x"].iloc[0]),
+            "y": float(bbox["y"].iloc[0]),
+            "w": float(bbox["w"].iloc[0]),
+            "h": float(bbox["h"].iloc[0])
         }
     else:
         return {}

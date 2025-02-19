@@ -1,6 +1,6 @@
 import pytest
 import tensorflow as tf
-from src.tensorflow_utils import to_bytes_feature, to_float_feature, to_int64_feature
+from src.model.tensorflow_utils import to_bytes_feature, to_float_feature, to_int64_feature
 
 # Tests for to_bytes_feature
 def test_to_bytes_feature_with_string():

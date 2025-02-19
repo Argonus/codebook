@@ -1,6 +1,6 @@
 import pandas as pd
 from typing import Tuple
-from src.calculations import standard_deviation_bounds
+from src.utils.calculations import standard_deviation_bounds
 
 def remove_age_outliers(data: pd.DataFrame, n_std: int = 3) -> Tuple[pd.DataFrame, float]:
     """

@@ -1,7 +1,7 @@
 import pytest
 import pandas as pd
 
-from src.data_entry_utils import extract_patient_info, extract_image_info
+from src.data.data_entry_utils import extract_patient_info, extract_image_info
 
 @pytest.fixture
 def sample_row():

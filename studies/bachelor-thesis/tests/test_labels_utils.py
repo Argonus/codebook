@@ -1,8 +1,6 @@
 import pytest
-from typing import List
-
 # Import the functions you want to test
-from src.labels_utils import encode_labels, decode_labels
+from src.data.labels_utils import encode_labels, decode_labels
 
 def test_encode_labels_basic():
     labels = ["No Finding", "Atelectasis", "Cardiomegaly"]
