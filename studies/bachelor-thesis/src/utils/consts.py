@@ -13,6 +13,7 @@ import os
 CURRENT_DIR: str = os.path.dirname(os.path.abspath(__file__))
 PROJECT_ROOT: str = os.path.abspath(os.path.join(CURRENT_DIR, os.pardir, os.pardir))
 DATASETS_PATH: str = os.path.join(PROJECT_ROOT, "datasets")
+MODELS_PATH: str = os.path.join(PROJECT_ROOT, "models")
 """Path to the datasets directory in project root"""
 
 # Dataset Paths
@@ -25,6 +26,13 @@ CLEARED_DATASET: str = os.path.join(DATASETS_PATH, 'cleared-data', 'nih-dataset'
 
 TF_RECORD_DATASET: str = os.path.join(DATASETS_PATH, 'tfrecord-dataset', 'nih-dataset')
 """Path to the TFRecord format dataset ready for model training"""
+
+# Dataset Metadata
+# ----------------
+NUM_CLASSES: int = 15
+"""Number of classes in the dataset"""
+DATASET_SIZE = 102697
+"""Total number of samples in the dataset"""
 
 # TensorFlow Configuration
 # ----------------------

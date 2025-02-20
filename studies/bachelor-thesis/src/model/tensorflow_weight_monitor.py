@@ -8,7 +8,7 @@ class WeightMonitor(Callback):
     def __init__(self, logger: logging.Logger):
         self.logger = logger
 
-    def on_epoch_start(self, epoch, logs=None):
+    def on_epoch_begin(self, epoch, logs=None):
         weights = []
         for layer in self.model.layers:
             if isinstance(layer, tf.keras.layers.Conv2D):
