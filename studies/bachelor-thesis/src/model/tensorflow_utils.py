@@ -2,17 +2,19 @@ import tensorflow as tf
 import matplotlib.pyplot as plt
 import logging
 import numpy as np
+import pandas as pd
+import logging
 
 from tqdm import tqdm
 from typing import Union, List
 from tensorflow.keras.metrics import BinaryAccuracy, Precision, Recall, F1Score, AUC
 
-from src.utils.consts import DENSENET_IMAGE_SIZE, IMAGENET_MEAN, IMAGENET_STD, NUM_CLASSES
+from src.utils.consts import DENSENET_IMAGE_SIZE, IMAGENET_MEAN, IMAGENET_STD, NUM_CLASSES, TF_RECORD_DATASET
 
 from src.model.tensorflow_logger import TrainingLogger
-from src.model.tensorflow_weight_monitor import WeightMonitor
-from src.model.tensorflow_csv_metrics_logger import CSVMetricsLogger
-from src.model.tensorflow_log_filter import LogFilter
+
+from src.model.monitors.tensorflow_loss_monitor import LossAnalysisMonitor
+from src.model.monitors.tensorflow_metrics_monitor import MetricsMonitor
 
 # ------------------------------------------------------------------------------
 # Tensorflow Features Utils
@@ -352,8 +354,6 @@ def extract_first_record(dataset: tf.data.Dataset) -> (tf.Tensor, tf.Tensor):
 def setup_logger() -> logging.Logger:
     logger = logging.getLogger(__name__)
     logger.setLevel(logging.INFO)
-    logger.addFilter(LogFilter())
-    tf.get_logger().addFilter(LogFilter())
     
     # Create formatters and handlers
     formatter = logging.Formatter(
@@ -386,20 +386,32 @@ def setup_training_logger(logger: logging.Logger, batch_size: int, log_interval:
     """
     return TrainingLogger(logger, batch_size, log_interval)
 
-def setup_weight_monitor(logger: logging.Logger) -> WeightMonitor:
-    """
-    Setup Weight Monitor, that will log weights in model training
-    :param logger:
-    :return:
-    """
-    return WeightMonitor(logger)
-
-def setup_metrics_logger(output_dir: str, output_file: str) -> CSVMetricsLogger:
+def setup_metrics_monitor(output_dir: str, model_name: str, logger: logging.Logger) -> MetricsMonitor:
     """
     Setup CSV Metrics Logger that will save training metrics to CSV files.
     This will be used to log metrics during training, and load them later for analysis.
     """
-    return CSVMetricsLogger(output_dir, output_file)
+    return MetricsMonitor(output_dir, model_name, logger)
+
+def setup_loss_monitor(output_dir: str, model_name: str, logger: logging.Logger, val_ds: tf.data.Dataset) -> LossAnalysisMonitor:
+    """
+    Setup Loss Monitor, that will log losses in model training.
+    :param logger: Logger instance for real-time logging
+    :param output_dir: Directory to save metrics
+    :param model_name: Name of the model (used for file naming)
+    :param val_ds: Validation dataset for gradient analysis
+    :return: LossAnalysisMonitor instance configured to track and save detailed metrics
+    """
+    label_mappings = pd.read_csv(f"{TF_RECORD_DATASET}/label_mappings.csv")
+    label_names = label_mappings["Label"].tolist()
+
+    return LossAnalysisMonitor(
+        output_dir=output_dir,
+        model_name=model_name,
+        logger=logger,
+        validation_data=val_ds,
+        class_names=label_names
+    )   
 
 def get_metrics(threshold: float=0.5):
     """

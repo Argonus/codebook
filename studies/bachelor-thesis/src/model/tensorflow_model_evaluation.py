@@ -117,7 +117,7 @@ class ModelEvaluation:
         plt.xlabel('Predicted Label')
         plt.tight_layout()
         
-        save_path = os.path.join(self.output_dir, f'{self.model_name}_combined_confusion_matrix.png')
+        save_path = os.path.join(self.output_dir, 'combined_confusion_matrix.png')
         plt.savefig(save_path, bbox_inches='tight', dpi=300)
         plt.close()
         print(f"Saved combined confusion matrix to: {save_path}")
