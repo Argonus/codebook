@@ -8,27 +8,77 @@ import logging
 
 
 class LossAnalysisMonitor(Callback):
-    def __init__(self, output_dir: str, model_name: str, logger: logging.Logger, validation_data: tf.data.Dataset, class_names: list[str]):
+    def __init__(self, output_dir: str, model_name: str, logger: logging.Logger, validation_data: tf.data.Dataset, 
+                 class_names: list[str], resume_training: bool = False, initial_epoch: int = 0):
         """
         :param validation_data: Validation dataset to analyze
         :param class_names: List of class names
         :param output_dir: Directory to save metrics
         :param model_name: Name of the model (used for file naming)
         :param logger: Logger instance for real-time logging
+        :param resume_training: Whether this is a resumed training run (if True, preserves existing files)
+        :param initial_epoch: Epoch to start from when resuming (used to clean up data from this epoch and beyond)
         """
         super().__init__()
         self.validation_data = validation_data
         self.class_names = class_names
         self.logger = logger
+        self.resume_training = resume_training
+        self.initial_epoch = initial_epoch
 
         self.output_dir = f"{output_dir}/{model_name}"
         os.makedirs(self.output_dir, exist_ok=True)
 
         self.metrics_file = os.path.join(self.output_dir, "loss_analysis_metrics.csv")
+        
+        # Initialize metrics file (and clean up if resuming)
+        if self.resume_training and self.initial_epoch > 0:
+            self._cleanup_existing_records()
         self.init_metrics_file()
         
+    def _cleanup_existing_records(self):
+        """Clean up metrics data from initial_epoch and beyond when resuming training."""
+        try:
+            if os.path.exists(self.metrics_file):
+                temp_file = self.metrics_file + '.temp'
+                kept_records = 0
+                
+                with open(self.metrics_file, 'r') as infile, open(temp_file, 'w', newline='') as outfile:
+                    reader = csv.reader(infile)
+                    writer = csv.writer(outfile)
+                    
+                    # Copy the header row
+                    header = next(reader)
+                    writer.writerow(header)
+                    
+                    # Process rows - group them by epoch for loss analysis (since we have multiple rows per epoch)
+                    rows_by_epoch = {}
+                    for row in reader:
+                        epoch = int(row[0])  # epoch is the first column
+                        if epoch not in rows_by_epoch:
+                            rows_by_epoch[epoch] = []
+                        rows_by_epoch[epoch].append(row)
+                    
+                    # Only keep rows where epoch < initial_epoch
+                    for epoch, rows in sorted(rows_by_epoch.items()):
+                        if epoch < self.initial_epoch:
+                            for row in rows:
+                                writer.writerow(row)
+                                kept_records += 1
+                
+                # Replace the original file with the cleaned version
+                os.replace(temp_file, self.metrics_file)
+                self.logger.info(f"Cleaned loss analysis metrics file, kept {kept_records} records before epoch {self.initial_epoch}")
+        except Exception as e:
+            self.logger.error(f"Error cleaning up existing records: {str(e)}")
+            
     def init_metrics_file(self):
         """Initialize CSV file with headers."""
+        # If resuming training and the file exists, don't reinitialize
+        if self.resume_training and os.path.exists(self.metrics_file):
+            self.logger.info(f"Resuming from existing loss analysis file: {self.metrics_file}")
+            return
+            
         headers = [
             'epoch', 
             'timestamp', 

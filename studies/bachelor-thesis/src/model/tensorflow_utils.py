@@ -1,3 +1,6 @@
+import os 
+
+import numpy as np
 import tensorflow as tf
 import matplotlib.pyplot as plt
 import logging
@@ -11,10 +14,13 @@ from tensorflow.keras.metrics import BinaryAccuracy, Precision, Recall, F1Score,
 
 from src.utils.consts import DENSENET_IMAGE_SIZE, IMAGENET_MEAN, IMAGENET_STD, NUM_CLASSES, TF_RECORD_DATASET
 
-from src.model.tensorflow_logger import TrainingLogger
+# Image Augmentation
+from src.model.tensorflow_image_augmentation import augment_xray
 
+from src.model.tensorflow_logger import TrainingLogger
 from src.model.monitors.tensorflow_loss_monitor import LossAnalysisMonitor
 from src.model.monitors.tensorflow_metrics_monitor import MetricsMonitor
+from src.model.tensorflow_garbage_collector import GarbageCollector
 
 # ------------------------------------------------------------------------------
 # Tensorflow Features Utils
@@ -156,106 +162,69 @@ def optimize_dataset(dataset, batch_size: int):
     return dataset.batch(batch_size).prefetch(tf.data.AUTOTUNE)
 
 # ------------------------------------------------------------------------------
-# Tensorflow Image Transform Utils
+# Data Oversampling
 # ------------------------------------------------------------------------------
-@tf.function
-def apply_augmentation(image: tf.Tensor, augmentation_func: callable, probability=0.5, *args, **kwargs) -> tf.Tensor:
-    """
-    Applies an augmentation function to an image with a given probability.
-    :param image: A 3-D tensor of shape [height, width, channels]
-    :param augmentation_func: Function to apply augmentation
-    :param probability: Probability of applying the augmentation
-    :params *args, **kwargs: Additional arguments to pass to augmentation_func
-    :return: A 3-D tensor of shape [height, width, channels]
+def get_sampling_rates(class_weights: dict, min_rate: float = 1.0, max_rate: float = 5.0) -> tf.Tensor:
     """    
-    return tf.cond(
-        tf.random.uniform([], 0, 1) < probability,
-        lambda: augmentation_func(image, *args, **kwargs),
-        lambda: image
-    )
+    :param class_weights: Dictionary mapping class indices to their respective weights
+    :param min_rate: Minimum sampling rate (default: 1.0)
+    :param max_rate: Maximum sampling rate (default: 5.0)
+    :return TensorFlow tensor of sampling rates
+    """
+    min_weight = min(class_weights.values())
+    max_weight = max(class_weights.values())
+    weight_range = max_weight - min_weight
+    
+    sampling_rates = []
+    for i in range(len(class_weights)):
+        if i == 10:
+            sampling_rates.append(min_rate)
+        else:
+            weight = class_weights[i]
+            if weight_range > 0:
+                norm_weight = (weight - min_weight) / weight_range
+                rate = min_rate + norm_weight * (max_rate - min_rate)
+            else:
+                rate = max_rate
+            sampling_rates.append(rate)
+    
+    return tf.constant(sampling_rates, dtype=tf.float32)
 
-@tf.function
-def random_brightness(image: tf.Tensor, max_delta: float = 0.2) -> tf.Tensor:
+def oversample_minority_classes(dataset: tf.data.Dataset, class_weights: dict, min_rate: float = 1.0, max_rate: float = 5.0) -> tf.data.Dataset:
     """
-    Apply random brightness adjustment.
-    Mimics: Variations in X-ray exposure settings or tissue absorption
+    Oversampling for minority classes with proportional sampling rates.
+    :param dataset: TensorFlow dataset containing (image, labels) pairs
+    :param class_weights: Dictionary mapping class indices to their respective weights
+    :param min_rate: Minimum sampling rate (default: 1.0)
+    :param max_rate: Maximum sampling rate (default: 5.0)   
+    :returns TensorFlow dataset with oversampled minority classes
     """
-    return tf.image.random_brightness(image, max_delta)
-
-@tf.function
-def random_contrast(image: tf.Tensor, lower: float = 0.5, upper: float = 1.5) -> tf.Tensor:
-    """
-    Apply random contrast adjustment.
-    Mimics: Differences in scanner contrast settings or patient body composition
-    """
-    return tf.image.random_contrast(image, lower, upper)
-
-@tf.function
-def random_shifting(image: tf.Tensor, minval: int = -10, maxval: int = 10) -> tf.Tensor:
-    """
-    Apply random shifting to a single image.
-    Mimics: Differences in scanner position or patient position
-    """
+    sampling_rates = get_sampling_rates(class_weights, min_rate, max_rate)
     
-    image = tf.expand_dims(image, 0)
-    dx = tf.random.uniform([], minval=minval, maxval=maxval, dtype=tf.float32)
-    dy = tf.random.uniform([], minval=minval, maxval=maxval, dtype=tf.float32)
+    def calculate_repeat_weights(x, y):
+        present_classes = tf.cast(tf.where(y > 0)[0], tf.int32)        
+        class_rates = tf.gather(sampling_rates, present_classes)
+        num_classes = tf.shape(present_classes)[0]
+        repeat_weight = tf.cond(
+            num_classes > 1,
+            lambda: tf.cast(tf.math.ceil(tf.reduce_max(class_rates) * 1.5), tf.int64),
+            lambda: tf.cast(tf.math.ceil(tf.reduce_max(class_rates)), tf.int64)
+        )
+        
+        # Ensure we have at least one repeat
+        repeat_weight = tf.maximum(repeat_weight, 1)
+        
+        return x, y, repeat_weight
     
-    transforms = tf.stack([
-        tf.ones_like(dx),
-        tf.zeros_like(dx),
-        dx,
-        tf.zeros_like(dy),
-        tf.ones_like(dy),
-        dy,
-        tf.zeros_like(dx),
-        tf.zeros_like(dx)
-    ])
-    transforms = tf.reshape(transforms, [1, 8])
-    input_shape = tf.shape(image)[1:3]
-    transformed = tf.raw_ops.ImageProjectiveTransformV3(
-        images=image,
-        transforms=transforms,
-        output_shape=input_shape,
-        interpolation="BILINEAR",
-        fill_mode="REFLECT",
-        fill_value=0.0
-    )
+    weighted_ds = dataset.map(calculate_repeat_weights, num_parallel_calls=tf.data.AUTOTUNE)
+    def repeat_sample(x, y, repeat_count):
+        sample_ds = tf.data.Dataset.from_tensors((x, y))
+        return sample_ds.repeat(repeat_count)
     
-    return tf.squeeze(transformed, 0)
-
-@tf.function
-def gaussian_noise(image: tf.Tensor, stddev: float = 0.2) -> tf.Tensor:
-    """
-    Apply Gaussian noise.
-    Mimics: Noise in the X-ray image
-    """
+    repeated_ds = weighted_ds.flat_map(repeat_sample)
+    shuffled_ds = repeated_ds.shuffle(buffer_size=10000, seed=42)
     
-    shape = image.shape
-    if shape.rank is None:
-        shape = tf.shape(image)
-    
-    noise = tf.random.normal(shape=shape, mean=0., stddev=stddev)
-    return tf.clip_by_value(image + noise, 0, 1)
-
-@tf.function
-def augment_xray(image: tf.Tensor) -> tf.Tensor:
-    """
-    Applies medical-safe augmentations to a chest X-ray image.
-    """
-    tf.debugging.assert_rank(image, 3, message="Input image must be a single image with shape [height, width, channels]")
-    
-    # Cast to float32
-    image = tf.cast(image, tf.float32)
-    
-    # Apply augmentations
-    image = apply_augmentation(image, random_brightness, probability=0.5)
-    image = apply_augmentation(image, random_contrast, probability=0.5)
-    image = apply_augmentation(image, random_shifting, probability=0.1)
-    image = apply_augmentation(image, gaussian_noise, probability=0.05)
-    
-    tf.debugging.assert_rank(image, 3, message="Output image must be a single image with shape [height, width, channels]")
-    return image
+    return shuffled_ds
 
 # ------------------------------------------------------------------------------
 # Statistics calculations
@@ -291,6 +260,42 @@ def show_class_weights(class_weights: dict) -> None:
         print(f"Class {class_idx}: {weight:.2f}")
 
     return None
+
+def analyze_class_distribution(dataset: tf.data.Dataset, num_classes: int) -> dict:
+    """
+    Analyzes class distribution in a multi-label dataset.
+    :param dataset: TensorFlow dataset containing (image, labels) pairs
+    :param num_classes: Number of classes (default 15)
+    :return class_distribution: Dictionary with class statistics
+    """
+    
+    labels_dataset = dataset.map(lambda x, y: y)
+    total_samples = 0
+    class_counts = np.zeros(num_classes)
+    
+    for labels in labels_dataset:
+        if len(labels.shape) == 1:
+            total_samples += 1
+            class_counts += labels.numpy()
+        else: 
+            total_samples += labels.shape[0]
+            class_counts += tf.reduce_sum(labels, axis=0).numpy()
+    
+    class_percentages = (class_counts / total_samples) * 100
+    class_distribution = {
+        'total_samples': total_samples,
+        'class_counts': class_counts,
+        'class_percentages': class_percentages,
+        'class_weights': (total_samples / (num_classes * class_counts)).astype(np.float32)
+    }
+    
+    # Print statistics
+    print(f"Total samples: {total_samples}")
+    print("\nClass distribution:")
+    for i in range(num_classes):
+        print(f"Class {i}: {class_counts[i]} samples ({class_percentages[i]:.2f}%), weight: {class_distribution['class_weights'][i]:.4f}")
+    
+    return class_distribution
 
 # ------------------------------------------------------------------------------
 # Visualisation Utils
@@ -386,20 +391,29 @@ def setup_training_logger(logger: logging.Logger, batch_size: int, log_interval:
     """
     return TrainingLogger(logger, batch_size, log_interval)
 
-def setup_metrics_monitor(output_dir: str, model_name: str, logger: logging.Logger) -> MetricsMonitor:
+def setup_metrics_monitor(output_dir: str, model_name: str, logger: logging.Logger, resume_training: bool = False, initial_epoch: int = 0) -> MetricsMonitor:
     """
     Setup CSV Metrics Logger that will save training metrics to CSV files.
     This will be used to log metrics during training, and load them later for analysis.
+    
+    :param output_dir: Directory to save metrics
+    :param model_name: Name of the model
+    :param logger: Logger instance
+    :param resume_training: Whether this is a resumed training run (if True, preserves existing files)
+    :param initial_epoch: Epoch to start from when resuming (used to clean up data from this epoch and beyond)
+    :return: MetricsMonitor instance
     """
-    return MetricsMonitor(output_dir, model_name, logger)
+    return MetricsMonitor(output_dir, model_name, logger, resume_training=resume_training, initial_epoch=initial_epoch)
 
-def setup_loss_monitor(output_dir: str, model_name: str, logger: logging.Logger, val_ds: tf.data.Dataset) -> LossAnalysisMonitor:
+def setup_loss_monitor(output_dir: str, model_name: str, logger: logging.Logger, val_ds: tf.data.Dataset, resume_training: bool = False, initial_epoch: int = 0) -> LossAnalysisMonitor:
     """
     Setup Loss Monitor, that will log losses in model training.
     :param logger: Logger instance for real-time logging
     :param output_dir: Directory to save metrics
     :param model_name: Name of the model (used for file naming)
     :param val_ds: Validation dataset for gradient analysis
+    :param resume_training: Whether this is a resumed training run (if True, preserves existing files)
+    :param initial_epoch: Epoch to start from when resuming (used to clean up data from this epoch and beyond)
     :return: LossAnalysisMonitor instance configured to track and save detailed metrics
     """
     label_mappings = pd.read_csv(f"{TF_RECORD_DATASET}/label_mappings.csv")
@@ -410,20 +424,189 @@ def setup_loss_monitor(output_dir: str, model_name: str, logger: logging.Logger,
         model_name=model_name,
         logger=logger,
         validation_data=val_ds,
-        class_names=label_names
+        class_names=label_names,
+        resume_training=resume_training,
+        initial_epoch=initial_epoch
     )   
 
-def get_metrics(threshold: float=0.5):
+def setup_garbage_collector(logger: logging.Logger) -> GarbageCollector:
     """
-    Returns a list of metrics to be used during training.
+    Returns a GarbageCollector callback that will log memory usage at the end of each epoch.
+    :param logger: Logger instance for real-time logging
+    """
+    return GarbageCollector(logger)
+
+def get_metrics(threshold: float=0.5, as_dict: bool=False):
+    """
+    Returns metrics to be used during training.
     Configured specifically for multi-label classification.
+    
     :param threshold: Classification threshold for binary metrics (default: 0.5)
-    :return: List of metrics configured for multi-label classification
+    :param as_dict: If True, returns a dictionary mapping metric names to metric objects
+                    This is useful for custom_objects in model loading
+    :return: List or dict of metrics configured for multi-label classification
     """
-    return [
+    metrics = [
         BinaryAccuracy(name='accuracy', threshold=threshold),
         Precision(name='precision', thresholds=threshold),
         Recall(name='recall', thresholds=threshold),
         AUC(name='auc', multi_label=True, num_labels=NUM_CLASSES),
         F1Score(name='f1_score', threshold=threshold, average='weighted')
     ]
+    
+    if as_dict:
+        # Convert to a dictionary for easy lookup when loading models
+        metrics_dict = {}
+        for metric in metrics:
+            metrics_dict[metric.name] = metric
+        return metrics_dict
+    
+    return metrics
+
+# ------------------------------------------------------------------------------
+# Tensorflow Model Utils
+# ------------------------------------------------------------------------------
+def load_model(models_path: str, model_name: str) -> tf.keras.Model:
+    """
+    Loads a TensorFlow model from a given path.
+    :param model_path: Path to the saved models 
+    :param model_name: Name of the model
+    :return: Loaded TensorFlow model
+    """
+    return tf.keras.models.load_model(os.path.join(models_path, f"{model_name}.keras"))
+
+
+def start_or_resume_training(model, compile_kwargs, train_ds, val_ds, epochs, steps_per_epoch, validation_steps, 
+                        class_weights=None, callbacks=None, checkpoint_path=None, initial_epoch=0,
+                        output_dir=None, model_name=None, logger=None):
+    """
+    Start training from scratch or resume from a checkpoint
+    
+    :param model: TensorFlow model instance
+    :param compile_kwargs: Dictionary with model compilation arguments
+    :param train_ds: Training dataset
+    :param val_ds: Validation dataset
+    :param epochs: Total number of epochs to train
+    :param steps_per_epoch: Number of steps per epoch
+    :param validation_steps: Number of validation steps
+    :param class_weights: Optional dictionary of class weights
+    :param callbacks: List of callbacks
+    :param checkpoint_path: Path to checkpoint file (if resuming)
+    :param initial_epoch: Epoch to start from (if resuming)
+    :param output_dir: Output directory for metrics (optional)
+    :param model_name: Model name for metrics (optional)
+    :param logger: Logger instance (optional)
+    :return: Training history and model
+    """
+    is_resuming = checkpoint_path is not None
+    
+    # If we're resuming and have monitoring capabilities, set up monitors with resume=True
+    if is_resuming and output_dir and model_name and logger:
+        # Replace or add monitors with resume_training=True
+        if callbacks is None:
+            callbacks = []
+            
+        # Find and replace existing monitors
+        metrics_monitor_found = False
+        loss_monitor_found = False
+        
+        for i, callback in enumerate(callbacks):
+            if isinstance(callback, MetricsMonitor):
+                callbacks[i] = setup_metrics_monitor(output_dir, model_name, logger, 
+                                                    resume_training=True, initial_epoch=initial_epoch)
+                metrics_monitor_found = True
+            elif isinstance(callback, LossAnalysisMonitor):
+                callbacks[i] = setup_loss_monitor(output_dir, model_name, logger, val_ds, 
+                                                 resume_training=True, initial_epoch=initial_epoch)
+                loss_monitor_found = True
+                
+        # Add monitors if not found
+        if not metrics_monitor_found:
+            callbacks.append(setup_metrics_monitor(output_dir, model_name, logger, 
+                                                  resume_training=True, initial_epoch=initial_epoch))
+        if not loss_monitor_found and val_ds is not None:
+            callbacks.append(setup_loss_monitor(output_dir, model_name, logger, val_ds, 
+                                               resume_training=True, initial_epoch=initial_epoch))
+    
+    if is_resuming:
+        # Resume training from checkpoint
+        history, trained_model = resume_training(model, compile_kwargs, checkpoint_path, train_ds, val_ds, 
+                                    epochs, initial_epoch, steps_per_epoch, validation_steps, 
+                                    class_weights, callbacks)
+        return history, trained_model
+    else:
+        # Start training from scratch
+        history = start_training(model, compile_kwargs, train_ds, val_ds, epochs, 
+                              callbacks, steps_per_epoch, validation_steps, class_weights)
+        return history, model
+
+def start_training(model: tf.keras.Model, compile_kwargs: dict, train_ds: tf.data.Dataset, val_ds: tf.data.Dataset, 
+                epochs: int, callbacks: list, steps_per_epoch: int, validation_steps: int, class_weights: dict = None):
+    """
+    Start training a model from scratch
+    
+    :param model: TensorFlow model instance
+    :param compile_kwargs: Dictionary with model compilation arguments
+    :param train_ds: Training dataset
+    :param val_ds: Validation dataset
+    :param epochs: Number of epochs to train
+    :param callbacks: List of callbacks
+    :param steps_per_epoch: Number of steps per epoch
+    :param validation_steps: Number of validation steps
+    :param class_weights: Optional dictionary of class weights
+    :return: Training history
+    """
+    model.compile(**compile_kwargs)
+    history = model.fit(
+        train_ds.repeat(),
+        validation_data=val_ds.repeat(),
+        class_weight=class_weights,
+        epochs=epochs,
+        steps_per_epoch=steps_per_epoch,
+        validation_steps=validation_steps,
+        callbacks=callbacks
+    )
+
+    return history
+
+def resume_training(_model: tf.keras.Model, compile_kwargs: dict, checkpoint_path: str, 
+                   train_ds: tf.data.Dataset, val_ds: tf.data.Dataset, 
+                   epochs: int, initial_epoch: int, steps_per_epoch: int, validation_steps: int,
+                   class_weights: dict = None, callbacks: list = None):
+    """
+    Resume training from a checkpoint with a specified initial epoch
+    
+    :param model: Model architecture reference (NOT used directly, only for type hinting)
+    :param compile_kwargs: Dictionary with model compilation arguments (used to recompile the loaded model)
+    :param checkpoint_path: Path to the checkpoint file
+    :param train_ds: Training dataset
+    :param val_ds: Validation dataset
+    :param epochs: Total number of epochs to train (including previously trained epochs)
+    :param initial_epoch: Epoch to start from (for logging and scheduling purposes)
+    :param steps_per_epoch: Number of steps per epoch
+    :param validation_steps: Number of validation steps
+    :param class_weights: Optional dictionary of class weights
+    :param callbacks: List of callbacks
+    :return: Training history
+    """
+    print(f"Loading full model from checkpoint: {checkpoint_path}")
+    # Load the full model including weights and optimizer state
+    loaded_model = tf.keras.models.load_model(checkpoint_path)
+    
+    # Recompile the model with the provided compilation arguments
+    # This ensures consistency and allows updating parameters if needed
+    loaded_model.compile(**compile_kwargs)
+    
+    # Continue training with the loaded model
+    history = loaded_model.fit(
+        train_ds.repeat(),
+        validation_data=val_ds.repeat(),
+        class_weight=class_weights,
+        epochs=epochs,
+        initial_epoch=initial_epoch-1,
+        steps_per_epoch=steps_per_epoch,
+        validation_steps=validation_steps,
+        callbacks=callbacks
+    )
+    
+    return history, loaded_model
