@@ -10,6 +10,7 @@ from src.model.tensorflow_image_augmentation import (
     _random_brightness,
     _random_contrast,
     _random_shifting,
+    _random_rotation,
     _gaussian_noise
 )
 
@@ -99,6 +100,12 @@ def test_random_shifting(non_uniform_image):
     assert shifted.shape == non_uniform_image.shape    
     assert not tf.reduce_all(tf.equal(shifted, non_uniform_image))
 
+def test_random_rotation(non_uniform_image):
+    """Test that random rotation changes pixel positions."""
+    rotated = _random_rotation(non_uniform_image, max_angle=5.0)
+    
+    assert rotated.shape == non_uniform_image.shape
+    assert not tf.reduce_all(tf.equal(rotated, non_uniform_image))
 
 def test_gaussian_noise(sample_image):
     """Test that Gaussian noise changes pixel values."""

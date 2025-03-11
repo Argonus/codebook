@@ -39,6 +39,12 @@ DATASET_SIZE = 102697
 TF_BUFFER_SIZE: int = 262144
 """Buffer size for TFRecord reading, optimized for performance"""
 
+TF_SHUFFLE_SIZE: int = 10000
+"""Shuffle size for TFRecord shuffling"""
+
+TF_BATCH_SIZE: int = 32
+"""TFRecord batch size used for optimize performance"""
+
 # ImageNet Normalization Parameters
 # ------------------------------
 DENSENET_IMAGE_SIZE: Tuple[int, int] = (224, 224)

@@ -18,10 +18,12 @@ def augment_xray(image: tf.Tensor, probability: dict = {}) -> tf.Tensor:
     image = _apply_augmentation(image, _random_brightness, probability=probability.get("brightness", 0.5))
     image = _apply_augmentation(image, _random_contrast, probability=probability.get("contrast", 0.5))
     image = _apply_augmentation(image, _random_shifting, probability=probability.get("shifting", 0.1))
-    image = _apply_augmentation(image, _gaussian_noise, probability=probability.get("gaussian_noise", 0.05))
+    image = _apply_augmentation(image, _random_rotation, probability=probability.get("rotation", 0.1))
+    image = _apply_augmentation(image, _gaussian_noise, probability=probability.get("gaussian_noise", 0.1))
     
     tf.debugging.assert_rank(image, 3, message="Output image must be a single image with shape [height, width, channels]")
     return image
+
 @tf.function
 def _apply_augmentation(image: tf.Tensor, augmentation_func: callable, probability=0.5, *args, **kwargs) -> tf.Tensor:
     """
@@ -37,6 +39,44 @@ def _apply_augmentation(image: tf.Tensor, augmentation_func: callable, probabili
         lambda: augmentation_func(image, *args, **kwargs),
         lambda: image
     )
+
+@tf.function
+def _random_rotation(image: tf.Tensor, max_angle: float = 5.0) -> tf.Tensor:
+    """
+    Apply small random rotation to simulate patient positioning variations
+    Mimics: Variations in scanner angle or patient position
+    """
+    angle = tf.random.uniform([], -max_angle, max_angle) * (3.14159/180)
+    cos_angle = tf.cos(angle)
+    sin_angle = tf.sin(angle)
+
+    height = tf.cast(tf.shape(image)[0], tf.float32)
+    width = tf.cast(tf.shape(image)[1], tf.float32)
+    
+    cx = width / 2
+    cy = height / 2
+    
+    tx = cx - cx * cos_angle + cy * sin_angle
+    ty = cy - cx * sin_angle - cy * cos_angle
+    
+    transforms = tf.stack([
+        cos_angle, sin_angle, tx,
+        -sin_angle, cos_angle, ty,
+        0.0, 0.0
+    ])
+    
+    transforms = tf.reshape(transforms, [1, 8])
+    image = tf.expand_dims(image, 0)
+    transformed = tf.raw_ops.ImageProjectiveTransformV3(
+        images=image,
+        transforms=transforms,
+        output_shape=tf.shape(image)[1:3],
+        interpolation="BILINEAR",
+        fill_mode="REFLECT",
+        fill_value=0.0
+    )
+    
+    return tf.squeeze(transformed, 0)
 
 @tf.function
 def _random_brightness(image: tf.Tensor, max_delta: float = 0.2) -> tf.Tensor:
