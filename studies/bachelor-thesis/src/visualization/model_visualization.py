@@ -35,7 +35,9 @@ def _confidence_distribution(ax: plt.Axes, df: pd.DataFrame, top_classes: int, e
     latest_data = df[df['epoch'] == latest_epoch]
 
     confidence_cols = ['high_confidence_ratio', 'medium_confidence_ratio', 'uncertain_ratio', 'low_confidence_ratio']
+    latest_data = latest_data.copy()
     latest_data['total_confidence'] = latest_data['high_confidence_ratio'] + latest_data['medium_confidence_ratio']
+
     top_confident_classes = latest_data.nlargest(top_classes, 'total_confidence')
 
     x = np.arange(len(top_confident_classes))
@@ -85,6 +87,8 @@ def _positives_comparison(ax: plt.Axes, df: pd.DataFrame, top_classes: int, epoc
 
 def _performance_metrics(ax: plt.Axes, df: pd.DataFrame, metric: str) -> None:
     ax.bar(df['class_name'], df[metric], color='purple')
+    ticks = np.arange(len(df['class_name']))
+    ax.set_xticks(ticks)
     ax.set_xticklabels(df['class_name'], rotation=45, ha='right')
     ax.set_ylabel(f"{metric}")
     ax.set_title(f"{metric}")

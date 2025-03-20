@@ -4,7 +4,10 @@ This document tracks the evolution of DenseNet architectures developed during th
 
 ## Performance Comparison
 
-### F1 Score
+### Overall Metrics Comparison
+This metrics are collected from train and validation datasets logs.
+
+#### F1 Score
 
 | Model | Best Val F1 | Avg Val F1 | Best Training F1 | Epochs to Best |
 |-------|------------|------------|------------------|----------------|
@@ -13,7 +16,7 @@ This document tracks the evolution of DenseNet architectures developed during th
 | SimplifiedDenseNet_v3 | 0.0574 | 0.0117 | 0.0588 | 10 |
 | SimplifiedDenseNet_v4 | 0.0558 | 0.0131 | 0.0670 | 26 |
 
-### AUC Score
+#### AUC Score
 
 | Model | Best Val AUC | Avg Val AUC | Training AUC | Epochs to Best |
 |-------|------------|------------|-------------|----------------|
@@ -22,7 +25,7 @@ This document tracks the evolution of DenseNet architectures developed during th
 | SimplifiedDenseNet_v3 | 0.7127 | 0.6527 | 0.7235 | 28 |
 | SimplifiedDenseNet_v4 | 0.7216 | 0.6736 | 0.7445 | 24 |
 
-### Precision
+#### Precision
 
 | Model | Best Val Precision | Avg Val Precision | Training Precision | Epochs to Best |
 |-------|------------|------------|-------------|----------------|
@@ -31,23 +34,96 @@ This document tracks the evolution of DenseNet architectures developed during th
 | SimplifiedDenseNet_v3 | 0.4087 | 0.1745 | 0.4487 | 16 |
 | SimplifiedDenseNet_v4 | 0.4456 | 0.2005 | 0.4557 | 30 |
 
-### Recall
+#### Recall
 
 | Model | Best Val Recall | Avg Val Recall | Training Recall | Epochs to Best |
 |-------|------------|------------|-------------|----------------|
-| SimplifiedDenseNet_v1 | 0.0536 | 0.0171 | 0.0316 | 4 |
+| SimplifiedDenseNet_v1 | 0.0536 | 0.0171 | 0.0316 | 4  |
 | SimplifiedDenseNet_v2 | 0.0907 | 0.0088 | 0.0474 | 17 |
-| SimplifiedDenseNet_v3 | 0.1047 | 0.0121 | 0.0424 | 9 |
+| SimplifiedDenseNet_v3 | 0.1047 | 0.0121 | 0.0424 | 9  |
 | SimplifiedDenseNet_v4 | 0.0494 | 0.0098 | 0.0469 | 23 |
+
+### Detailed Class Performance Comparison
+This metrics are collected from test dataset logs.
+
+#### Top Performing Classes by Model (F1 Score)
+
+| Model | 1st Best Class | 2nd Best Class | 3rd Best Class |
+|-------|---------------|---------------|---------------|
+| SimplifiedDenseNet_v1 | Cardiomegaly (F1=0.31) | Effusion (F1=0.24)     | Edema (F1=0.15) |
+| SimplifiedDenseNet_v2 | Cardiomegaly (F1=0.19) | Effusion (F1=0.09)     | Hernia (F1=0.02) |
+| SimplifiedDenseNet_v3 | Cardiomegaly (F1=0.24) | Effusion (F1=0.17)     | Pneumothorax (F1=0.04) |
+| SimplifiedDenseNet_v4 | Hernia (F1=0.27)       | Cardiomegaly (F1=0.25) | Effusion (F1=0.01) |
+
+#### Loss Metrics Evolution
+
+| Model | Initial Loss | Final Loss | Rate of Convergence | Loss Volatility |
+|-------|-------------|------------|---------------------|----------------|
+| SimplifiedDenseNet_v1 | ? | ? | ? | ? |
+| SimplifiedDenseNet_v2 | ? | ? | ? | ? |
+| SimplifiedDenseNet_v3 | ? | ? | ? | ? |
+| SimplifiedDenseNet_v4 | ? | ? | ? | ? |
+
+**Loss** metric allows to track how well our model is learning over time. We can see how many mistakes, our model is doing over time. In summary, we can see that our model learned something based on diff between initial and finall loss
+
+#### Class-wise Precision Comparison (Top 5 Classes)
+
+| Class | v1 Precision | v2 Precision | v3 Precision | v4 Precision |
+|-------|-------------|-------------|-------------|-------------|
+| Cardiomegaly | ? | ? | ? | ? |
+| Effusion     | ? | ? | ? | ? |
+| Hernia       | ? | ? | ? | ? |
+| Pneumothorax | ? | ? | ? | ? |
+| Edema        | ? | ? | ? | ? |
+
+#### Class-wise Recall Comparison (Top 5 Classes)
+
+| Class | v1 Recall | v2 Recall | v3 Recall | v4 Recall |
+|-------|-----------|-----------|-----------|----------|
+| Cardiomegaly | ? | ? | ? | ? |
+| Effusion     | ? | ? | ? | ? |
+| Hernia       | ? | ? | ? | ? |
+| Pneumothorax | ? | ? | ? | ? |
+| Edema        | ? | ? | ? | ? |
+
+### Training Dynamics Comparison
+
+#### Learning Convergence Patterns
+
+| Model | Converged | Epochs to Stabilize | Oscillation After Convergence | Final vs. Best Epoch |
+|-------|-----------|---------------------|------------------------------|---------------------|
+| SimplifiedDenseNet_v1 | ? | ? | ? | ? |
+| SimplifiedDenseNet_v2 | ? | ? | ? | ? |
+| SimplifiedDenseNet_v3 | ? | ? | ? | ? |
+| SimplifiedDenseNet_v4 | ? | ? | ? | ? |
+
+#### True Positive Rate Evolution
+
+| Model | Early TP Rate | Mid TP Rate | Final TP Rate | Pattern |
+|-------|---------------|-------------|---------------|--------|
+| SimplifiedDenseNet_v1 | ? | ? | ? | ? |
+| SimplifiedDenseNet_v2 | ? | ? | ? | ? |
+| SimplifiedDenseNet_v3 | ? | ? | ? | ? |
+| SimplifiedDenseNet_v4 | ? | ? | ? | ? |
+
+#### Loss Contribution by Class (Average Across Epochs)
+
+| Class | v1 Loss Contribution | v2 Loss Contribution | v3 Loss Contribution | v4 Loss Contribution |
+|-------|----------------------|----------------------|----------------------|----------------------|
+| Infiltration | ? | ? | ? | ? |
+| Effusion     | ? | ? | ? | ? |
+| Cardiomegaly | ? | ? | ? | ? |
+| Hernia       | ? | ? | ? | ? |
+| No Finding   | ? | ? | ? | ? |
 
 ## Class-wise Performance
 
 | Model | Most Improved Classes | Problematic Classes | Class Balance Impact |
 |-------|----------------------|---------------------|----------------------|
-| SimplifiedDenseNet_v1 | ? | ? | ? |
-| SimplifiedDenseNet_v2 | ? | ? | ? |
-| SimplifiedDenseNet_v3 | ? | ? | ? |
-| SimplifiedDenseNet_v4 | ? | ? | ? |
+| SimplifiedDenseNet_v1 | Cardiomegaly (AUC=0.85, F1=0.31, wt=2.5) <br/> Effusion (AUC=0.80, F1=0.24, wt=0.5) <br/> Edema (AUC=0.81, F1=0.15, wt=3.0) | Pneumothorax (AUC=0.75, F1=0.03, wt=1.3) <br/> Consolidation (AUC=0.73, F1=0.00, wt=1.5) <br/> Hernia (AUC=0.72, F1=0.03, wt=30.2) | ? |
+| SimplifiedDenseNet_v2 | Cardiomegaly (AUC=0.82, F1=0.19, wt=2.5) <br/> Effusion (AUC=0.78, F1=0.09, wt=0.5) <br/> Hernia (AUC=0.67, F1=0.02, wt=30.2) | Edema (AUC=0.83, F1=0.00, wt=3.0) <br/> Consolidation (AUC=0.75, F1=0.00, wt=1.5) <br /> Pneumothorax (AUC=0.71, F1=0.00, wt=1.3) | ? |
+| SimplifiedDenseNet_v3 | Cardiomegaly (AUC=0.84, F1=0.24, wt=2.5) <br/> Effusion (AUC=0.79, F1=0.17, wt=0.5) <br/> Pneumothorax (AUC=0.73, F1=0.04, wt=1.3) | Edema (AUC=0.84, F1=0.03, wt=3.0) <br/> Hernia (AUC=0.77, F1=0.03, wt=30.2) <br/> Consolidation (AUC=0.73, F1=0.00, wt=1.5) | ? |
+| SimplifiedDenseNet_v4 | Hernia (AUC=0.76, F1=0.27, wt=30.2) <br/> Cardiomegaly (AUC=0.85, F1=0.25, wt=2.5) <br/> Effusion (AUC=0.80, F1=0.01, wt=0.5) | Edema (AUC=0.84, F1=0.00, wt=3.0) <br/> Effusion (AUC=0.80, F1=0.01, wt=0.5) <br/> Pneumothorax (AUC=0.75, F1=0.00, wt=1.3) | ? |
 
 ## Architectural Changes and Impacts
 
@@ -113,7 +189,8 @@ This document tracks the evolution of DenseNet architectures developed during th
 
 ### SimplifiedDenseNet_v5
 - **Changes from v4:**
-  - Get back to BinaryCrossentropy
+  - Get back to BinaryCrossentropy(from_logits=False, label_smoothing=0.01)
+    - Added label smoothing
 - **Hypothesis:** [Why these changes were made]
 - **Impact:** [Results](models/Simplified_DenseNet_v5)
 
