@@ -15,6 +15,8 @@ This metrics are collected from train and validation datasets logs.
 | SimplifiedDenseNet_v2 | 0.0540 | 0.0095 | 0.0654 | 17 |
 | SimplifiedDenseNet_v3 | 0.0574 | 0.0117 | 0.0588 | 10 |
 | SimplifiedDenseNet_v4 | 0.0558 | 0.0131 | 0.0670 | 26 |
+| SimplifiedDenseNet_v5 | 0.1041 | 0.0361 | 0.1166 | 27 |
+
 
 #### AUC Score
 
@@ -24,6 +26,8 @@ This metrics are collected from train and validation datasets logs.
 | SimplifiedDenseNet_v2 | 0.6904 | 0.6418 | 0.6716 | 15 |
 | SimplifiedDenseNet_v3 | 0.7127 | 0.6527 | 0.7235 | 28 |
 | SimplifiedDenseNet_v4 | 0.7216 | 0.6736 | 0.7445 | 24 |
+| SimplifiedDenseNet_v5 | 0.7510 | 0.6988 | 0.7685 | 26 |
+
 
 #### Precision
 
@@ -33,6 +37,7 @@ This metrics are collected from train and validation datasets logs.
 | SimplifiedDenseNet_v2 | 0.2438 | 0.1020 | 0.2249 | 27 |
 | SimplifiedDenseNet_v3 | 0.4087 | 0.1745 | 0.4487 | 16 |
 | SimplifiedDenseNet_v4 | 0.4456 | 0.2005 | 0.4557 | 30 |
+| SimplifiedDenseNet_v5 | 0.6667 | 0.2925 | 0.5004 | 2  |
 
 #### Recall
 
@@ -42,6 +47,7 @@ This metrics are collected from train and validation datasets logs.
 | SimplifiedDenseNet_v2 | 0.0907 | 0.0088 | 0.0474 | 17 |
 | SimplifiedDenseNet_v3 | 0.1047 | 0.0121 | 0.0424 | 9  |
 | SimplifiedDenseNet_v4 | 0.0494 | 0.0098 | 0.0469 | 23 |
+| SimplifiedDenseNet_v5 | 0.1043 | 0.0278 | 0.0851 | 27 |
 
 ### Detailed Class Performance Comparison
 This metrics are collected from test dataset logs.
@@ -50,10 +56,11 @@ This metrics are collected from test dataset logs.
 
 | Model | 1st Best Class | 2nd Best Class | 3rd Best Class |
 |-------|---------------|---------------|---------------|
-| SimplifiedDenseNet_v1 | Cardiomegaly (F1=0.31) | Effusion (F1=0.24)     | Edema (F1=0.15) |
-| SimplifiedDenseNet_v2 | Cardiomegaly (F1=0.19) | Effusion (F1=0.09)     | Hernia (F1=0.02) |
-| SimplifiedDenseNet_v3 | Cardiomegaly (F1=0.24) | Effusion (F1=0.17)     | Pneumothorax (F1=0.04) |
-| SimplifiedDenseNet_v4 | Hernia (F1=0.27)       | Cardiomegaly (F1=0.25) | Effusion (F1=0.01) |
+| SimplifiedDenseNet_v1 | Cardiomegaly (F1=0.34) | Effusion (F1=0.25)      | Edema (F1=0.18)        |
+| SimplifiedDenseNet_v2 | Infiltration (F1=0.27) | Consolidation (F1=0.08) | Mass (F1=0.08)         |
+| SimplifiedDenseNet_v3 | Effusion (F1=0.35)     | Cardiomegaly (F1=0.20)  | Atelectasis (F1=0.02)  |
+| SimplifiedDenseNet_v4 | Cardiomegaly (F1=0.22) | Hernia (F1=0.11)        | Pneumothorax (F1=0.01) |
+| SimplifiedDenseNet_v5 | Effusion (F1=0.33)     | Infiltration (F1=0.32)  | Cardiomegaly (F1=0.28) |
 
 #### Loss Metrics Evolution
 
@@ -120,10 +127,11 @@ This metrics are collected from test dataset logs.
 
 | Model | Most Improved Classes | Problematic Classes | Class Balance Impact |
 |-------|----------------------|---------------------|----------------------|
-| SimplifiedDenseNet_v1 | Cardiomegaly (AUC=0.85, F1=0.31, wt=2.5) <br/> Effusion (AUC=0.80, F1=0.24, wt=0.5) <br/> Edema (AUC=0.81, F1=0.15, wt=3.0) | Pneumothorax (AUC=0.75, F1=0.03, wt=1.3) <br/> Consolidation (AUC=0.73, F1=0.00, wt=1.5) <br/> Hernia (AUC=0.72, F1=0.03, wt=30.2) | ? |
-| SimplifiedDenseNet_v2 | Cardiomegaly (AUC=0.82, F1=0.19, wt=2.5) <br/> Effusion (AUC=0.78, F1=0.09, wt=0.5) <br/> Hernia (AUC=0.67, F1=0.02, wt=30.2) | Edema (AUC=0.83, F1=0.00, wt=3.0) <br/> Consolidation (AUC=0.75, F1=0.00, wt=1.5) <br /> Pneumothorax (AUC=0.71, F1=0.00, wt=1.3) | ? |
-| SimplifiedDenseNet_v3 | Cardiomegaly (AUC=0.84, F1=0.24, wt=2.5) <br/> Effusion (AUC=0.79, F1=0.17, wt=0.5) <br/> Pneumothorax (AUC=0.73, F1=0.04, wt=1.3) | Edema (AUC=0.84, F1=0.03, wt=3.0) <br/> Hernia (AUC=0.77, F1=0.03, wt=30.2) <br/> Consolidation (AUC=0.73, F1=0.00, wt=1.5) | ? |
-| SimplifiedDenseNet_v4 | Hernia (AUC=0.76, F1=0.27, wt=30.2) <br/> Cardiomegaly (AUC=0.85, F1=0.25, wt=2.5) <br/> Effusion (AUC=0.80, F1=0.01, wt=0.5) | Edema (AUC=0.84, F1=0.00, wt=3.0) <br/> Effusion (AUC=0.80, F1=0.01, wt=0.5) <br/> Pneumothorax (AUC=0.75, F1=0.00, wt=1.3) | ? |
+| SimplifiedDenseNet_v1 | Cardiomegaly (AUC=0.88, F1=0.34, wt=2.5) <br/> Effusion (AUC=0.80, F1=0.25, wt=0.5) <br/> Edema (AUC=0.84, F1=0.18, wt=3.0) | Pneumothorax (AUC=0.74, F1=0.03, wt=1.3) <br/> Consolidation (AUC=0.73, F1=0.00, wt=1.5) <br/> Atelectasis (AUC=0.72, F1=0.01, wt=0.6) | ? |
+| SimplifiedDenseNet_v2 | Infiltration (AUC=0.51, F1=0.27, wt=0.3) <br/> Consolidation (AUC=0.53, F1=0.08, wt=1.5) <br/> Mass (AUC=0.51, F1=0.08, wt=1.2) | None identified | ? |
+| SimplifiedDenseNet_v3 | Effusion (AUC=0.78, F1=0.35, wt=0.5) </br> Cardiomegaly (AUC=0.83, F1=0.20, wt=2.5) <br/> Atelectasis (AUC=0.69, F1=0.02, wt=0.6) | Edema (AUC=0.83, F1=0.00, wt=3.0) <br/> Consolidation (AUC=0.71, F1=0.00, wt=1.5) <br/> No Finding (AUC=0.70, F1=0.00, wt=0.1) | ? |
+| SimplifiedDenseNet_v4 | Cardiomegaly (AUC=0.85, F1=0.22, wt=2.5) <br/> Hernia (AUC=0.73, F1=0.11, wt=30.2) <br/> Pneumothorax (AUC=0.75, F1=0.01, wt=1.3) | Edema (AUC=0.84, F1=0.00, wt=3.0) <br/> Effusion (AUC=0.79, F1=0.01, wt=0.5) <br/> Pneumothorax (AUC=0.75, F1=0.01, wt=1.3) | ? |
+| SimplifiedDenseNet_v5 | Effusion (AUC=0.79, F1=0.33, wt=0.5) <br/> Infiltration (AUC=0.61, F1=0.32, wt=0.3) <br/> Cardiomegaly (AUC=0.82, F1=0.28, wt=2.5) | Consolidation (AUC=0.73, F1=0.00, wt=1.5) <br/> Pleural_Thickening (AUC=0.72, F1=0.00, wt=2.0) <br/> No Finding (AUC=0.71, F1=0.00, wt=0.1) | ? |
 
 ## Architectural Changes and Impacts
 
@@ -193,6 +201,13 @@ This metrics are collected from test dataset logs.
     - Added label smoothing
 - **Hypothesis:** [Why these changes were made]
 - **Impact:** [Results](models/Simplified_DenseNet_v5)
+
+### DenseNet121_v1
+- **Changes from v5:**
+  - Add bottelneck layer
+- **Hypothesis:** [Why these changes were made]
+- **Impact:** [Results](models/Simplified_DenseNet_v5)
+
 
 ## Training Dynamics Analysis
 

@@ -3,10 +3,12 @@
 from typing import Tuple
 
 import tensorflow as tf
-from tensorflow.keras.layers import Input, Conv2D, BatchNormalization, ReLU, MaxPooling2D
-from tensorflow.keras.layers import GlobalAveragePooling2D, Dense, Dropout, Concatenate, AveragePooling2D
+from tensorflow.keras.layers import Input, MaxPooling2D
+from tensorflow.keras.layers import GlobalAveragePooling2D, Dense, Dropout, Concatenate
 from tensorflow.keras.models import Model
-from tensorflow.keras.regularizers import l2
+
+from src.model.densnet.tensorflow_model_blocks import conv_block, transition_layer
+
 
 def build_densenet121(num_classes: int, input_shape: Tuple[int, int, int] = (224, 224, 3)) -> Model:
     """
@@ -19,17 +21,7 @@ def build_densenet121(num_classes: int, input_shape: Tuple[int, int, int] = (224
     inputs = Input(shape=input_shape, name="input_layer")
 
     # Initial convolution
-    x = BatchNormalization()(inputs)
-    x = ReLU()(x)
-    x = Conv2D(
-        filters=64,
-        kernel_size=(7, 7),
-        strides=2,
-        padding="same",
-        use_bias=False,
-        kernel_regularizer=l2(1e-4),
-        kernel_initializer='he_normal'
-    )(x)
+    x = conv_block(inputs, filters=64, kernel_size=(7,7), strides=2, padding="same")
     x = MaxPooling2D(pool_size=(3, 3), strides=2, padding="same")(x)
 
     # Dense blocks with transition layers
@@ -43,11 +35,8 @@ def build_densenet121(num_classes: int, input_shape: Tuple[int, int, int] = (224
     x = transition_layer(x)
 
     x = dense_block(x, num_layers=16, growth_rate=32)
-
-    # Classification layer
-    x = BatchNormalization()(x)
-    x = ReLU()(x)
     x = GlobalAveragePooling2D()(x)
+
     x = Dropout(0.5)(x)
     
     outputs = Dense(num_classes, activation="sigmoid", name="output_layer")(x)
@@ -55,79 +44,35 @@ def build_densenet121(num_classes: int, input_shape: Tuple[int, int, int] = (224
 
     return model
 
-def bottleneck_layer(x: tf.Tensor, growth_rate: int) -> tf.Tensor:
-    """
-    Bottleneck layer with BN-ReLU-Conv(1x1)-BN-ReLU-Conv(3x3) pattern.
-    :param x: Input tensor
-    :param growth_rate: Growth rate for the dense block
-    :return: tf.Tensor: Output tensor after bottleneck transformation
-    """
-    # First composite function (1x1 conv)
-    x = BatchNormalization()(x)
-    x = ReLU()(x)
-    x = Conv2D(
-        filters=4 * growth_rate,
-        kernel_size=(1, 1),
-        strides=1,
-        padding='same',
-        use_bias=False,
-        kernel_regularizer=l2(1e-4),
-        kernel_initializer='he_normal'
-    )(x)
-
-    # Second composite function (3x3 conv)
-    x = BatchNormalization()(x)
-    x = ReLU()(x)
-    x = Conv2D(
-        filters=growth_rate,
-        kernel_size=(3, 3),
-        strides=1,
-        padding='same',
-        use_bias=False,
-        kernel_regularizer=l2(1e-4),
-        kernel_initializer='he_normal'
-    )(x)
-
-    return x
-
 def dense_block(x: tf.Tensor, num_layers: int, growth_rate: int) -> tf.Tensor:
     """
-    Dense block with bottleneck layers and dense connectivity pattern.
-    
+    Dense block that implements the core feature of DenseNet architecture with bottleneck optimization.
+
+    Operations:
+    1. Feature concatenation - combines all previous layers' outputs
+    2. Bottleneck layer - 1x1 convolution to reduce input channel dimensions 
+    3. Core convolution - 3x3 convolution to extract new features
+    4. Dense connectivity - each layer receives feature maps from all preceding layers
+
+    The dense block serves several critical purposes:
+    - Feature reuse: Maximizes information flow by connecting each layer to every other layer
+    - Gradient flow: Direct connections to all previous layers mitigate the vanishing gradient problem
+    - Parameter efficiency: Growth rate controls the amount of new information each layer contributes
+    - Regularization effect: Dense connectivity pattern provides implicit deep supervision
+
+    Bottleneck layers (1x1 convolutions) significantly reduce the computation by first compressing 
+    the input feature maps before the more expensive 3x3 convolutions.
+
     :param x: Input tensor
     :param num_layers: Number of layers in the dense block
-    :param growth_rate: Growth rate for feature maps
-    :return: tf.Tensor: Concatenated feature maps
+    :param growth_rate: Number of filters added by each layer (controls network width)
+    :return: Concatenated feature maps from all layers in the block
     """
     features = [x]
     for _ in range(num_layers):
         current_input = Concatenate()(features) if len(features) > 1 else x
-        new_features = bottleneck_layer(current_input, growth_rate)
+        new_features = conv_block(current_input, 4 * growth_rate, kernel_size=(1,1), strides=1)
+        new_features = conv_block(new_features, growth_rate, kernel_size=(3,3))
         features.append(new_features)
 
     return Concatenate()(features)
-
-def transition_layer(x: tf.Tensor, compression: float = 0.5) -> tf.Tensor:
-    """
-    Transition layer with compression to reduce feature maps.
-    
-    :param x: Input tensor
-    :param compression: Compression factor for reducing feature maps
-    :return: tf.Tensor: Compressed and pooled feature maps
-    """
-    filters = int(tf.keras.backend.int_shape(x)[-1] * compression)
-    
-    x = BatchNormalization()(x)
-    x = ReLU()(x)
-    x = Conv2D(
-        filters=filters,
-        kernel_size=(1, 1),
-        strides=1,
-        padding='same',
-        use_bias=False,
-        kernel_regularizer=l2(1e-4),
-        kernel_initializer='he_normal'
-    )(x)
-    x = AveragePooling2D(pool_size=(2, 2), strides=2, padding="same")(x)
-    
-    return x

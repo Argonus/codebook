@@ -3,10 +3,11 @@
 from typing import Tuple
 
 import tensorflow as tf
-from tensorflow.keras.layers import Input, Conv2D, BatchNormalization, ReLU, MaxPooling2D
-from tensorflow.keras.layers import GlobalAveragePooling2D, Dense, Dropout, Concatenate, AveragePooling2D
+from tensorflow.keras.layers import Input, MaxPooling2D
+from tensorflow.keras.layers import GlobalAveragePooling2D, Dense, Dropout, Concatenate
 from tensorflow.keras.models import Model
-from tensorflow.keras.regularizers import l2
+
+from src.model.densnet.tensorflow_model_blocks import conv_block, transition_layer
 
 def build_densenet(num_classes: int) -> Model:
     """
@@ -35,28 +36,6 @@ def build_densenet(num_classes: int) -> Model:
 
     return model
 
-def conv_block(x: tf.Tensor, 
-             filters: int, 
-             kernel_size: Tuple[int, int] = (3,3), 
-             strides: int = 1, 
-             padding: str = "same") -> tf.Tensor:
-    """
-    Convolutional block, that consists of a convolutional layer, batch normalization and ReLU activation.
-    This is a building block responsible for extracting features from the input image.
-    """
-    x = BatchNormalization()(x)
-    x = ReLU()(x)
-    x = Conv2D(
-        filters=filters,
-        kernel_size=kernel_size,
-        strides=strides,
-        padding=padding,
-        use_bias=False,
-        kernel_regularizer=l2(1e-4),
-        kernel_initializer='he_normal')(x)
-    
-    return x
-
 def dense_block(x: tf.Tensor, num_layers: int, growth_rate: int) -> tf.Tensor:
     """
     Dense block, that consists of a concatenation of multiple convolutional blocks.
@@ -69,13 +48,3 @@ def dense_block(x: tf.Tensor, num_layers: int, growth_rate: int) -> tf.Tensor:
         features.append(new_features)
     
     return Concatenate()(features)
-
-def transition_layer(x: tf.Tensor, compression: float = 0.5) -> tf.Tensor:
-    """
-    Transition layer, that consists of a convolutional layer, batch normalization and ReLU activation.
-    This is a building block responsible for reducing the number of channels after each dense block.
-    """
-    filters = int(tf.keras.backend.int_shape(x)[-1] * compression)
-    x = conv_block(x, filters, kernel_size=(1,1))
-    x = AveragePooling2D(pool_size=(2,2), strides=2, padding="same")(x) 
-    return x
