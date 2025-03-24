@@ -16,6 +16,7 @@ This metrics are collected from train and validation datasets logs.
 | SimplifiedDenseNet_v3 | 0.0574 | 0.0117 | 0.0588 | 10 |
 | SimplifiedDenseNet_v4 | 0.0558 | 0.0131 | 0.0670 | 26 |
 | SimplifiedDenseNet_v5 | 0.1041 | 0.0361 | 0.1166 | 27 |
+| DenseNet121_v1        | 0.1041 | 0.0361 | 0.1166 | 27 |
 
 
 #### AUC Score
@@ -193,7 +194,6 @@ This metrics are collected from test dataset logs.
   - Precision improved further (0.4456 vs 0.4087)
   - Recall declined significantly (0.0494 vs 0.1047), reverting to levels below v2
   - The changes improved model's discrimination ability (AUC) and precision but at the cost of recall, which is critical for medical applications
-  - Gradient clipping may have prevented the model from making the larger updates needed to improve recall on rare classes
 
 ### SimplifiedDenseNet_v5
 - **Changes from v4:**
@@ -204,10 +204,24 @@ This metrics are collected from test dataset logs.
 
 ### DenseNet121_v1
 - **Changes from v5:**
-  - Add bottelneck layer
-- **Hypothesis:** [Why these changes were made]
+  - Add bottleneck layer
+- **Hypothesis:**
+  - 
 - **Impact:** [Results](models/Simplified_DenseNet_v5)
 
+### DenseNet121_v2
+- **Changes from v1:**
+  - Added SE block with ration 16
+- **Hypothesis:**
+  - 
+- **Impact:** [Results](models/DenseNet121_v2)
+
+### DenseNet121_v3
+- **Changes from v2:**
+  - Lowered ratio to 8
+- **Hypothesis:**
+  - 
+- **Impact:** [Results](models/DenseNet121_v2)
 
 ## Training Dynamics Analysis
 
