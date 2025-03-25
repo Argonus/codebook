@@ -86,7 +86,7 @@ def squeeze_excitation(x: tf.Tensor, ratio: int = 16) -> tf.Tensor:
     :param ratio: Reduction ratio for the bottleneck in the channel excitation
     :return: Tensor with the same shape as input but with channel-wise recalibration
     """
-    channels = x.shape[-1]
+    channels = x.shape[-1]    
     squeeze = GlobalAveragePooling2D()(x)
     
     excitation = Dense(channels // ratio, activation='relu')(squeeze)

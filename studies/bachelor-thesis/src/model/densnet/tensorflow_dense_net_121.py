@@ -76,7 +76,7 @@ def dense_block(x: tf.Tensor, num_layers: int, growth_rate: int, use_se: bool) -
         new_features = conv_block(current_input, 4 * growth_rate, kernel_size=(1,1), strides=1)
         new_features = conv_block(new_features, growth_rate, kernel_size=(3,3))
         if use_se:
-            new_features = squeeze_excitation(new_features, ratio=8)
+            new_features = squeeze_excitation(new_features, ratio=16)
         features.append(new_features)
 
     return Concatenate()(features)
