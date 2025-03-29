@@ -270,6 +270,15 @@ This metrics are collected from test dataset logs.
   - F1 score improvement to 0.3554, over 115% increase from DenseNet121_v2_1
   - Highest AUC score among all models (0.7798)
 
+### DenseNet121_v3_1
+- **Changes from v3:**
+  - Reduce lambda to 0.01
+- **Hypothesis:**
+  - Reducing the lambda parameter will apply smaller penatlies for predicting NoFinding with other classes
+  which mach allow model to focus more on predicting disases
+- **Impact:**
+  - 
+
 ## Training Dynamics Analysis
 
 ### Learning Rate Impact

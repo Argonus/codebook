@@ -70,7 +70,9 @@ def to_int64_feature(value: Union[int, List[int]]) -> tf.train.Feature:
 def parse_record(example_proto: bytes) -> (tf.Tensor, tf.Tensor):
     """
     Parses a record from the TFRecord dataset and converts labels to one-hot encoding.
-    Returns:
+    :param example_proto: A serialized Example proto containing image and labels
+    
+    :return: A tuple of (image, labels) where:
         - image: tensor of shape (224, 224, 3)
         - labels: tensor of shape (15,) - one-hot encoded labels
     """
