@@ -33,6 +33,10 @@ NUM_CLASSES: int = 15
 """Number of classes in the dataset"""
 DATASET_SIZE = 102697
 """Total number of samples in the dataset"""
+NO_FINDING_CLASS_IDX: int = 10
+"""Index of the No Finding class in the dataset"""
+DROP_NO_FINDING_CLASS: bool = False
+"""Whether to drop the No Finding class from the dataset"""
 
 # TensorFlow Configuration
 # ----------------------
