@@ -8,6 +8,11 @@ This document tracks the evolution of DenseNet architectures developed during th
 This metrics are collected from train and validation datasets logs.
 
 #### F1 Score
+F1 Score is metric that shows balance between precision and recall, in this case it is used to measure how well the model is able to identify positive cases (diseases) in the validation and training datasets. This is a main metric of a project and can be calculated using following algorithm
+
+```latex
+F1 = 2 * (precision * recall) / (precision + recall)
+```
 
 | Model | Best Val F1 | Avg Val F1 | Best Training F1 | Epochs to Best |
 |-------|------------|------------|------------------|----------------|
@@ -24,7 +29,9 @@ This metrics are collected from train and validation datasets logs.
 | DenseNet121_v3_2      | 0.3958 | 0.3062 | 0.4441 | 28 |
 
 
-#### AUC Score
+#### AUC ROC Score
+
+AUC ROC is a metrics that shows how well the model is able to separate positive and negative cases. This is a secondary metric.
 
 | Model | Best Val AUC | Avg Val AUC | Training AUC | Epochs to Best |
 |-------|------------|------------|-------------|----------------|
@@ -42,6 +49,12 @@ This metrics are collected from train and validation datasets logs.
 
 #### Precision
 
+Precision is a metrics that shows how many of the predicted positive cases are actually positive. This is a secondary metric that can be calculated using following algorithm
+
+```latex
+Precision = True Positives / (True Positives + False Positives)
+```
+
 | Model | Best Val Precision | Avg Val Precision | Training Precision | Epochs to Best |
 |-------|------------|------------|-------------|----------------|
 | SimplifiedDenseNet_v1 | 0.5000 | 0.2310 | 0.3834 | 10 |
@@ -57,6 +70,12 @@ This metrics are collected from train and validation datasets logs.
 | DenseNet121_v3_2      | 0.7304 | 0.6276 | 0.7127 | 1  |
 
 #### Recall
+
+Recall is a metrics that shows how many of the actual positive cases are predicted as positive. This is a secondary metric that can be calculated using following algorithm
+
+```latex
+Recall = True Positives / (True Positives + False Negatives)
+```
 
 | Model | Best Val Recall | Avg Val Recall | Training Recall | Epochs to Best |
 |-------|------------|------------|-------------|----------------|
@@ -93,64 +112,68 @@ This metrics are collected from test dataset logs.
 
 #### Loss Metrics Evolution
 
+**Loss** metric allows to track how well our model is learning over time. We can see how many mistakes, our model is doing over time. In summary, we can see that our model learned something based on diff between initial and final loss. And we aim to have a low initial loss and a low final loss.
+
+- **Initial Loss** is a metric that shows the initial loss of the model. In summary it shows how well our model was learning at the beginning. 
+- **Final Loss** is a metric that shows the final loss of the model. In summary its a loss at last epoch. In summary it shows how well our model was learning at the end.
+- **Rate of Convergence** is a metric that shows the rate of convergence of the model. Convergence shows us how quickly model moves to end state. Bigger value, in theory means model is learning faster.
+- **Loss Volatility** is a metric that shows the volatility of the loss of the model. Volatility is a how much the loss changes over time. Lower value means more stable learning process, bigger value means more unstable learning process.
+
 | Model | Initial Loss | Final Loss | Rate of Convergence | Loss Volatility |
 |-------|-------------|------------|---------------------|----------------|
-| SimplifiedDenseNet_v1 | ? | ? | ? | ? |
-| SimplifiedDenseNet_v2 | ? | ? | ? | ? |
-| SimplifiedDenseNet_v3 | ? | ? | ? | ? |
-| SimplifiedDenseNet_v4 | ? | ? | ? | ? |
-
-**Loss** metric allows to track how well our model is learning over time. We can see how many mistakes, our model is doing over time. In summary, we can see that our model learned something based on diff between initial and finall loss
-
-#### Class-wise Precision Comparison (Top 5 Classes)
-
-| Class | v1 Precision | v2 Precision | v3 Precision | v4 Precision |
-|-------|-------------|-------------|-------------|-------------|
-| Cardiomegaly | ? | ? | ? | ? |
-| Effusion     | ? | ? | ? | ? |
-| Hernia       | ? | ? | ? | ? |
-| Pneumothorax | ? | ? | ? | ? |
-| Edema        | ? | ? | ? | ? |
-
-#### Class-wise Recall Comparison (Top 5 Classes)
-
-| Class | v1 Recall | v2 Recall | v3 Recall | v4 Recall |
-|-------|-----------|-----------|-----------|----------|
-| Cardiomegaly | ? | ? | ? | ? |
-| Effusion     | ? | ? | ? | ? |
-| Hernia       | ? | ? | ? | ? |
-| Pneumothorax | ? | ? | ? | ? |
-| Edema        | ? | ? | ? | ? |
+| Simplified_DenseNet_v1 | 0.7445 | 0.1967 | 0.0189 | 0.1114 |
+| Simplified_DenseNet_v2 | 0.5757 | 0.0530 | 0.0180 | 0.1034 |
+| Simplified_DenseNet_v3 | 1.4972 | 0.0495 | 0.0499 | 0.2637 |
+| Simplified_DenseNet_v4 | 0.5338 | 0.0533 | 0.0166 | 0.0907 |
+| Simplified_DenseNet_v5 | 0.5338 | 0.0533 | 0.0166 | 0.0907 |
+| DenseNet121_v1         | 1.8001 | 0.1750 | 0.0560 | 0.2990 |
+| DenseNet121_v2         | 1.6527 | 0.1819 | 0.0507 | 0.2689 |
+| DenseNet121_v2_1       | 1.6972 | 0.1804 | 0.0523 | 0.2777 |
+| DenseNet121_v3         | 1.5953 | 0.2051 | 0.0479 | 0.2552 |
+| DenseNet121_v3_1       | 1.5264 | 0.1748 | 0.0466 | 0.2456 |
+| DenseNet121_v3_2       | 1.5107 | 0.2203 | 0.0445 | 0.2348 |
 
 ### Training Dynamics Comparison
 
 #### Learning Convergence Patterns
 
+This section shows the learning convergence patterns of the models. It shows how well the models have converged and how they have stabilized.
+
+- **Converged** is a metric that shows if the model has converged. In summary it shows if the model has reached a stable state.
+- **Epochs to Stabilize** is a metric that shows the number of epochs it took for the model to stabilize. In summary it shows how many epochs it took for the model to reach a stable state.
+- **Oscillation After Convergence** is a metric that shows the oscillation of the model after convergence. In summary it shows how much the model oscillates after it has reached a stable state.
+- **Final vs. Best Epoch** is a metric that shows the final vs. best epoch of the model. In summary it shows how much the model has improved over time.
+
 | Model | Converged | Epochs to Stabilize | Oscillation After Convergence | Final vs. Best Epoch |
 |-------|-----------|---------------------|------------------------------|---------------------|
-| SimplifiedDenseNet_v1 | ? | ? | ? | ? |
-| SimplifiedDenseNet_v2 | ? | ? | ? | ? |
-| SimplifiedDenseNet_v3 | ? | ? | ? | ? |
-| SimplifiedDenseNet_v4 | ? | ? | ? | ? |
+| Simplified_DenseNet_v1 | No  | 30 | Insufficient Data | 75.3% (Significant Drop)                 |
+| Simplified_DenseNet_v2 | No  | 30 | Insufficient Data | 26.9% (Significant Drop)                 |
+| Simplified_DenseNet_v3 | No  | 30 | Insufficient Data | 41.4% (Significant Drop)                 |
+| Simplified_DenseNet_v4 | No  | 30 | Insufficient Data | 12.0% (Significant Drop (Best Near End)) |
+| Simplified_DenseNet_v5 | Yes | 13 | High              | 70.6% (Significant Drop (Best Near End)) |
+| DenseNet121_v1         | Yes | 12 | High              | 75.9% (Significant Drop (Best Near End)) |
+| DenseNet121_v2         | No  | 12 | High              | 100.0% (Close to Best (Best at Final))   |
+| DenseNet121_v2_1       | Yes | 30 | Insufficient Data | 78.2% (Significant Drop (Best Near End)) |
+| DenseNet121_v3         | No  | 7  | High              | 46.1% (Significant Drop (Best Near End)) |
+| DenseNet121_v3_1       | Yes | 9  | Medium            | 98.2% (Close to Best)                    |
+| DenseNet121_v3_2       | Yes | 7  | Medium            | 93.5% (Moderate Drop (Best Near End))    |
+
 
 #### True Positive Rate Evolution
 
-| Model | Early TP Rate | Mid TP Rate | Final TP Rate | Pattern |
-|-------|---------------|-------------|---------------|--------|
-| SimplifiedDenseNet_v1 | ? | ? | ? | ? |
-| SimplifiedDenseNet_v2 | ? | ? | ? | ? |
-| SimplifiedDenseNet_v3 | ? | ? | ? | ? |
-| SimplifiedDenseNet_v4 | ? | ? | ? | ? |
-
-#### Loss Contribution by Class (Average Across Epochs)
-
-| Class | v1 Loss Contribution | v2 Loss Contribution | v3 Loss Contribution | v4 Loss Contribution |
-|-------|----------------------|----------------------|----------------------|----------------------|
-| Infiltration | ? | ? | ? | ? |
-| Effusion     | ? | ? | ? | ? |
-| Cardiomegaly | ? | ? | ? | ? |
-| Hernia       | ? | ? | ? | ? |
-| No Finding   | ? | ? | ? | ? |
+| Model | Early TP Count | Mid TP Count | Final TP Count |
+|-------|---------------|-------------|---------------|
+| Simplified_DenseNet_v1 | 156.9 | 513.3 | 338.4  |
+| Simplified_DenseNet_v2 | 30.2  | 385.3 | 102.6  |
+| Simplified_DenseNet_v3 | 393.8 | 45.2  | 258.6  |
+| Simplified_DenseNet_v4 | 29.4  | 152.9 | 398.0  |
+| Simplified_DenseNet_v5 | 101.3 | 393.7 | 1084.5 |
+| DenseNet121_v1         | 193.3 | 734.5 | 1263.3 |
+| DenseNet121_v2         | 246.1 | 710.1 | 1070.1 |
+| DenseNet121_v2_1       | 93.2  | 487.3 | 1092.1 |
+| DenseNet121_v3         | 248.6 | 754.0 | 1120.0 |
+| DenseNet121_v3_1       | 564.7 | 1299.5| 1559.3 |
+| DenseNet121_v3_2       | 828.1 | 1526.8| 2168.2 |
 
 ## Class-wise Performance
 
@@ -167,7 +190,6 @@ This metrics are collected from test dataset logs.
 | DenseNet121_v3	| No Finding (AUC=0.76, F1=0.50, wt=0.1) <br/> Effusion (AUC=0.86, F1=0.43, wt=0.5) <br/> Cardiomegaly (AUC=0.90, F1=0.35, wt=2.5) |	Edema (AUC=0.86, F1=0.00, wt=3.0) <br/> Emphysema (AUC=0.81, F1=0.01, wt=2.7) <br/> Consolidation (AUC=0.77, F1=0.00, wt=1.5) | ? |
 | DenseNet121_v3_1	| No Finding (AUC=0.76, F1=0.63, wt=0.1) <br/> Effusion (AUC=0.86, F1=0.37, wt=0.5) <br/> Cardiomegaly (AUC=0.88, F1=0.32, wt=2.5) |	Edema (AUC=0.86, F1=0.02, wt=3.0) <br/> Consolidation (AUC=0.77, F1=0.00, wt=1.5) <br/> Pleural_Thickening (AUC=0.74, F1=0.00, wt=2.0) | ? |
 | DenseNet121_v3_2	| No Finding (AUC=0.76, F1=0.64, wt=0.1) <br/> Effusion (AUC=0.86, F1=0.45, wt=0.5) <br/> Pneumothorax (AUC=0.83, F1=0.32, wt=1.3) <br/> Edema (AUC=0.87, F1=0.01, wt=3.0) <br/> Consolidation (AUC=0.76, F1=0.00, wt=1.5) <br/> Pleural_Thickening (AUC=0.74, F1=0.03, wt=2.0)  | ? |
-
 
 ## Architectural Changes and Impacts
 
@@ -292,7 +314,18 @@ This metrics are collected from test dataset logs.
   - Reducing the lambda parameter will apply smaller penatlies for predicting NoFinding with other classes
   which mach allow model to focus more on predicting disases
 - **Impact:**
-  - 
+  - Further improvement in F1 score to 0.3650
+  - More balanced performance across classes as well as more stable performance
+
+### DenseNet121_v3_2
+- **Changes from v3_1:**
+  - Add sigmoid calculation to custom loss function
+- **Hypothesis:**
+  - Applying a sigmoid calculation within the custom loss function stablize training process
+- **Impact:** [Results](models/DenseNet121_v3_1)
+  - Further improvement in F1 score.
+  - Best untill now number of true positive predictions
+  - More balanced performance across classes
 
 ## Training Dynamics Analysis
 
