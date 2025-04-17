@@ -42,8 +42,11 @@ NUM_CLASSES_WITHOUT_NO_FINDING: int = NUM_CLASSES - 1
 
 # TensorFlow Configuration
 # ----------------------
-TF_BUFFER_SIZE: int = 262144
-"""Buffer size for TFRecord reading, optimized for performance"""
+TF_MAX_EPOCHS: int = 100
+"""Maximum number of epochs for training, with early stopping monitoring validation metrics"""
+
+TF_BUFFER_SIZE: int = 1048576
+"""Buffer size for TFRecord reading, optimized for 32GB RAM system"""
 
 TF_SHUFFLE_SIZE: int = 10000
 """Shuffle size for TFRecord shuffling"""

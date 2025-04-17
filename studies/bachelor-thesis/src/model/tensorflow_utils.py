@@ -18,9 +18,8 @@ from src.utils.consts import DENSENET_IMAGE_SIZE, IMAGENET_MEAN, IMAGENET_STD, N
 from src.model.tensorflow_image_augmentation import augment_xray
 
 from src.model.tensorflow_logger import TrainingLogger
-from src.model.monitors.tensorflow_loss_monitor import LossAnalysisMonitor
 from src.model.monitors.tensorflow_metrics_monitor import MetricsMonitor
-from src.model.tensorflow_garbage_collector import GarbageCollector
+from tensorflow.keras.callbacks import EarlyStopping
 
 # ------------------------------------------------------------------------------
 # Tensorflow Features Utils
@@ -422,6 +421,23 @@ def setup_training_logger(logger: logging.Logger, batch_size: int, log_interval:
     """
     return TrainingLogger(logger, batch_size, log_interval)
 
+def setup_early_stopping(patience: int = 15, min_delta: float = 0.001) -> EarlyStopping:
+    """
+    Setup early stopping callback to prevent overfitting.
+    
+    :param patience: Number of epochs with no improvement after which training will stop
+    :param min_delta: Minimum change in monitored quantity to qualify as an improvement
+    :return: Configured EarlyStopping callback
+    """
+    return EarlyStopping(
+        monitor='val_f1_score',  # Monitor validation F1 score
+        mode='max',         # We want to maximize the F1 score
+        patience=patience,  # Number of epochs with no improvement
+        min_delta=min_delta,  # Minimum change to qualify as an improvement
+        restore_best_weights=True,  # Restore model weights from the epoch with the best value of the monitored quantity
+        verbose=1  # Print message when early stopping is triggered
+    )
+
 def setup_metrics_monitor(output_dir: str, model_name: str, logger: logging.Logger, resume_training: bool = False, initial_epoch: int = 0) -> MetricsMonitor:
     """
     Setup CSV Metrics Logger that will save training metrics to CSV files.
@@ -435,38 +451,6 @@ def setup_metrics_monitor(output_dir: str, model_name: str, logger: logging.Logg
     :return: MetricsMonitor instance
     """
     return MetricsMonitor(output_dir, model_name, logger, resume_training=resume_training, initial_epoch=initial_epoch)
-
-def setup_loss_monitor(output_dir: str, model_name: str, logger: logging.Logger, val_ds: tf.data.Dataset, resume_training: bool = False, initial_epoch: int = 0) -> LossAnalysisMonitor:
-    """
-    Setup Loss Monitor, that will log losses in model training.
-    :param logger: Logger instance for real-time logging
-    :param output_dir: Directory to save metrics
-    :param model_name: Name of the model (used for file naming)
-    :param val_ds: Validation dataset for gradient analysis
-    :param resume_training: Whether this is a resumed training run (if True, preserves existing files)
-    :param initial_epoch: Epoch to start from when resuming (used to clean up data from this epoch and beyond)
-    :return: LossAnalysisMonitor instance configured to track and save detailed metrics
-    """
-    label_mappings = pd.read_csv(f"{TF_RECORD_DATASET}/label_mappings.csv")
-    label_names = label_mappings["Label"].tolist()
-    class_names = label_names if not DROP_NO_FINDING_CLASS else label_names[:NO_FINDING_CLASS_IDX] + label_names[NO_FINDING_CLASS_IDX+1:]
-
-    return LossAnalysisMonitor(
-        output_dir=output_dir,
-        model_name=model_name,
-        logger=logger,
-        validation_data=val_ds,
-        class_names=class_names,
-        resume_training=resume_training,
-        initial_epoch=initial_epoch
-    )   
-
-def setup_garbage_collector(logger: logging.Logger) -> GarbageCollector:
-    """
-    Returns a GarbageCollector callback that will log memory usage at the end of each epoch.
-    :param logger: Logger instance for real-time logging
-    """
-    return GarbageCollector(logger)
 
 def get_metrics(threshold: float=0.5, as_dict: bool=False):
     """
@@ -547,15 +531,13 @@ def start_or_resume_training(model, compile_kwargs, train_ds, val_ds, epochs, st
             if isinstance(callback, MetricsMonitor):
                 callbacks[i] = setup_metrics_monitor(output_dir, model_name, logger, resume_training=True, initial_epoch=initial_epoch)
                 metrics_monitor_found = True
-            elif isinstance(callback, LossAnalysisMonitor):
-                callbacks[i] = setup_loss_monitor(output_dir, model_name, logger, val_ds, resume_training=True, initial_epoch=initial_epoch)
-                loss_monitor_found = True
-                
+
         # Add monitors if not found
         if not metrics_monitor_found:
             callbacks.append(setup_metrics_monitor(output_dir, model_name, logger, resume_training=True, initial_epoch=initial_epoch))
-        if not loss_monitor_found and val_ds is not None:
-            callbacks.append(setup_loss_monitor(output_dir, model_name, logger, val_ds, resume_training=True, initial_epoch=initial_epoch))
+            
+        # Add early stopping
+        callbacks.append(setup_early_stopping())
     
     if is_resuming:
         # Resume training from checkpoint
