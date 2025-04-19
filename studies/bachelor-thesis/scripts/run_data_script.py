@@ -22,10 +22,6 @@ if gpus:
         [tf.config.experimental.VirtualDeviceConfiguration(memory_limit=4096)]
     )
 
-# Limit TensorFlow memory usage
-os.environ['TF_FORCE_GPU_ALLOW_GROWTH'] = 'true'
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '1'  # Suppress some TensorFlow warnings
-
 # Import DataLoader after TensorFlow configuration
 from src.model.tensorflow_data_loader import DataLoader
 from src.utils.consts import TF_BUFFER_SIZE

@@ -35,7 +35,7 @@ DATASET_SIZE = 102697
 """Total number of samples in the dataset"""
 NO_FINDING_CLASS_IDX: int = 10
 """Index of the No Finding class in the dataset"""
-DROP_NO_FINDING_CLASS: bool = True
+DROP_NO_FINDING_CLASS: bool = False
 """Whether to drop the No Finding class from the dataset"""
 NUM_CLASSES_WITHOUT_NO_FINDING: int = NUM_CLASSES - 1
 """Number of classes in the dataset without the No Finding class"""
@@ -45,14 +45,14 @@ NUM_CLASSES_WITHOUT_NO_FINDING: int = NUM_CLASSES - 1
 TF_MAX_EPOCHS: int = 100
 """Maximum number of epochs for training, with early stopping monitoring validation metrics"""
 
-TF_BUFFER_SIZE: int = 1048576
-"""Buffer size for TFRecord reading, optimized for 32GB RAM system"""
+TF_BUFFER_SIZE: int = 1024 * 1024  # 1MB
+"""Buffer size for TFRecord reading, optimized for RTX 3090 Ti"""
 
-TF_SHUFFLE_SIZE: int = 10000
-"""Shuffle size for TFRecord shuffling"""
+TF_SHUFFLE_SIZE: int = 25000
+"""Shuffle size for TFRecord shuffling, ~25% of dataset size for good randomization"""
 
-TF_BATCH_SIZE: int = 32
-"""TFRecord batch size used for optimize performance"""
+TF_BATCH_SIZE: int = 128
+"""Batch size optimized for RTX 3090 Ti memory and compute capability"""
 
 # ImageNet Normalization Parameters
 # ------------------------------

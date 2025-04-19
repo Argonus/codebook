@@ -3,8 +3,7 @@ import os
 import tensorflow as tf
 import shutil
 
-from tqdm import tqdm
-from src.model.tensorflow_data_splitter import DatasetSplitter
+from src.data.tensorflow_data_splitter import DatasetSplitter
 from src.utils.consts import TF_RECORD_DATASET, TF_BUFFER_SIZE
 
 class DataLoader:

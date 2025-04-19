@@ -1,6 +1,6 @@
 import pytest
 import tensorflow as tf
-from src.model.tensorflow_data_splitter import DatasetSplitter
+from src.data.tensorflow_data_splitter import DatasetSplitter
 
 from src.utils.consts import TF_RECORD_DATASET
 

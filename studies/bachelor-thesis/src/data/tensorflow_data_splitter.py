@@ -83,15 +83,12 @@ class DatasetSplitter:
             class_counts[class_id] = class_counts.get(class_id, 0) + 1
             total_samples += 1
         
-        # Get unique class combinations
         unique_class_ids = list(class_counts.keys())
-        
-        # Calculate statistics using the string keys directly
         stats = {
             'total_samples': total_samples,
             'class_counts': [class_counts[class_id] for class_id in unique_class_ids],
             'class_percentages': [class_counts[class_id]/total_samples*100 for class_id in unique_class_ids] if total_samples > 0 else [],
-            'class_ids': unique_class_ids  # Store the mapping of indices to actual class combinations
+            'class_ids': unique_class_ids
         }
         
         return stats
@@ -128,8 +125,8 @@ class DatasetSplitter:
         # 0.2 / (1 - 0.2) = 0.5
         val_size_relative = val_ratio / (1 - test_ratio)
 
-        x_temp, y_temp, x_test, y_test = iterative_train_test_split(X, y, test_size=test_ratio)
-        x_train, y_train, x_val, y_val = iterative_train_test_split(x_temp, y_temp, test_size=val_size_relative)
+        x_temp, y_temp, x_test, _y_test = iterative_train_test_split(X, y, test_size=test_ratio)
+        x_train, _y_train, x_val, _y_val = iterative_train_test_split(x_temp, y_temp, test_size=val_size_relative)
         
         train_indices = [x[0] for x in x_train]
         val_indices = [x[0] for x in x_val]
@@ -181,7 +178,7 @@ class DatasetSplitter:
         for i, record in enumerate(tqdm(self.original_dataset, desc="Extraction progress: ")):
             current_chunk.append(record)            
             label = record[self.label_key]
-            # Handle SparseTensor objects
+
             if isinstance(label, tf.sparse.SparseTensor):
                 label = tf.sparse.to_dense(label)
             
@@ -376,8 +373,7 @@ class DatasetSplitter:
     def _parse_function(self, example_proto):
         return tf.io.parse_single_example(example_proto, self.feature_description)    
 
-    @staticmethod
-    def _create_stratification_key(labels_list):
+    def _create_stratification_key(self, labels_list):
         """
         Create a stratification key from multi-label labels.
         :param labels_list: list of labels
