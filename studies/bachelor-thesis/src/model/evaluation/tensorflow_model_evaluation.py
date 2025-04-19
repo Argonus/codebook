@@ -276,12 +276,21 @@ class ModelEvaluation:
         
         for i in range(y_true.shape[1]):
             try:
+                # Calculate confusion matrix values
+                tn, fp, fn, tp = confusion_matrix(y_true[:, i], y_pred[:, i]).ravel()
+                total_samples = len(y_true[:, i])
+                
                 metrics_per_class[i] = {
                     'accuracy': accuracy_score(y_true[:, i], y_pred[:, i]),
                     'precision': precision_score(y_true[:, i], y_pred[:, i], zero_division=0),
                     'recall': recall_score(y_true[:, i], y_pred[:, i], zero_division=0),
                     'f1_score': f1_score(y_true[:, i], y_pred[:, i], zero_division=0),
-                    'auc': roc_auc_score(y_true[:, i], y_pred_proba[:, i]) if len(np.unique(y_true[:, i])) > 1 else 0.0
+                    'auc': roc_auc_score(y_true[:, i], y_pred_proba[:, i]) if len(np.unique(y_true[:, i])) > 1 else 0.0,
+                    'true_positives': int(tp),
+                    'true_positives_rate': float(tp) / total_samples if total_samples > 0 else 0.0,
+                    'false_positives': int(fp),
+                    'false_negatives': int(fn),
+                    'true_negatives': int(tn)
                 }
             except Exception as e:
                 print(f"Warning: Error calculating metrics for class {self.label_names[i]}: {str(e)}")
@@ -290,7 +299,12 @@ class ModelEvaluation:
                     'precision': 0.0,
                     'recall': 0.0,
                     'f1_score': 0.0,
-                    'auc': 0.0
+                    'auc': 0.0,
+                    'true_positives': 0,
+                    'true_positives_rate': 0.0,
+                    'false_positives': 0,
+                    'false_negatives': 0,
+                    'true_negatives': 0
                 }
         
         return metrics_per_class

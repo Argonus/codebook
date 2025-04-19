@@ -31,9 +31,14 @@ class ModelSummary:
             val_metrics = pd.read_csv(os.path.join(model_dir, "val_metrics.csv"))
             train_metrics = pd.read_csv(os.path.join(model_dir, "train_metrics.csv"))
             
-            best_validation    = val_metrics[val_metric].max()
+            best_validation = val_metrics[val_metric].max()
             avarage_validation = val_metrics[val_metric].mean()
-            epochs_to_best     = val_metrics[val_metric].idxmax() + 1
+            
+            # Early stopping threshold
+            threshold = best_validation * 0.999
+            best_epochs = val_metrics[val_metrics[val_metric] >= threshold].index
+            best_epoch = best_epochs[0]
+            epochs_to_best = best_epoch + 1
 
             train_metrics = train_metrics.groupby('epoch')[metric].mean()
             best_training = train_metrics.max()
@@ -218,76 +223,6 @@ class ModelSummary:
 
         return f"{final_vs_best} ({descriptor}{epoch_context})"
 
-    def calculate_tp_count_evolution(self) -> pd.DataFrame:
-        """
-        Calculate the evolution of True Positive Count across training
-        using class-specific metrics from loss_analysis_metrics.csv files.
-        :returns pd.DataFrame: DataFrame with TP count evolution metrics
-        """
-        results = []
-        
-        for model_name in self.model_names:
-            model_dir = os.path.join(self.models_path, model_name)
-            metrics_file = os.path.join(model_dir, 'loss_analysis_metrics.csv')
-            
-            loss_df = pd.read_csv(metrics_file)
-            num_epochs = int(loss_df['epoch'].max()) + 1
-            
-            if num_epochs < 3:
-                print(f"Not enough epochs in metrics for {model_name}")
-                continue
-                    
-            early_end = max(1, num_epochs // 3)
-            mid_start = early_end
-            mid_end = 2 * (num_epochs // 3)
-            late_start = mid_end
-            
-            df_filtered = loss_df[loss_df['class_name'] != 'No Finding']
-            tp_by_epoch = df_filtered.groupby('epoch')['true_positives'].sum().reset_index()
-
-            early_tp = tp_by_epoch[tp_by_epoch['epoch'] < early_end]['true_positives'].mean()
-            mid_tp = tp_by_epoch[(tp_by_epoch['epoch'] >= mid_start) & (tp_by_epoch['epoch'] < mid_end)]['true_positives'].mean()
-            final_tp = tp_by_epoch[tp_by_epoch['epoch'] >= late_start]['true_positives'].mean()
-
-            results.append({
-                'Model': model_name,
-                'Early TP Count': f"{early_tp:.1f}",
-                'Mid TP Count': f"{mid_tp:.1f}",
-                'Final TP Count': f"{final_tp:.1f}"
-            })
-            
-        return pd.DataFrame(results)
-
-    def analyze_class_performance(self):
-        """
-        Analyze class performance for multiple models.
-        """
-        
-        results = []
-        test_ds = load_dataset(f"{TF_RECORD_DATASET}/test.tfrecord", TF_BUFFER_SIZE)
-        class_weights = calculate_class_weights(test_ds, NUM_CLASSES)
-                
-        for model_name in self.model_names:
-            model_dir = os.path.join(self.models_path, model_name)
-            model_metrics = pd.read_csv(os.path.join(model_dir, "model_metrics.csv"))
-
-            has_no_finding_output = not model_name in self.models_without_no_finding
-            class_names = self._load_label_mappings(has_no_finding_output)
-            
-            most_improved = self._get_most_improved_data(model_metrics, class_names, class_weights)
-            most_improved_str = ", ".join(most_improved)
-            
-            problematic = self._get_problematic_data(model_metrics, class_names, class_weights)
-            problematic_str = ", ".join(problematic)
-            
-            results.append({
-                "Model": model_name,
-                "Most Improved Classes": most_improved_str if most_improved_str else "None above threshold",
-                "Problematic Classes": problematic_str if problematic_str else "None identified",
-            })
-        
-        return pd.DataFrame(results)
-
     def _load_label_mappings(self, has_no_finding_output: bool) -> List[str]:
         mappings_path = f"{TF_RECORD_DATASET}/label_mappings.csv"
         df = pd.read_csv(mappings_path)
@@ -297,38 +232,100 @@ class ModelSummary:
             df = df[df['Index'] != NO_FINDING_CLASS_IDX]
 
         return df['Label'].tolist()
-
-    def _get_most_improved_data(self, model_metrics: pd.DataFrame, class_names: List[str], class_weights: List[float]) -> List[str]:
-        most_improved_with_weights = []     
-        most_improved = model_metrics.sort_values('f1_score', ascending=False).head(3)
+            
+    def get_metric_table(self, metric_name: str) -> pd.DataFrame:
+        """Get a specific metric table for all classes and models.
+        :param metric_name: Name of the metric to display (f1_score, auc, precision, recall, true_positives_rate, etc.)
+        :returns: DataFrame with classes as rows and models as columns
+        """
+        all_classes = set()
+        data = []
         
-        for _, row in most_improved.iterrows():
-            class_name = row['class_name']
-            class_idx = [i for i, name in enumerate(class_names) if name == class_name]
+        for model_name in self.model_names:
+            df = pd.read_csv(self._metrics_file(model_name))
+            all_classes.update(df['class_name'].tolist())
             
-            if class_idx:
-                weight = float(class_weights[class_idx[0]])
-                most_improved_with_weights.append(f"{class_name} (AUC={row['auc']:.2f}, F1={row['f1_score']:.2f}, wt={weight:.1f})")
-            else:
-                most_improved_with_weights.append(f"{class_name} (AUC={row['auc']:.2f}, F1={row['f1_score']:.2f})")
-
-        return most_improved_with_weights
-
-    def _get_problematic_data(self, model_metrics: pd.DataFrame, class_names: List[str], class_weights: List[float]) -> List[str]:
-        problematic_with_weights = []        
-        problematic = model_metrics[(model_metrics['auc'] > 0.65) & (model_metrics['f1_score'] < 0.05)].sort_values('auc', ascending=False).head(3)
-        for _, row in problematic.iterrows():
-            class_name = row['class_name']
-            class_idx = [i for i, name in enumerate(class_names) if name == class_name]
+        for class_name in sorted(all_classes):
+            row = {'Class': class_name}
+            for model_name in self.model_names:
+                df = pd.read_csv(self._metrics_file(model_name))
+                class_metrics = df[df['class_name'] == class_name]
+                if not class_metrics.empty:
+                    if metric_name in class_metrics.columns:
+                        value = class_metrics[metric_name].iloc[0]
+                        if isinstance(value, (int, float)):
+                            row[model_name] = f"{value:.3f}"
+                        else:
+                            row[model_name] = str(value)
+                    else:
+                        if metric_name == 'true_positives_rate':
+                            tp = class_metrics['true_positives'].iloc[0]
+                            total = tp + class_metrics['false_negatives'].iloc[0]
+                            row[model_name] = f"{(tp / total if total > 0 else 0):.3f}"
+                        elif metric_name == 'false_positives_rate':
+                            fp = class_metrics['false_positives'].iloc[0]
+                            total = fp + class_metrics['true_negatives'].iloc[0]
+                            row[model_name] = f"{(fp / total if total > 0 else 0):.3f}"
+                        elif metric_name == 'false_negatives_rate':
+                            fn = class_metrics['false_negatives'].iloc[0]
+                            total = fn + class_metrics['true_positives'].iloc[0]
+                            row[model_name] = f"{(fn / total if total > 0 else 0):.3f}"
+                        elif metric_name == 'true_negatives_rate':
+                            tn = class_metrics['true_negatives'].iloc[0]
+                            total = tn + class_metrics['false_positives'].iloc[0]
+                            row[model_name] = f"{(tn / total if total > 0 else 0):.3f}"
+                else:
+                    row[model_name] = 'N/A'
+            data.append(row)
             
-            if class_idx:
-                weight = float(class_weights[class_idx[0]])
-                problematic_with_weights.append(f"{class_name} (AUC={row['auc']:.2f}, F1={row['f1_score']:.2f}, wt={weight:.1f})")
-            else:
-                problematic_with_weights.append(f"{class_name} (AUC={row['auc']:.2f}, F1={row['f1_score']:.2f})")
+        return pd.DataFrame(data)
+
+    def calculate_confusion_rates(self) -> Dict[str, pd.DataFrame]:
+        """Generate confusion matrix rates per class for all models."""
+        rates = {
+            'true_positives_rate': pd.DataFrame(),
+            'false_positives_rate': pd.DataFrame(),
+            'false_negatives_rate': pd.DataFrame(),
+            'true_negatives_rate': pd.DataFrame()
+        }
         
-        return problematic_with_weights
-            
+        all_classes = set()
+        for model_name in self.model_names:
+            df = pd.read_csv(self._metrics_file(model_name))
+            all_classes.update(df['class_name'].tolist())
+        
+        for rate_name in rates.keys():
+            data = []
+            for class_name in sorted(all_classes):
+                row = {'Class': class_name}
+                for model_name in self.model_names:
+                    df = pd.read_csv(self._metrics_file(model_name))
+                    class_metrics = df[df['class_name'] == class_name]
+                    if not class_metrics.empty:
+                        if rate_name == 'true_positives_rate':
+                            tp = class_metrics['true_positives'].iloc[0]
+                            total = tp + class_metrics['false_negatives'].iloc[0]
+                            rate = tp / total if total > 0 else 0
+                        elif rate_name == 'false_positives_rate':
+                            fp = class_metrics['false_positives'].iloc[0]
+                            total = fp + class_metrics['true_negatives'].iloc[0]
+                            rate = fp / total if total > 0 else 0
+                        elif rate_name == 'false_negatives_rate':
+                            fn = class_metrics['false_negatives'].iloc[0]
+                            total = fn + class_metrics['true_positives'].iloc[0]
+                            rate = fn / total if total > 0 else 0
+                        elif rate_name == 'true_negatives_rate':
+                            tn = class_metrics['true_negatives'].iloc[0]
+                            total = tn + class_metrics['false_positives'].iloc[0]
+                            rate = tn / total if total > 0 else 0
+                        row[model_name] = f"{rate:.3f}"
+                    else:
+                        row[model_name] = 'N/A'
+                data.append(row)
+            rates[rate_name] = pd.DataFrame(data)
+        
+        return rates
+
     def _metrics_file(self, model_name: str) -> str:
         return os.path.join(self._model_dir(model_name), f"model_metrics.csv")
     

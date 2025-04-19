@@ -134,7 +134,7 @@ def load_dataset(record_path: str, tfrecord_buffer_size: int) -> tf.data.TFRecor
     """
     dataset = tf.data.TFRecordDataset([record_path], buffer_size=tfrecord_buffer_size)
     dataset = dataset.map(parse_record, num_parallel_calls=tf.data.AUTOTUNE)
-
+    
     return dataset
 
 def split_dataset(dataset, train_ratio: float, val_ratio: float, shuffle_buffer_size: int, dataset_size: int) -> (tf.data.Dataset, tf.data.Dataset, tf.data.Dataset):

@@ -455,3 +455,5 @@ FodyWeavers.xsd
 /studies/bachelor-thesis/datasets/raw-data
 /studies/bachelor-thesis/datasets/cleared-data
 /studies/bachelor-thesis/datasets/tfrecord-dataset
+*.keras
+*.h5
