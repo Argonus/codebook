@@ -166,13 +166,13 @@ def count_dataset_size(dataset: tf.data.TFRecordDataset, dataset_size: int) -> i
     return dataset_size
 
 
-def apply_augmentation_to_dataset(dataset: tf.data.Dataset) -> tf.data.Dataset:
+def apply_augmentation_to_dataset(dataset: tf.data.Dataset, probability: dict = {}) -> tf.data.Dataset:
     """
     Applies augmentation to a dataset.
     Each sample should have shape ([224, 224, 3], [NUM_CLASSES]).
     """
     return dataset.map(
-        lambda x, y: (augment_xray(x), y),
+        lambda x, y: (augment_xray(x, probability), y),
         num_parallel_calls=tf.data.AUTOTUNE
     )
 
