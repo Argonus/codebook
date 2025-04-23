@@ -3,14 +3,13 @@
 from typing import Tuple
 
 import tensorflow as tf
-from tensorflow.keras.layers import Input, MaxPooling2D
-from tensorflow.keras.layers import GlobalAveragePooling2D, Dense, Dropout, Concatenate
+from tensorflow.keras.layers import Input, MaxPooling2D, GlobalAveragePooling2D, Dense, Dropout, Concatenate
 from tensorflow.keras.models import Model
 
 from src.model.densnet.tensorflow_model_blocks import conv_block, transition_layer, squeeze_excitation, spatial_attention
 
 
-def build_densenet121(num_classes: int, input_shape: Tuple[int, int, int] = (224, 224, 3), use_se: bool = True, use_sa: bool = True) -> Model:
+def build_densenet121(num_classes: int, input_shape: Tuple[int, int, int] = (224, 224, 3), use_se: bool = False, use_sa: bool = False) -> Model:
     """
     Build DenseNet121 architecture from scratch with bottleneck layers.
     
@@ -75,13 +74,6 @@ def dense_block(x: tf.Tensor, num_layers: int, growth_rate: int, use_se: bool, u
         current_input = Concatenate()(features) if len(features) > 1 else x
         new_features = conv_block(current_input, 4 * growth_rate, kernel_size=(1,1), strides=1)
         new_features = conv_block(new_features, growth_rate, kernel_size=(3,3))
-
-        if use_se:
-            new_features = squeeze_excitation(new_features, ratio=16)
-
-        if use_sa:
-            new_features = spatial_attention(new_features, kernel_size=(3,3))
-
         features.append(new_features)
 
     return Concatenate()(features)

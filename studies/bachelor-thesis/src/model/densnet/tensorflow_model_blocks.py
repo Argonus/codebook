@@ -99,27 +99,22 @@ def squeeze_excitation(x: tf.Tensor, ratio: int = 16) -> tf.Tensor:
 def spatial_attention(x: tf.Tensor, kernel_size: Tuple[int, int] = (7,7)) -> tf.Tensor:
     """
     Implements spatial attention for X-ray feature maps.
-    [docstring...]
     """
-    avg_pool = ChannelAvgPool()(x)
-    max_pool = ChannelMaxPool()(x)
-
-    concat = Concatenate(axis=-1)([avg_pool, max_pool])
-    spatial_map = Conv2D(filters=1, kernel_size=kernel_size, padding='same', activation='sigmoid')(concat)
-    output = multiply([x, spatial_map])
-    return output
-
-# Custom layers for channel-wise pooling
-class ChannelAvgPool(tf.keras.layers.Layer):
-    def call(self, inputs):
-        return tf.reduce_mean(inputs, axis=-1, keepdims=True)
+    # Average pooling across channels
+    avg_pool = tf.reduce_mean(x, axis=-1, keepdims=True)
     
-    def get_config(self):
-        return super().get_config()
-
-class ChannelMaxPool(tf.keras.layers.Layer):
-    def call(self, inputs):
-        return tf.reduce_max(inputs, axis=-1, keepdims=True)
+    # Max pooling across channels
+    max_pool = tf.reduce_max(x, axis=-1, keepdims=True)
     
-    def get_config(self):
-        return super().get_config()
+    # Concatenate pooled features
+    concat = tf.concat([avg_pool, max_pool], axis=-1)
+    
+    # Generate attention map
+    attention = Conv2D(filters=1,
+                      kernel_size=kernel_size,
+                      padding='same',
+                      use_bias=False,
+                      kernel_initializer='he_normal')(concat)
+    attention = tf.nn.sigmoid(attention)
+    
+    return x * attention
