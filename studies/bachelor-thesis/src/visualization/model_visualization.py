@@ -106,3 +106,51 @@ def plot_combined_analysis(metrics_path: str, model_name: str) -> None:
 
     plt.tight_layout()
     plt.show()
+
+def plot_model_class_comparison(metrics_path: str, model_names: list[str], metric: str) -> None:
+    """
+    Create a comparison visualization of different models' performance for a specific metric across all classes
+    
+    :param metrics_path: Path to the metrics directory
+    :param model_names: List of model names to compare
+    :param metric: Metric to compare (e.g., 'f1_score', 'precision', 'recall', 'accuracy')
+    """
+    # Setup the plot
+    plt.figure(figsize=(15, 8))
+    ax = plt.gca()
+    
+    # Load data for each model
+    dfs = []
+    for model_name in model_names:
+        df = _get_csv(metrics_path, model_name, 'model_metrics.csv')
+        df['model'] = model_name  # Add model name for identification
+        dfs.append(df)
+    
+    # Combine all dataframes
+    combined_df = pd.concat(dfs)
+    
+    # Get unique classes and models
+    classes = dfs[0]['class_name'].unique()  # Assuming all models have same classes
+    num_models = len(model_names)
+    
+    # Setup bar positions
+    bar_width = 0.8 / num_models
+    r = np.arange(len(classes))
+    
+    # Plot bars for each model
+    for idx, model_name in enumerate(model_names):
+        model_data = combined_df[combined_df['model'] == model_name]
+        position = r + idx * bar_width
+        plt.bar(position, model_data[metric], bar_width, label=model_name)
+    
+    # Customize the plot
+    plt.xlabel('Classes')
+    plt.ylabel(metric.replace('_', ' ').title())
+    plt.title(f'{metric.replace("_", " ").title()} Comparison Across Models')
+    plt.xticks(r + bar_width * (num_models-1)/2, classes, rotation=45, ha='right')
+    plt.legend()
+    plt.grid(True, alpha=0.3)
+    
+    # Adjust layout to prevent label cutoff
+    plt.tight_layout()
+    plt.show()

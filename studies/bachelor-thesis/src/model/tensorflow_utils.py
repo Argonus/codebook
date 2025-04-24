@@ -507,49 +507,80 @@ def start_or_resume_training(model, compile_kwargs, train_ds, val_ds, epochs, st
     :param steps_per_epoch: Number of steps per epoch
     :param validation_steps: Number of validation steps
     :param class_weights: Optional dictionary of class weights
-    :param callbacks: List of callbacks
-    :param checkpoint_path: Path to checkpoint file (if resuming)
-    :param initial_epoch: Epoch to start from (if resuming)
-    :param output_dir: Output directory for metrics (optional)
-    :param model_name: Model name for metrics (optional)
-    :param logger: Logger instance (optional)
-    :return: Training history and model
+    :param callbacks: Optional list of callbacks
+    :param checkpoint_path: Optional path to checkpoint to resume from
+    :param initial_epoch: Epoch to start from (for resuming training)
+    :param output_dir: Optional output directory for saving models
+    :param model_name: Optional model name
+    :param logger: Optional logger instance
+    :return: Tuple of (training history, trained model)
     """
-    is_resuming = checkpoint_path is not None
+    is_resuming = checkpoint_path is not None and os.path.exists(checkpoint_path)
     
-    # If we're resuming and have monitoring capabilities, set up monitors with resume=True
-    if is_resuming and output_dir and model_name and logger:
-        # Replace or add monitors with resume_training=True
+    if is_resuming:
+        if logger:
+            logger.info(f"Resuming training from checkpoint: {checkpoint_path}")
+        
+        history, trained_model = resume_training(checkpoint_path, train_ds, val_ds, 
+                                    epochs, initial_epoch, steps_per_epoch, validation_steps, 
+                                    class_weights, callbacks, output_dir, model_name, logger)
+        return history, trained_model
+    else:
+        history, model = start_training(model, compile_kwargs, train_ds, val_ds, epochs, 
+                              callbacks, steps_per_epoch, validation_steps, class_weights)
+        return history, model
+
+def resume_training(checkpoint_path: str, 
+                   train_ds: tf.data.Dataset, val_ds: tf.data.Dataset, 
+                   epochs: int, initial_epoch: int, steps_per_epoch: int, validation_steps: int,
+                   class_weights: dict = None, callbacks: list = None,
+                   output_dir: str = None, model_name: str = None, logger = None):
+    """
+    Resume training from a checkpoint with a specified initial epoch
+    
+    :param checkpoint_path: Path to the checkpoint file
+    :param train_ds: Training dataset
+    :param val_ds: Validation dataset
+    :param epochs: Total number of epochs to train (including previously trained epochs)
+    :param initial_epoch: Epoch to start from (for logging and scheduling purposes)
+    :param steps_per_epoch: Number of steps per epoch
+    :param validation_steps: Number of validation steps
+    :param class_weights: Optional dictionary of class weights
+    :param callbacks: List of callbacks
+    :param output_dir: Optional output directory for saving models
+    :param model_name: Optional model name
+    :param logger: Optional logger instance
+    :return: Tuple of (training history, trained model)
+    """
+    # Load the full model with its optimizer state
+    loaded_model = tf.keras.models.load_model(checkpoint_path, safe_mode=False)
+    
+    # Set up metrics monitor if needed
+    if output_dir and model_name and logger:
         if callbacks is None:
             callbacks = []
-            
-        # Find and replace existing monitors
-        metrics_monitor_found = False
-        loss_monitor_found = False
         
+        metrics_monitor_found = False
         for i, callback in enumerate(callbacks):
             if isinstance(callback, MetricsMonitor):
                 callbacks[i] = setup_metrics_monitor(output_dir, model_name, logger, resume_training=True, initial_epoch=initial_epoch)
                 metrics_monitor_found = True
-
-        # Add monitors if not found
+        
         if not metrics_monitor_found:
             callbacks.append(setup_metrics_monitor(output_dir, model_name, logger, resume_training=True, initial_epoch=initial_epoch))
-            
-        # Add early stopping
-        callbacks.append(setup_early_stopping())
     
-    if is_resuming:
-        # Resume training from checkpoint
-        history, trained_model = resume_training(model, compile_kwargs, checkpoint_path, train_ds, val_ds, 
-                                    epochs, initial_epoch, steps_per_epoch, validation_steps, 
-                                    class_weights, callbacks)
-        return history, trained_model
-    else:
-        # Start training from scratch
-        history = start_training(model, compile_kwargs, train_ds, val_ds, epochs, 
-                              callbacks, steps_per_epoch, validation_steps, class_weights)
-        return history, model
+    history = loaded_model.fit(
+        train_ds.repeat(),
+        validation_data=val_ds.repeat(),
+        class_weight=class_weights,
+        epochs=epochs,
+        initial_epoch=initial_epoch-1,
+        steps_per_epoch=steps_per_epoch,
+        validation_steps=validation_steps,
+        callbacks=callbacks
+    )
+    
+    return history, loaded_model
 
 def start_training(model: tf.keras.Model, compile_kwargs: dict, train_ds: tf.data.Dataset, val_ds: tf.data.Dataset, 
                 epochs: int, callbacks: list, steps_per_epoch: int, validation_steps: int, class_weights: dict = None):
@@ -578,54 +609,8 @@ def start_training(model: tf.keras.Model, compile_kwargs: dict, train_ds: tf.dat
         callbacks=callbacks
     )
 
-    return history
+    return history, model
 
-def resume_training(_model: tf.keras.Model, compile_kwargs: dict, checkpoint_path: str, 
-                   train_ds: tf.data.Dataset, val_ds: tf.data.Dataset, 
-                   epochs: int, initial_epoch: int, steps_per_epoch: int, validation_steps: int,
-                   class_weights: dict = None, callbacks: list = None):
-    """
-    Resume training from a checkpoint with a specified initial epoch
-    
-    :param model: Model architecture reference (NOT used directly, only for type hinting)
-    :param compile_kwargs: Dictionary with model compilation arguments (used to recompile the loaded model)
-    :param checkpoint_path: Path to the checkpoint file
-    :param train_ds: Training dataset
-    :param val_ds: Validation dataset
-    :param epochs: Total number of epochs to train (including previously trained epochs)
-    :param initial_epoch: Epoch to start from (for logging and scheduling purposes)
-    :param steps_per_epoch: Number of steps per epoch
-    :param validation_steps: Number of validation steps
-    :param class_weights: Optional dictionary of class weights
-    :param callbacks: List of callbacks
-    :return: Training history
-    """
-    print(f"Loading full model from checkpoint: {checkpoint_path}")
-    # Load the full model including weights and optimizer state
-    loaded_model = tf.keras.models.load_model(checkpoint_path, safe_mode=False)
-    
-    # Recompile the model with the provided compilation arguments
-    # This ensures consistency and allows updating parameters if needed
-    loaded_model.compile(**compile_kwargs)
-    
-    # Continue training with the loaded model
-    history = loaded_model.fit(
-        train_ds.repeat(),
-        validation_data=val_ds.repeat(),
-        class_weight=class_weights,
-        epochs=epochs,
-        initial_epoch=initial_epoch-1,
-        steps_per_epoch=steps_per_epoch,
-        validation_steps=validation_steps,
-        callbacks=callbacks
-    )
-    
-    return history, loaded_model
-
-# ------------------------------------------------------------------------------
-# Real Utils
-# ------------------------------------------------------------------------------
 def get_num_classes() -> int:
     """Returns the number of classes based on whether No Finding is dropped"""    
     return NUM_CLASSES_WITHOUT_NO_FINDING if DROP_NO_FINDING_CLASS else NUM_CLASSES
-        
