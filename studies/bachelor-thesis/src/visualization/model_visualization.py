@@ -107,13 +107,14 @@ def plot_combined_analysis(metrics_path: str, model_name: str) -> None:
     plt.tight_layout()
     plt.show()
 
-def plot_model_class_comparison(metrics_path: str, model_names: list[str], metric: str) -> None:
+def plot_model_class_comparison(metrics_path: str, model_names: list[str], metric: str, models_without_no_finding: list[str]) -> None:
     """
     Create a comparison visualization of different models' performance for a specific metric across all classes
     
     :param metrics_path: Path to the metrics directory
     :param model_names: List of model names to compare
     :param metric: Metric to compare (e.g., 'f1_score', 'precision', 'recall', 'accuracy')
+    :param models_without_no_finding: List of model names that don't include the No Finding class
     """
     # Setup the plot
     plt.figure(figsize=(15, 8))
@@ -122,24 +123,29 @@ def plot_model_class_comparison(metrics_path: str, model_names: list[str], metri
     # Load data for each model
     dfs = []
     for model_name in model_names:
-        df = _get_csv(metrics_path, model_name, 'model_metrics.csv')
-        df['model'] = model_name  # Add model name for identification
+        df = pd.read_csv(f"{metrics_path}/{model_name}/model_metrics.csv")
+        df['model'] = model_name
+        if model_name in models_without_no_finding:
+            # Skip the No Finding class for models that don't include it
+            df = df[df['class_name'] != 'No Finding']
         dfs.append(df)
     
     # Combine all dataframes
-    combined_df = pd.concat(dfs)
+    combined_df = pd.concat(dfs, ignore_index=True)
     
-    # Get unique classes and models
-    classes = dfs[0]['class_name'].unique()  # Assuming all models have same classes
+    # Get unique classes (excluding No Finding for models that don't have it)
+    classes = sorted(combined_df['class_name'].unique())
+    
+    # Calculate positions for bars
     num_models = len(model_names)
-    
-    # Setup bar positions
     bar_width = 0.8 / num_models
     r = np.arange(len(classes))
     
     # Plot bars for each model
     for idx, model_name in enumerate(model_names):
         model_data = combined_df[combined_df['model'] == model_name]
+        # Ensure data is in the same order as classes
+        model_data = model_data.set_index('class_name').reindex(classes).reset_index()
         position = r + idx * bar_width
         plt.bar(position, model_data[metric], bar_width, label=model_name)
     

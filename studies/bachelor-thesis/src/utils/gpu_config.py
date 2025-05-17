@@ -10,13 +10,24 @@ def configure_gpu():
             return
             
         for device in physical_devices:
+            # Enable memory growth to prevent TF from allocating all memory at once
             tf.config.experimental.set_memory_growth(device, True)
             
-            GB = 1024 * 1024 * 1024  # 1 GB in bytes
-            memory_limit = int(18 * GB)  # ~75% of total memory
+            # Set memory limit to 24GB for RTX 3090 Ti (which has 24GB VRAM)
+            GB = 1024 * 1024 * 1024
+            memory_limit = int(18 * GB)  # Leave some headroom
             
-            config = tf.config.experimental.VirtualDeviceConfiguration(memory_limit=memory_limit)
+            # Configure virtual devices with memory limit
+            config = tf.config.experimental.VirtualDeviceConfiguration(
+                memory_limit=memory_limit
+            )
             tf.config.experimental.set_virtual_device_configuration(device, [config])
+            
+            # Configure memory allocator
+            tf.config.experimental.enable_tensor_float_32_execution(True)
+            
+            # Set GPU options for better memory handling
+            tf.config.experimental.set_synchronous_execution(True)
             
             print("\nGPU configuration successful!")
             print(f"Device: {device.name}")
@@ -34,16 +45,17 @@ def get_optimal_thread_count():
     import multiprocessing
     cpu_count = multiprocessing.cpu_count()
     
-    inter_op_threads = max(1, int(cpu_count * 0.4))    
-    intra_op_threads = max(1, int(cpu_count * 0.6))
+    inter_op_threads = max(1, int(cpu_count * 0.3))    
+    intra_op_threads = max(1, int(cpu_count * 0.5))
     
     return inter_op_threads, intra_op_threads, cpu_count
 
 def optimize_tensorflow():
     """Apply TensorFlow optimizations for better performance and resource usage."""
+    tf.keras.backend.clear_session()
     try:
         inter_threads, intra_threads, cpu_count = get_optimal_thread_count()
-        
+
         # Optimize CPU threads
         tf.config.threading.set_inter_op_parallelism_threads(inter_threads)
         tf.config.threading.set_intra_op_parallelism_threads(intra_threads)
