@@ -483,14 +483,18 @@ def get_metrics(threshold: float=0.5, as_dict: bool=False):
 # ------------------------------------------------------------------------------
 # Tensorflow Model Utils
 # ------------------------------------------------------------------------------
-def load_model(models_path: str, model_name: str) -> tf.keras.Model:
+def load_model(models_path: str, model_name: str, custom_objects=None) -> tf.keras.Model:
     """
     Loads a TensorFlow model from a given path.
     :param model_path: Path to the saved models 
     :param model_name: Name of the model
     :return: Loaded TensorFlow model
     """
-    return tf.keras.models.load_model(os.path.join(models_path, f"{model_name}.keras"), safe_mode=False)
+    return tf.keras.models.load_model(
+        os.path.join(models_path, f"{model_name}.keras"),
+        custom_objects=custom_objects,
+        safe_mode=False
+    )
 
 
 def start_or_resume_training(model, compile_kwargs, train_ds, val_ds, epochs, steps_per_epoch, validation_steps, 
