@@ -317,7 +317,7 @@ Baseline model with default configuration, no changes applied only Early Stoppin
   - Better generalization on test data
   - Reduced overfitting compared to v1
 
-## SimplifiedDenseNetV1_3
+### SimplifiedDenseNetV1_3
 
 #### Configuration
 - **Changes from v2:** 
@@ -405,7 +405,7 @@ Baseline model with default configuration, no changes applied only Early Stoppin
   - Added label smoothing
 - **Hypothesis:**
   - Label smoothing will help reduce model overconfidence and improve generalization
-  - Small value (0.001) chosen to maintain model confidence while providing minimal regularization
+  - Small value (0.01) chosen to maintain model confidence while providing minimal regularization
   - Should help stabilize training without significantly impacting model's ability to make confident predictions
 - **Impact:**
   - Similar slightly lower test performance to previous versions.
@@ -426,3 +426,55 @@ Baseline model with default configuration, no changes applied only Early Stoppin
   - Improved performance on minority classes
   - Slightly lower overall F1 score compared to V2_2 and V2_4
   - More balanced learning with still visible overfitting
+
+## DenseNetV2 Summary
+
+### Filtered or No Filtered No Finding Class
+- **Filtered:** 
+  - Models without No Finding class generally show:
+    - Better performance on minority classes
+    - Visibly lower overall F1 score
+- **No Filtered:**
+  - Models with No Finding class generally show:
+    - Better overall performance yet mostly visible in No Finding class
+
+### Focal Loss vs Plain Binary Loss
+
+#### Training Dynamics
+- **BinaryCrossentropy (V2_1, V2_4)**
+  - V2_1: More stable validation performance
+  - V2_4: Shows higher but volatile validation scores
+  - Training F1 reaches ~0.8
+  - Larger train-test gap (especially in V2_4: ~0.54)
+
+- **FocalLoss (V2_2, V2_5)**
+  - V2_2: More controlled training curve (max F1 ~0.65)
+  - V2_5: Shows early performance decline
+  - Better generalization (smaller train-test gap ~0.35)
+  - More consistent epoch-to-epoch performance
+
+#### Performance Characteristics
+- **BinaryCrossentropy**
+  - Higher training ceiling
+  - More prone to overfitting
+  - Better recall on minority classes
+
+- **FocalLoss**
+  - More controlled learning
+  - Better generalization
+  - More stable long-term performance
+
+### Next Steps
+
+#### Model Architecture
+- Stay with filtered No Finding class
+- Use Focal Loss for training
+
+#### Training Strategy
+- Test increased label smoothing with Focal Loss:
+  - 0.05 - 5x increase
+    - More aggressive regularization
+    - Test if stronger smoothing further reduces overfitting
+  - 0.1 - 10x increase
+    - Maximum commonly used value
+    - Understand upper bound impact on model confidence
