@@ -6,7 +6,7 @@ class NoFindingBinaryCrossentropy(tf.keras.losses.Loss):
     Custom loss function that enforces the logical relationship between "No Finding" class and other conditions.
     When "No Finding" is true, other conditions should not be predicted, and vice versa.
     """
-    def __init__(self, no_finding_idx, with_sigmoid=False, sigmoid_scale=10.0, lambda_value=0.2, from_logits=False, label_smoothing=0.00, **kwargs):
+    def __init__(self, no_finding_idx, with_sigmoid=True, sigmoid_scale=10.0, lambda_value=0.2, from_logits=False, label_smoothing=0.01, **kwargs):
         super(NoFindingBinaryCrossentropy, self).__init__(**kwargs)
         self.no_finding_idx = no_finding_idx
         self.with_sigmoid = with_sigmoid
