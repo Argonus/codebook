@@ -25,9 +25,9 @@ F1 = 2 * (precision * recall) / (precision + recall)
 |DenseNetV2_1          |   0.2841	   | 0.1797	    | 0.7605	         | 29             |
 |DenseNetV2_2          |   0.2675	   | 0.1916	    | 0.6611	         | 59             |
 |DenseNetV2_3          |   0.3648	   | 0.2771	    | 0.6886	         | 30             |
-|DenseNetV2_4          |   0.2716	   | 0.1816	    | 0.8130	         | 35             |
-|DenseNetV2_5          |   0.2545	   | 0.1556	    | 0.6106	         | 27             |
-|DenseNetV2_6          |   0.4314	   | 0.3571	    | 0.8122	         | 21             |
+|DenseNetV3_1          |   0.2716	   | 0.1816	    | 0.8130	         | 35             |
+|DenseNetV3_2          |   0.2545	   | 0.1556	    | 0.6106	         | 27             |
+|DenseNetV3_3          |   0.4314	   | 0.3571	    | 0.8122	         | 21             |
 
 #### AUC ROC Score
 
@@ -44,9 +44,9 @@ AUC ROC is a metrics that shows how well the model is able to separate positive 
 |DenseNetV2_1          | 0.7599       | 0.7226      | 0.9713       | 14             |
 |DenseNetV2_2          | 0.7634       | 0.7434      | 0.9592       | 16             |
 |DenseNetV2_3          | 0.7572       | 0.6964      | 0.9732       | 10             |
-|DenseNetV2_4          | 0.7682       | 0.7306      | 0.9789       | 14             |
-|DenseNetV2_5          | 0.7599       | 0.7386      | 0.9488       | 12             |
-|DenseNetV2_6          | 0.7764       | 0.7318      | 0.9633       | 11             |
+|DenseNetV3_1          | 0.7682       | 0.7306      | 0.9789       | 14             |
+|DenseNetV3_2          | 0.7599       | 0.7386      | 0.9488       | 12             |
+|DenseNetV3_3          | 0.7764       | 0.7318      | 0.9633       | 11             |
 
 #### Precision
 
@@ -67,9 +67,9 @@ Precision = True Positives / (True Positives + False Positives)
 |DenseNetV2_1          | 0.5420             | 0.2976            | 0.8631             | 4              |
 |DenseNetV2_2          | 0.4044             | 0.3123            | 0.7984             | 10             |
 |DenseNetV2_3          | 0.8889             | 0.6542            | 0.9271             | 2              |
-|DenseNetV2_4          | 0.3900             | 0.2977            | 0.8977             | 14             |
-|DenseNetV2_5          | 0.5844             | 0.3046            | 0.7760             | 8              |
-|DenseNetV2_6          | 0.7705             | 0.5599            | 0.8964             | 4              |
+|DenseNetV3_1          | 0.3900             | 0.2977            | 0.8977             | 14             |
+|DenseNetV3_2          | 0.5844             | 0.3046            | 0.7760             | 8              |
+|DenseNetV3_3          | 0.7705             | 0.5599            | 0.8964             | 4              |
 
 #### Recall
 
@@ -90,16 +90,16 @@ Recall = True Positives / (True Positives + False Negatives)
 |DenseNetV2_1          | 0.2826          | 0.1626         | 0.6898          | 29             |
 |DenseNetV2_2          | 0.2573          | 0.1628         | 0.5792          | 59             |
 |DenseNetV2_3          | 0.3381          | 0.2375         | 0.5665          | 37             |
-|DenseNetV2_4          | 0.2721          | 0.1595         | 0.7497          | 37             |
-|DenseNetV2_5          | 0.2403          | 0.1283         | 0.5247          | 27             |
-|DenseNetV2_6          | 0.4062          | 0.3191         | 0.7507          | 21             |
+|DenseNetV3_1          | 0.2721          | 0.1595         | 0.7497          | 37             |
+|DenseNetV3_2          | 0.2403          | 0.1283         | 0.5247          | 27             |
+|DenseNetV3_3          | 0.4062          | 0.3191         | 0.7507          | 21             |
 
 ### Detailed Class Performance Comparison
 This metrics are collected from test dataset logs.
 
 #### F1 Score per Class
 
-| Class              | SDV1_1 | SDV1_2 | SDV1_3 | DV1_1 | DV1_2 | DV1_3 | DV2_1 | DV2_2 | DV2_3 | DV2_4 | DV2_5 | DV2_6 |
+| Class              | SDV1_1 | SDV1_2 | SDV1_3 | DV1_1 | DV1_2 | DV1_3 | DV2_1 | DV2_2 | DV2_3 | DV3_1 | DV3_2 | DV3_3 |
 |--------------------|--------|--------|--------|-------|-------|-------|-------|-------|-------|-------|-------|-------|
 | Atelectasis        | 0.207  | 0.216  | 0.074  | 0.281 | 0.049 | 0.278 | 0.328 | 0.310 | 0.180 | 0.290 | 0.234 | 0.257 |
 | Cardiomegaly       | 0.238  | 0.315  | 0.309  | 0.255 | 0.315 | 0.336 | 0.311 | 0.338 | 0.151 | 0.351 | 0.301 | 0.285 |
@@ -119,7 +119,7 @@ This metrics are collected from test dataset logs.
 
 #### Precision per Class
 
-| Class              | SDV1_1 | SDV1_2 | SDV1_3 | DV1_1 | DV1_2 | DV1_3 | DV2_1 | DV2_2 | DV2_3 | DV2_4 | DV2_5 | DV2_6 |
+| Class              | SDV1_1 | SDV1_2 | SDV1_3 | DV1_1 | DV1_2 | DV1_3 | DV2_1 | DV2_2 | DV2_3 | DV3_1 | DV3_2 | DV3_3 |
 |--------------------|--------|--------|--------|-------|-------|-------|-------|-------|-------|-------|-------|-------|
 | Atelectasis        | 0.312  | 0.343  | 0.439  | 0.316 | 0.377 | 0.291 | 0.263 | 0.271 | 0.317 | 0.268 | 0.308 | 0.298 |
 | Cardiomegaly       | 0.365  | 0.381  | 0.234  | 0.443 | 0.277 | 0.368 | 0.324 | 0.313 | 0.487 | 0.348 | 0.359 | 0.398 |
@@ -139,7 +139,7 @@ This metrics are collected from test dataset logs.
 
 #### Recall per Class
 
-| Class              | SDV1_1 | SDV1_2 | SDV1_3 | DV1_1 | DV1_2 | DV1_3 | DV2_1 | DV2_2 | DV2_3 | DV2_4 | DV2_5 | DV2_6 |
+| Class              | SDV1_1 | SDV1_2 | SDV1_3 | DV1_1 | DV1_2 | DV1_3 | DV2_1 | DV2_2 | DV2_3 | DV3_1 | DV3_2 | DV3_3 |
 |--------------------|--------|--------|--------|-------|-------|-------|-------|-------|-------|-------|-------|-------|
 | Atelectasis        | 0.155  | 0.158  | 0.040  | 0.253 | 0.026 | 0.266 | 0.433 | 0.361 | 0.126 | 0.315 | 0.188 | 0.226 |
 | Cardiomegaly       | 0.176  | 0.268  | 0.454  | 0.179 | 0.365 | 0.309 | 0.300 | 0.367 | 0.089 | 0.355 | 0.258 | 0.222 |
@@ -177,9 +177,9 @@ This metrics are collected from test dataset logs.
 |DenseNetV2_1          | 2.0690       | 0.1120     | 0.0455              | 0.3564          |
 |DenseNetV2_2          | 1.8808       | 0.0428     | 0.0252              | 0.2447          |
 |DenseNetV2_3          | 2.0104       | 0.184      | 0.0415              | 0.302           |
-|DenseNetV2_4          | 2.0813       | 0.1121     | 0.0402              | 0.3375          |
-|DenseNetV2_5          | 1.8681       | 0.0454     | 0.0445              | 0.3143          |
-|DenseNetV2_6          | 2.0247       | 0.2256     | 0.0391              | 0.2880          |
+|DenseNetV3_1          | 2.0813       | 0.1121     | 0.0402              | 0.3375          |
+|DenseNetV3_2          | 1.8681       | 0.0454     | 0.0445              | 0.3143          |
+|DenseNetV3_3          | 2.0247       | 0.2256     | 0.0391              | 0.2880          |
 
 ### Training Dynamics Comparison
 
@@ -203,15 +203,15 @@ This section shows the learning convergence patterns of the models. It shows how
 |DenseNetV2_1          | Yes       | 10                  | High                          | 94.1% (Moderate Drop)                 |
 |DenseNetV2_2          | Yes       | 20                  | Medium                        | 94.5% (Moderate Drop)                 |
 |DenseNetV2_3          | Yes       | 8                   | High                          | 98.1% (Close to Best)                 |
-|DenseNetV2_4          | Yes       | 24                  | Medium                        | 95.3% (Close to Best)                 |
-|DenseNetV2_5          | Yes       | 14                  | High                          | 91.3% (Moderate Drop)                 |
-|DenseNetV2_6          | Yes       | 14                  | Low                           | 96.9% (Close to Best)                 |
+|DenseNetV3_1          | Yes       | 24                  | Medium                        | 95.3% (Close to Best)                 |
+|DenseNetV3_2          | Yes       | 14                  | High                          | 91.3% (Moderate Drop)                 |
+|DenseNetV3_3          | Yes       | 14                  | Low                           | 96.9% (Close to Best)                 |
 
 ### Test Samples Rate Evolution
 
 #### Test True Positive Rate Evolution
 
-| Class              | SDV1_1 | SDV1_2 | SDV1_3 | DV1_1 | DV1_2 | DV1_3 | DV2_1 | DV2_2 | DV2_3 | DV2_4 | DV2_5 | DV2_6 |
+| Class              | SDV1_1 | SDV1_2 | SDV1_3 | DV1_1 | DV1_2 | DV1_3 | DV2_1 | DV2_2 | DV2_3 | DV3_1 | DV3_2 | DV3_3 |
 |--------------------|--------|--------|--------|-------|-------|-------|-------|-------|-------|-------|-------|-------|
 | Atelectasis        | 0.155  | 0.158  | 0.040  | 0.253 | 0.026 | 0.266 | 0.433 | 0.361 | 0.126 | 0.315 | 0.188 | 0.226 |
 | Cardiomegaly       | 0.176  | 0.268  | 0.454  | 0.179 | 0.365 | 0.309 | 0.300 | 0.367 | 0.089 | 0.355 | 0.258 | 0.222 |
@@ -231,7 +231,7 @@ This section shows the learning convergence patterns of the models. It shows how
 
 #### Test False Positive Rate Evolution
 
-| Class              | SDV1_1 | SDV1_2 | SDV1_3 | DV1_1 | DV1_2 | DV1_3 | DV2_1 | DV2_2 | DV2_3 | DV2_4 | DV2_5 | DV2_6 |
+| Class              | SDV1_1 | SDV1_2 | SDV1_3 | DV1_1 | DV1_2 | DV1_3 | DV2_1 | DV2_2 | DV2_3 | DV3_1 | DV3_2 | DV3_3 |
 |--------------------|--------|--------|--------|-------|-------|-------|-------|-------|-------|-------|-------|-------|
 | Atelectasis        | 0.043  | 0.038  | 0.006  | 0.069 | 0.005 | 0.082 | 0.152 | 0.122 | 0.034 | 0.108 | 0.053 | 0.067 |
 | Cardiomegaly       | 0.008  | 0.012  | 0.041  | 0.006 | 0.026 | 0.015 | 0.017 | 0.022 | 0.003 | 0.018 | 0.013 | 0.009 |
@@ -251,7 +251,7 @@ This section shows the learning convergence patterns of the models. It shows how
 
 #### Test False Negative Rate Evolution
 
-| Class              | SDV1_1 | SDV1_2 | SDV1_3 | DV1_1 | DV1_2 | DV1_3 | DV2_1 | DV2_2 | DV2_3 | DV2_4 | DV2_5 | DV2_6 |
+| Class              | SDV1_1 | SDV1_2 | SDV1_3 | DV1_1 | DV1_2 | DV1_3 | DV2_1 | DV2_2 | DV2_3 | DV3_1 | DV3_2 | DV3_3 |
 |--------------------|--------|--------|--------|-------|-------|-------|-------|-------|-------|-------|-------|-------|
 | Atelectasis        | 0.845  | 0.842  | 0.960  | 0.747 | 0.974 | 0.734 | 0.567 | 0.639 | 0.874 | 0.892 | 0.812 | 0.774 |
 | Cardiomegaly       | 0.824  | 0.732  | 0.546  | 0.821 | 0.635 | 0.691 | 0.700 | 0.633 | 0.911 | 0.982 | 0.742 | 0.778 |
@@ -271,7 +271,7 @@ This section shows the learning convergence patterns of the models. It shows how
 
 #### Test True Negative Rate Evolution
 
-| Class              | SDV1_1 | SDV1_2 | SDV1_3 | DV1_1 | DV1_2 | DV1_3 | DV2_1 | DV2_2 | DV2_3 | DV2_4 | DV2_5 | DV2_6 |
+| Class              | SDV1_1 | SDV1_2 | SDV1_3 | DV1_1 | DV1_2 | DV1_3 | DV2_1 | DV2_2 | DV2_3 | DV3_1 | DV3_2 | DV3_3 |
 |--------------------|--------|--------|--------|-------|-------|-------|-------|-------|-------|-------|-------|-------|
 | Atelectasis        | 0.957  | 0.962  | 0.994  | 0.931 | 0.995 | 0.918 | 0.848 | 0.878 | 0.966 | 0.892 | 0.947 | 0.933 |
 | Cardiomegaly       | 0.992  | 0.988  | 0.959  | 0.994 | 0.974 | 0.985 | 0.983 | 0.978 | 0.997 | 0.982 | 0.987 | 0.991 |
@@ -398,11 +398,12 @@ Baseline model with default configuration, no changes applied only Early Stoppin
   - Better performance on No Finding class
   - Most classes showed decreased performance
 
-### DenseNetV2_4
+### DenseNetV3_1
+This is model DenseNetV2_1 with added label smoothing
 
 #### Configuration
 - **Changes from v2_1:**
-  - Added label smoothing
+  - Added label smoothing 
 - **Hypothesis:**
   - Label smoothing will help reduce model overconfidence and improve generalization
   - Small value (0.01) chosen to maintain model confidence while providing minimal regularization
@@ -412,22 +413,39 @@ Baseline model with default configuration, no changes applied only Early Stoppin
   - Higher training performance, 
   - Model is even more overfitting than previous versions
 
-### DenseNetV2_5
+### DenseNetV3_2
+This is model DenseNetV2_2 with added label smoothing
 
 #### Configuration
 - **Changes from v2_2:**
   - Added label smoothing
 - **Hypothesis:**
   - Label smoothing will help reduce model overconfidence and improve generalization
-  - Small value (0.001) chosen to maintain model confidence while providing minimal regularization
+  - Small value (0.01) chosen to maintain model confidence while providing minimal regularization
   - Should help stabilize training without significantly impacting model's ability to make confident predictions
 - **Impact:**
-  - Better generalization than V2_4
+  - Better generalization than V2_2
   - Improved performance on minority classes
-  - Slightly lower overall F1 score compared to V2_2 and V2_4
+  - Slightly lower overall F1 score compared to V2_2 and V3_1
   - More balanced learning with still visible overfitting
 
-## DenseNetV2 Summary
+### DenseNetV3_3
+This is model DenseNetV2_3 with added label smoothing
+
+#### Configuration
+- **Changes from v2_3:**
+  - Added label smoothing
+- **Hypothesis:**
+  - Label smoothing will help reduce model overconfidence and improve generalization
+  - Small value (0.01) chosen to maintain model confidence while providing minimal regularization
+  - Should help stabilize training without significantly impacting model's ability to make confident predictions
+- **Impact:**
+  - Better generalization than V2_3
+  - Improved performance on minority classes
+  - Slightly lower overall F1 score compared to V2_2 and V3_1
+  - More balanced learning with still visible overfitting
+
+## DenseNetV2 & V3 Summary
 
 ### Filtered or No Filtered No Finding Class
 - **Filtered:** 
@@ -441,15 +459,15 @@ Baseline model with default configuration, no changes applied only Early Stoppin
 ### Focal Loss vs Plain Binary Loss
 
 #### Training Dynamics
-- **BinaryCrossentropy (V2_1, V2_4)**
+- **BinaryCrossentropy (V2_1, V3_1)**
   - V2_1: More stable validation performance
-  - V2_4: Shows higher but volatile validation scores
+  - V3_1: Shows higher but volatile validation scores
   - Training F1 reaches ~0.8
-  - Larger train-test gap (especially in V2_4: ~0.54)
+  - Larger train-test gap (especially in V3_1: ~0.54)
 
-- **FocalLoss (V2_2, V2_5)**
+- **FocalLoss (V2_2, V3_2, V3_3)**
   - V2_2: More controlled training curve (max F1 ~0.65)
-  - V2_5: Shows early performance decline
+  - V3_2: Shows early performance decline
   - Better generalization (smaller train-test gap ~0.35)
   - More consistent epoch-to-epoch performance
 
@@ -464,17 +482,5 @@ Baseline model with default configuration, no changes applied only Early Stoppin
   - Better generalization
   - More stable long-term performance
 
-### Next Steps
-
-#### Model Architecture
-- Stay with filtered No Finding class
-- Use Focal Loss for training
-
-#### Training Strategy
-- Test increased label smoothing with Focal Loss:
-  - 0.05 - 5x increase
-    - More aggressive regularization
-    - Test if stronger smoothing further reduces overfitting
-  - 0.1 - 10x increase
-    - Maximum commonly used value
-    - Understand upper bound impact on model confidence
+### 
+  

@@ -9,7 +9,7 @@ from tensorflow.keras.models import Model
 from src.model.densnet.tensorflow_model_blocks import conv_block, transition_layer, squeeze_excitation, spatial_attention
 
 
-def build_densenet121(num_classes: int, input_shape: Tuple[int, int, int] = (224, 224, 3), use_se: bool = False, use_sa: bool = False) -> Model:
+def build_densenet121(num_classes: int, input_shape: Tuple[int, int, int] = (224, 224, 3), use_se: bool = False, use_sa: bool = False, ratio: int = 16) -> Model:
     """
     Build DenseNet121 architecture from scratch with bottleneck layers.
     
@@ -25,16 +25,16 @@ def build_densenet121(num_classes: int, input_shape: Tuple[int, int, int] = (224
     x = MaxPooling2D(pool_size=(3, 3), strides=2, padding="same")(x)
 
     # Dense blocks with transition layers
-    x = dense_block(x, num_layers=6, growth_rate=32, use_se=use_se, use_sa=use_sa)
+    x = dense_block(x, num_layers=6, growth_rate=32, use_se=use_se, use_sa=use_sa, ratio=ratio)
     x = transition_layer(x)
 
-    x = dense_block(x, num_layers=12, growth_rate=32, use_se=use_se, use_sa=use_sa)
+    x = dense_block(x, num_layers=12, growth_rate=32, use_se=use_se, use_sa=use_sa, ratio=ratio)
     x = transition_layer(x)
 
-    x = dense_block(x, num_layers=24, growth_rate=32, use_se=use_se, use_sa=use_sa)
+    x = dense_block(x, num_layers=24, growth_rate=32, use_se=use_se, use_sa=use_sa, ratio=ratio)
     x = transition_layer(x)
 
-    x = dense_block(x, num_layers=16, growth_rate=32, use_se=use_se, use_sa=use_sa)
+    x = dense_block(x, num_layers=16, growth_rate=32, use_se=use_se, use_sa=use_sa, ratio=ratio)
     x = GlobalAveragePooling2D()(x)
 
     x = Dropout(0.5)(x)
@@ -44,7 +44,7 @@ def build_densenet121(num_classes: int, input_shape: Tuple[int, int, int] = (224
 
     return model
 
-def dense_block(x: tf.Tensor, num_layers: int, growth_rate: int, use_se: bool, use_sa: bool) -> tf.Tensor:
+def dense_block(x: tf.Tensor, num_layers: int, growth_rate: int, use_se: bool, use_sa: bool, ratio: int) -> tf.Tensor:
     """
     Dense block that implements the core feature of DenseNet architecture with bottleneck optimization.
 
@@ -74,6 +74,10 @@ def dense_block(x: tf.Tensor, num_layers: int, growth_rate: int, use_se: bool, u
         current_input = Concatenate()(features) if len(features) > 1 else x
         new_features = conv_block(current_input, 4 * growth_rate, kernel_size=(1,1), strides=1)
         new_features = conv_block(new_features, growth_rate, kernel_size=(3,3))
+        if use_se:
+            new_features = squeeze_excitation(new_features, ratio=ratio)
+        if use_sa:
+            new_features = spatial_attention(new_features)
         features.append(new_features)
 
     return Concatenate()(features)

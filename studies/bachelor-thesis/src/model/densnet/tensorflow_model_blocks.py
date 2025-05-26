@@ -3,7 +3,8 @@
 from typing import Tuple
 
 import tensorflow as tf
-from tensorflow.keras.layers import Conv2D, BatchNormalization, ReLU, AveragePooling2D, GlobalAveragePooling2D, Dense, Reshape, multiply, Concatenate
+from tensorflow.keras import backend as K
+from tensorflow.keras.layers import Conv2D, BatchNormalization, ReLU, AveragePooling2D, GlobalAveragePooling2D, Dense, Reshape, multiply, Concatenate, Lambda, Activation, Multiply
 from tensorflow.keras.regularizers import l2
 
 def conv_block(x: tf.Tensor, filters: int,  kernel_size: Tuple[int, int] = (3,3), strides: int = 1, padding: str = "same") -> tf.Tensor:
@@ -100,21 +101,16 @@ def spatial_attention(x: tf.Tensor, kernel_size: Tuple[int, int] = (7,7)) -> tf.
     """
     Implements spatial attention for X-ray feature maps.
     """
-    # Average pooling across channels
-    avg_pool = tf.reduce_mean(x, axis=-1, keepdims=True)
+    avg_pool = Lambda(lambda x: K.mean(x, axis=-1, keepdims=True))(x)
+    max_pool = Lambda(lambda x: K.max(x, axis=-1, keepdims=True))(x)
+    concat = Concatenate(axis=-1)([avg_pool, max_pool])
     
-    # Max pooling across channels
-    max_pool = tf.reduce_max(x, axis=-1, keepdims=True)
-    
-    # Concatenate pooled features
-    concat = tf.concat([avg_pool, max_pool], axis=-1)
-    
-    # Generate attention map
     attention = Conv2D(filters=1,
                       kernel_size=kernel_size,
                       padding='same',
                       use_bias=False,
+                      kernel_regularizer=l2(1e-4),
                       kernel_initializer='he_normal')(concat)
-    attention = tf.nn.sigmoid(attention)
+    attention = Activation('sigmoid')(attention)
     
-    return x * attention
+    return multiply([x, attention])
