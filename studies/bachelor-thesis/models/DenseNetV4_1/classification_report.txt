@@ -2,22 +2,22 @@ Note: 'No Finding' class is excluded as this model doesn't predict it.
 
                     precision    recall  f1-score   support
 
-       Atelectasis       0.31      0.22      0.25      1719
-      Cardiomegaly       0.34      0.32      0.33       414
-     Consolidation       0.17      0.11      0.13       687
-             Edema       0.24      0.20      0.21       342
-          Effusion       0.47      0.45      0.46      1984
-         Emphysema       0.23      0.11      0.15       376
-          Fibrosis       0.09      0.05      0.06       252
-            Hernia       0.69      0.32      0.44        34
-      Infiltration       0.39      0.11      0.17      2945
-              Mass       0.30      0.20      0.24       861
-            Nodule       0.17      0.10      0.12       942
-Pleural_Thickening       0.14      0.08      0.10       504
-         Pneumonia       0.04      0.01      0.02       211
-      Pneumothorax       0.34      0.38      0.36       789
+       Atelectasis       0.28      0.31      0.29      1719
+      Cardiomegaly       0.29      0.34      0.31       414
+     Consolidation       0.12      0.17      0.14       687
+             Edema       0.23      0.09      0.13       342
+          Effusion       0.41      0.54      0.47      1984
+         Emphysema       0.21      0.24      0.22       376
+          Fibrosis       0.10      0.04      0.06       252
+            Hernia       0.55      0.32      0.41        34
+      Infiltration       0.33      0.27      0.30      2945
+              Mass       0.28      0.19      0.22       861
+            Nodule       0.26      0.03      0.06       942
+Pleural_Thickening       0.16      0.06      0.09       504
+         Pneumonia       0.05      0.02      0.03       211
+      Pneumothorax       0.32      0.32      0.32       789
 
-         micro avg       0.33      0.21      0.26     12060
-         macro avg       0.28      0.19      0.22     12060
-      weighted avg       0.32      0.21      0.24     12060
-       samples avg       0.13      0.10      0.11     12060
+         micro avg       0.30      0.27      0.29     12060
+         macro avg       0.26      0.21      0.22     12060
+      weighted avg       0.29      0.27      0.27     12060
+       samples avg       0.14      0.13      0.13     12060
