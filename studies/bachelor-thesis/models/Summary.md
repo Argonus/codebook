@@ -518,3 +518,12 @@ This is model DenseNetV2_3 with added label smoothing
   - Slightly decreased F1 score (from 0.2755 to 0.2594) suggesting that smoothing value may be too aggressive
   - Higher smoothing appears to reach the point of diminishing returns in this architecture
   
+### DenseNetV5_1
+
+#### Configuration
+- **Changes from v4_1:**
+  - Add Squeeze-and-Excitation (SE) blocks, ratio = 16
+- **Hypothesis:**
+  - Better feature refinement across channels
+  - Improved ability to identify relevant features for specific pathologies
+- **Impact:**
