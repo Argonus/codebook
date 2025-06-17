@@ -6,18 +6,27 @@ import tensorflow as tf
 from tensorflow.keras.layers import Input, MaxPooling2D, GlobalAveragePooling2D, Dense, Dropout, Concatenate
 from tensorflow.keras.models import Model
 
-from src.model.densnet.tensorflow_model_blocks import conv_block, transition_layer, squeeze_excitation, spatial_attention
+from src.model.densnet.tensorflow_model_blocks import conv_block, transition_layer, squeeze_excitation, spatial_attention, efficient_channel_attention, gathered_aggregation_attention
 
 
-def build_densenet121(num_classes: int, input_shape: Tuple[int, int, int] = (224, 224, 3), use_se: bool = False, use_sa: bool = False, ratio: int = 16) -> Model:
+def build_densenet121(num_classes: int, input_shape: Tuple[int, int, int] = (224, 224, 3), 
+                     use_se: bool = False, use_sa: bool = False, use_eca: bool = False, use_gam: bool = False,
+                     ratio: int = 16, channel_blocks: list = None) -> Model:
     """
     Build DenseNet121 architecture from scratch with bottleneck layers.
     
     :params num_classes: Number of output classes
     :params input_shape: Input image shape (height, width, channels)
     :params use_se: Whether to use Squeeze-and-Excitation blocks
+    :params use_sa: Whether to use Spatial Attention blocks
+    :params use_eca: Whether to use Efficient Channel Attention blocks
+    :params ratio: Reduction ratio for SE blocks
+    :params channel_blocks: List of block indices (0-based) where to apply Channel Attention
     :return: Model: DenseNet-121 model
     """
+    if channel_blocks is None:
+        channel_blocks = [0, 1, 2, 3]  # Default: all blocks
+
     inputs = Input(shape=input_shape, name="input_layer")
 
     # Initial convolution
@@ -25,16 +34,48 @@ def build_densenet121(num_classes: int, input_shape: Tuple[int, int, int] = (224
     x = MaxPooling2D(pool_size=(3, 3), strides=2, padding="same")(x)
 
     # Dense blocks with transition layers
-    x = dense_block(x, num_layers=6, growth_rate=32, use_se=use_se, use_sa=use_sa, ratio=ratio)
+    use_se_one = use_se and 0 in channel_blocks
+    use_eca_one = use_eca and 0 in channel_blocks
+    use_gam_one = use_gam and 0 in channel_blocks
+    x = dense_block(x, num_layers=6, growth_rate=32, 
+                    use_se=use_se_one,
+                    ratio=ratio,
+                    use_sa=use_sa, 
+                    use_eca=use_eca_one,
+                    use_gam=use_gam_one)
     x = transition_layer(x)
 
-    x = dense_block(x, num_layers=12, growth_rate=32, use_se=use_se, use_sa=use_sa, ratio=ratio)
+    use_se_two = use_se and 1 in channel_blocks
+    use_eca_two = use_eca and 1 in channel_blocks
+    use_gam_two = use_gam and 1 in channel_blocks
+    x = dense_block(x, num_layers=12, growth_rate=32, 
+                    use_se=use_se_two,
+                    ratio=ratio,
+                    use_sa=use_sa, 
+                    use_eca=use_eca_two,
+                    use_gam=use_gam_two)
     x = transition_layer(x)
 
-    x = dense_block(x, num_layers=24, growth_rate=32, use_se=use_se, use_sa=use_sa, ratio=ratio)
+    use_se_three = use_se and 2 in channel_blocks
+    use_eca_three = use_eca and 2 in channel_blocks
+    use_gam_three = use_gam and 2 in channel_blocks
+    x = dense_block(x, num_layers=24, growth_rate=32, 
+                    use_se=use_se_three,
+                    ratio=ratio,
+                    use_sa=use_sa, 
+                    use_eca=use_eca_three,
+                    use_gam=use_gam_three)
     x = transition_layer(x)
 
-    x = dense_block(x, num_layers=16, growth_rate=32, use_se=use_se, use_sa=use_sa, ratio=ratio)
+    use_se_four = use_se and 3 in channel_blocks
+    use_eca_four = use_eca and 3 in channel_blocks
+    use_gam_four = use_gam and 3 in channel_blocks
+    x = dense_block(x, num_layers=16, growth_rate=32, 
+                    use_se=use_se_four,
+                    ratio=ratio,
+                    use_sa=use_sa, 
+                    use_eca=use_eca_four,
+                    use_gam=use_gam_four)
     x = GlobalAveragePooling2D()(x)
 
     x = Dropout(0.5)(x)
@@ -44,7 +85,7 @@ def build_densenet121(num_classes: int, input_shape: Tuple[int, int, int] = (224
 
     return model
 
-def dense_block(x: tf.Tensor, num_layers: int, growth_rate: int, use_se: bool, use_sa: bool, ratio: int) -> tf.Tensor:
+def dense_block(x: tf.Tensor, num_layers: int, growth_rate: int, use_se: bool, use_sa: bool, use_eca: bool, use_gam: bool, ratio: int) -> tf.Tensor:
     """
     Dense block that implements the core feature of DenseNet architecture with bottleneck optimization.
 
@@ -67,6 +108,9 @@ def dense_block(x: tf.Tensor, num_layers: int, growth_rate: int, use_se: bool, u
     :param num_layers: Number of layers in the dense block
     :param growth_rate: Number of filters added by each layer (controls network width)
     :param use_se: Whether to use Squeeze-and-Excitation blocks
+    :param use_sa: Whether to use Spatial Attention blocks
+    :param use_eca: Whether to use Efficient Channel Attention blocks
+    :param ratio: Reduction ratio for SE blocks
     :return: Concatenated feature maps from all layers in the block
     """
     features = [x]
@@ -76,6 +120,10 @@ def dense_block(x: tf.Tensor, num_layers: int, growth_rate: int, use_se: bool, u
         new_features = conv_block(new_features, growth_rate, kernel_size=(3,3))
         if use_se:
             new_features = squeeze_excitation(new_features, ratio=ratio)
+        elif use_eca:
+            new_features = efficient_channel_attention(new_features)
+        elif use_gam:
+            new_features = gathered_aggregation_attention(new_features)
         if use_sa:
             new_features = spatial_attention(new_features)
         features.append(new_features)

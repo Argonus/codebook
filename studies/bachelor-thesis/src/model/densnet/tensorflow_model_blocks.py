@@ -1,10 +1,11 @@
 """DensNet model blocks implementation using TensorFlow."""
 
 from typing import Tuple
+import math
 
 import tensorflow as tf
 from tensorflow.keras import backend as K
-from tensorflow.keras.layers import Conv2D, BatchNormalization, ReLU, AveragePooling2D, GlobalAveragePooling2D, Dense, Reshape, multiply, Concatenate, Lambda, Activation, Multiply
+from tensorflow.keras.layers import Conv2D, BatchNormalization, ReLU, AveragePooling2D, GlobalAveragePooling2D, Dense, Reshape, multiply, Concatenate, Lambda, Activation, Multiply, Permute, Conv1D
 from tensorflow.keras.regularizers import l2
 
 def conv_block(x: tf.Tensor, filters: int,  kernel_size: Tuple[int, int] = (3,3), strides: int = 1, padding: str = "same") -> tf.Tensor:
@@ -112,5 +113,81 @@ def spatial_attention(x: tf.Tensor, kernel_size: Tuple[int, int] = (7,7)) -> tf.
                       kernel_regularizer=l2(1e-4),
                       kernel_initializer='he_normal')(concat)
     attention = Activation('sigmoid')(attention)
+    
+    return multiply([x, attention])
+
+
+def efficient_channel_attention(x: tf.Tensor, kernel_size: int = None) -> tf.Tensor:
+    """
+  Efficient Channel Attention (ECA) module that captures channel-wise dependencies
+    without dimensionality reduction.
+
+    Operations:
+    1. Global average pooling - reduces spatial dimensions
+    2. 1D convolution - captures local cross-channel interactions
+    3. Sigmoid activation - generates channel attention weights
+    4. Channel-wise multiplication - recalibrates the input tensor
+
+    Key benefits over SE blocks:
+    - No dimensionality reduction, preserving subtle features
+    - Maintains local cross-channel interactions via Conv1D
+    - Lower parameter overhead (more efficient)
+    - Better performance on medical imaging tasks with subtle features
+
+    :param x: Input tensor of shape (batch, H, W, C)
+    :param kernel_size: Size of the Conv1D kernel. If None, it’s adaptively calculated based on the channel count.
+    :return: Tensor of same shape as input, with channel-wise attention applied
+    """
+    channels = x.shape[-1]
+
+    if kernel_size is None and channels is not None:
+        t = int((math.log2(channels) + 1) / 2)
+        kernel_size = t if t % 2 else t + 1
+        kernel_size = max(3, kernel_size)
+    
+    y = GlobalAveragePooling2D()(x)
+    y = Reshape((channels, 1))(y)
+
+    y = Conv1D(
+        filters=1,
+        kernel_size=kernel_size or 3,
+        padding='same',
+        use_bias=False,
+        kernel_regularizer=l2(1e-4)
+    )(y)
+    
+    y = Activation('sigmoid')(y)
+    y = Reshape((1, 1, channels))(y)
+    
+    return multiply([x, y])
+
+def gathered_aggregation_attention(x: tf.Tensor, reduction_ratio: int = 16) -> tf.Tensor:
+    """
+    Gathered Aggregation Mechanism (GAM) for channel attention.
+    Combines multiple context aggregation methods for better channel recalibration.
+    
+    Operations:
+    1. Dual pooling (avg + max) - captures complementary channel contexts
+    2. Multi-level feature processing - maintains both high and low-level representations
+    3. Efficient mixing of channel information
+    4. Channel-wise multiplication - recalibrates the input tensor
+    
+    :param x: Input tensor of shape (batch, H, W, C)
+    :param reduction_ratio: Reduction ratio for the bottleneck
+    :return: Tensor of same shape as input with enhanced channel attention
+    """
+    channels = x.shape[-1]
+    reduced_channels = max(channels // reduction_ratio, 8)
+    
+    avg_pool = GlobalAveragePooling2D()(x)
+    max_pool = Lambda(lambda x: K.max(x, axis=[1, 2]))(x)
+    
+    avg_features = Dense(reduced_channels, activation='relu')(avg_pool)
+    max_features = Dense(reduced_channels, activation='relu')(max_pool)
+    
+    gathered = Concatenate()([avg_features, max_features])
+    
+    attention = Dense(channels, activation='sigmoid')(gathered)
+    attention = Reshape((1, 1, channels))(attention)
     
     return multiply([x, attention])
