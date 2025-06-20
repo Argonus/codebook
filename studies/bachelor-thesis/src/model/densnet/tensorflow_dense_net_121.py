@@ -10,16 +10,22 @@ from src.model.densnet.tensorflow_model_blocks import conv_block, transition_lay
 
 
 def build_densenet121(num_classes: int, input_shape: Tuple[int, int, int] = (224, 224, 3), 
-                     use_se: bool = False, use_sa: bool = False, use_eca: bool = False, use_gam: bool = False,
+                     layer_attention: bool = False,
+                     use_se: bool = False, 
+                     use_eca: bool = False, 
+                     use_gam: bool = False,
+                     use_sa: bool = False, 
                      ratio: int = 16, channel_blocks: list = None) -> Model:
     """
     Build DenseNet121 architecture from scratch with bottleneck layers.
     
     :params num_classes: Number of output classes
     :params input_shape: Input image shape (height, width, channels)
-    :params use_se: Whether to use Squeeze-and-Excitation blocks
+    :params layer_attention: Whether to use layer attention
     :params use_sa: Whether to use Spatial Attention blocks
+    :params use_se: Whether to use Squeeze-and-Excitation blocks
     :params use_eca: Whether to use Efficient Channel Attention blocks
+    :params use_gam: Whether to use Gathered Aggregation Attention blocks
     :params ratio: Reduction ratio for SE blocks
     :params channel_blocks: List of block indices (0-based) where to apply Channel Attention
     :return: Model: DenseNet-121 model
@@ -38,44 +44,69 @@ def build_densenet121(num_classes: int, input_shape: Tuple[int, int, int] = (224
     use_eca_one = use_eca and 0 in channel_blocks
     use_gam_one = use_gam and 0 in channel_blocks
     x = dense_block(x, num_layers=6, growth_rate=32, 
-                    use_se=use_se_one,
                     ratio=ratio,
                     use_sa=use_sa, 
-                    use_eca=use_eca_one,
-                    use_gam=use_gam_one)
+                    use_se=use_se_one and layer_attention,
+                    use_eca=use_eca_one and layer_attention,
+                    use_gam=use_gam_one and layer_attention)
+    if use_se_one and not layer_attention:
+        x = squeeze_excitation(x, ratio=ratio)
+    elif use_eca_one and not layer_attention:
+        x = efficient_channel_attention(x)
+    elif use_gam_one and not layer_attention:
+        x = gathered_aggregation_attention(x)
     x = transition_layer(x)
 
     use_se_two = use_se and 1 in channel_blocks
     use_eca_two = use_eca and 1 in channel_blocks
     use_gam_two = use_gam and 1 in channel_blocks
     x = dense_block(x, num_layers=12, growth_rate=32, 
-                    use_se=use_se_two,
                     ratio=ratio,
                     use_sa=use_sa, 
-                    use_eca=use_eca_two,
-                    use_gam=use_gam_two)
+                    use_se=use_se_two and layer_attention,
+                    use_eca=use_eca_two and layer_attention,
+                    use_gam=use_gam_two and layer_attention)
+    if use_se_two and not layer_attention:
+        x = squeeze_excitation(x, ratio=ratio)
+    elif use_eca_two and not layer_attention:
+        x = efficient_channel_attention(x)
+    elif use_gam_two and not layer_attention:
+        x = gathered_aggregation_attention(x)
     x = transition_layer(x)
 
     use_se_three = use_se and 2 in channel_blocks
     use_eca_three = use_eca and 2 in channel_blocks
     use_gam_three = use_gam and 2 in channel_blocks
     x = dense_block(x, num_layers=24, growth_rate=32, 
-                    use_se=use_se_three,
                     ratio=ratio,
                     use_sa=use_sa, 
-                    use_eca=use_eca_three,
-                    use_gam=use_gam_three)
+                    use_se=use_se_three and layer_attention,
+                    use_eca=use_eca_three and layer_attention,
+                    use_gam=use_gam_three and layer_attention)
+    if use_se_three and not layer_attention:
+        x = squeeze_excitation(x, ratio=ratio)
+    elif use_eca_three and not layer_attention:
+        x = efficient_channel_attention(x)
+    elif use_gam_three and not layer_attention:
+        x = gathered_aggregation_attention(x)
     x = transition_layer(x)
 
     use_se_four = use_se and 3 in channel_blocks
     use_eca_four = use_eca and 3 in channel_blocks
     use_gam_four = use_gam and 3 in channel_blocks
     x = dense_block(x, num_layers=16, growth_rate=32, 
-                    use_se=use_se_four,
                     ratio=ratio,
                     use_sa=use_sa, 
-                    use_eca=use_eca_four,
-                    use_gam=use_gam_four)
+                    use_se=use_se_four and layer_attention,
+                    use_eca=use_eca_four and layer_attention,
+                    use_gam=use_gam_four and layer_attention)
+    if use_se_four and not layer_attention:
+        x = squeeze_excitation(x, ratio=ratio)
+    elif use_eca_four and not layer_attention:
+        x = efficient_channel_attention(x)
+    elif use_gam_four and not layer_attention:
+        x = gathered_aggregation_attention(x)
+
     x = GlobalAveragePooling2D()(x)
 
     x = Dropout(0.5)(x)

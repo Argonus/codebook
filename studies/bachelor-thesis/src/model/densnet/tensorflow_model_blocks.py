@@ -5,7 +5,7 @@ import math
 
 import tensorflow as tf
 from tensorflow.keras import backend as K
-from tensorflow.keras.layers import Conv2D, BatchNormalization, ReLU, AveragePooling2D, GlobalAveragePooling2D, Dense, Reshape, multiply, Concatenate, Lambda, Activation, Multiply, Permute, Conv1D
+from tensorflow.keras.layers import Conv2D, BatchNormalization, ReLU, GlobalMaxPooling2D, AveragePooling2D, GlobalAveragePooling2D, Dense, Reshape, multiply, Concatenate, Lambda, Activation, Multiply, Permute, Conv1D
 from tensorflow.keras.regularizers import l2
 
 def conv_block(x: tf.Tensor, filters: int,  kernel_size: Tuple[int, int] = (3,3), strides: int = 1, padding: str = "same") -> tf.Tensor:
@@ -180,7 +180,7 @@ def gathered_aggregation_attention(x: tf.Tensor, reduction_ratio: int = 16) -> t
     reduced_channels = max(channels // reduction_ratio, 8)
     
     avg_pool = GlobalAveragePooling2D()(x)
-    max_pool = Lambda(lambda x: K.max(x, axis=[1, 2]))(x)
+    max_pool = GlobalMaxPooling2D()(x)
     
     avg_features = Dense(reduced_channels, activation='relu')(avg_pool)
     max_features = Dense(reduced_channels, activation='relu')(max_pool)
