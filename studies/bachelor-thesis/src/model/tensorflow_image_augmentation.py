@@ -15,17 +15,17 @@ def augment_xray(image: tf.Tensor, probability: dict = {}) -> tf.Tensor:
     image = tf.cast(image, tf.float32)
     
     # Apply augmentations
-    image = _apply_augmentation(image, _random_brightness, probability=probability.get("brightness", 0.5))
-    image = _apply_augmentation(image, _random_contrast, probability=probability.get("contrast", 0.5))
-    image = _apply_augmentation(image, _random_intensity_scaling, probability=probability.get("intensity_scaling", 0.1))
-    image = _apply_augmentation(image, _adaptive_histogram_equalization, probability=probability.get("adaptive_histogram", 0.1))
+    image = _apply_augmentation(image, _random_brightness, probability=probability.get("brightness", 0.3))
+    image = _apply_augmentation(image, _random_contrast, probability=probability.get("contrast", 0.3))
+    image = _apply_augmentation(image, _random_intensity_scaling, probability=probability.get("intensity_scaling", 0.05))
+    image = _apply_augmentation(image, _adaptive_histogram_equalization, probability=probability.get("adaptive_histogram", 0.05))
 
-    image = _apply_augmentation(image, _random_zoom, probability=probability.get("zoom", 0.3))
-    image = _apply_augmentation(image, _random_shifting, probability=probability.get("shifting", 0.2))
-    image = _apply_augmentation(image, _random_rotation, probability=probability.get("rotation", 0.2))
+    image = _apply_augmentation(image, _random_zoom, probability=probability.get("zoom", 0.2))
+    image = _apply_augmentation(image, _random_shifting, probability=probability.get("shifting", 0.15))
+    image = _apply_augmentation(image, _random_rotation, probability=probability.get("rotation", 0.15))
     
-    image = _apply_augmentation(image, _gaussian_noise, probability=probability.get("gaussian_noise", 0.1))
-    image = _apply_augmentation(image, _random_cutout, probability=probability.get("cutout", 0.1))
+    image = _apply_augmentation(image, _gaussian_noise, probability=probability.get("gaussian_noise", 0.05))
+    image = _apply_augmentation(image, _random_cutout, probability=probability.get("cutout", 0.05))
     
     tf.debugging.assert_rank(image, 3, message="Output image must be a single image with shape [height, width, channels]")
     return image
@@ -47,7 +47,7 @@ def _apply_augmentation(image: tf.Tensor, augmentation_func: callable, probabili
     )
 
 @tf.function
-def _random_rotation(image: tf.Tensor, max_angle: float = 5.0) -> tf.Tensor:
+def _random_rotation(image: tf.Tensor, max_angle: float = 3.0) -> tf.Tensor:
     """
     Apply small random rotation to simulate patient positioning variations
     Mimics: Variations in scanner angle or patient position
@@ -85,7 +85,7 @@ def _random_rotation(image: tf.Tensor, max_angle: float = 5.0) -> tf.Tensor:
     return tf.squeeze(transformed, 0)
 
 @tf.function
-def _random_brightness(image: tf.Tensor, max_delta: float = 0.2) -> tf.Tensor:
+def _random_brightness(image: tf.Tensor, max_delta: float = 0.1) -> tf.Tensor:
     """
     Apply random brightness adjustment.
     Mimics: Variations in X-ray exposure settings or tissue absorption
@@ -93,7 +93,7 @@ def _random_brightness(image: tf.Tensor, max_delta: float = 0.2) -> tf.Tensor:
     return tf.image.random_brightness(image, max_delta)
 
 @tf.function
-def _random_contrast(image: tf.Tensor, lower: float = 0.5, upper: float = 1.5) -> tf.Tensor:
+def _random_contrast(image: tf.Tensor, lower: float = 0.8, upper: float = 1.2) -> tf.Tensor:
     """
     Apply random contrast adjustment.
     Mimics: Differences in scanner contrast settings or patient body composition
@@ -101,7 +101,7 @@ def _random_contrast(image: tf.Tensor, lower: float = 0.5, upper: float = 1.5) -
     return tf.image.random_contrast(image, lower, upper)
 
 @tf.function
-def _random_shifting(image: tf.Tensor, minval: int = -10, maxval: int = 10) -> tf.Tensor:
+def _random_shifting(image: tf.Tensor, minval: int = -5, maxval: int = 5) -> tf.Tensor:
     """
     Apply random shifting to a single image.
     Mimics: Differences in scanner position or patient position
@@ -135,7 +135,7 @@ def _random_shifting(image: tf.Tensor, minval: int = -10, maxval: int = 10) -> t
     return tf.squeeze(transformed, 0)
 
 @tf.function
-def _gaussian_noise(image: tf.Tensor, stddev: float = 0.2) -> tf.Tensor:
+def _gaussian_noise(image: tf.Tensor, stddev: float = 0.05) -> tf.Tensor:
     """
     Apply Gaussian noise.
     Mimics: Noise in the X-ray image
@@ -146,7 +146,7 @@ def _gaussian_noise(image: tf.Tensor, stddev: float = 0.2) -> tf.Tensor:
     return tf.clip_by_value(image + noise, 0, 1)
 
 @tf.function
-def _random_intensity_scaling(image: tf.Tensor, scale_range=(0.75, 1.25), shift_range=(-0.1, 0.1)) -> tf.Tensor:
+def _random_intensity_scaling(image: tf.Tensor, scale_range=(0.9, 1.1), shift_range=(-0.05, 0.05)) -> tf.Tensor:
     """
     Apply random intensity scaling and shifting to simulate different X-ray exposures.
     Mimics: Different radiation dose, detector sensitivity, processing algorithms.
@@ -181,7 +181,7 @@ def _adaptive_histogram_equalization(image: tf.Tensor) -> tf.Tensor:
     return tf.clip_by_value(scaled, 0.0, 1.0)
 
 @tf.function
-def _random_zoom(image: tf.Tensor, zoom_range=(0.85, 1.15)) -> tf.Tensor:
+def _random_zoom(image: tf.Tensor, zoom_range=(0.95, 1.05)) -> tf.Tensor:
     """
     Apply random zoom to simulate variations in patient distance from scanner.
     Mimics: Different X-ray focus distances.
@@ -208,7 +208,7 @@ def _random_zoom(image: tf.Tensor, zoom_range=(0.85, 1.15)) -> tf.Tensor:
     return image
 
 @tf.function
-def _random_cutout(image: tf.Tensor, mask_size_range=(10, 20), min_cutouts=1, max_cutouts=2) -> tf.Tensor:
+def _random_cutout(image: tf.Tensor, mask_size_range=(5, 10), min_cutouts=1, max_cutouts=1) -> tf.Tensor:
     """
     Randomly mask out rectangular regions of the image.
     Mimics: Purely technical variation. Forces model to look at broader context instead of specific small features.
