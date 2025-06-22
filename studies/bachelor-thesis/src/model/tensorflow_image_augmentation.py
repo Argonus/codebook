@@ -15,17 +15,17 @@ def augment_xray(image: tf.Tensor, probability: dict = {}) -> tf.Tensor:
     image = tf.cast(image, tf.float32)
     
     # Apply augmentations
-    image = _apply_augmentation(image, _random_brightness, probability=probability.get("brightness", 0.3))
-    image = _apply_augmentation(image, _random_contrast, probability=probability.get("contrast", 0.3))
-    image = _apply_augmentation(image, _random_intensity_scaling, probability=probability.get("intensity_scaling", 0.05))
-    image = _apply_augmentation(image, _adaptive_histogram_equalization, probability=probability.get("adaptive_histogram", 0.05))
+    # image = _apply_augmentation(image, _random_brightness, probability=probability.get("brightness", 0.3))
+    # image = _apply_augmentation(image, _random_contrast, probability=probability.get("contrast", 0.3))
+    # image = _apply_augmentation(image, _random_intensity_scaling, probability=probability.get("intensity_scaling", 0.05))
+    # image = _apply_augmentation(image, _adaptive_histogram_equalization, probability=probability.get("adaptive_histogram", 0.05))
 
-    image = _apply_augmentation(image, _random_zoom, probability=probability.get("zoom", 0.2))
-    image = _apply_augmentation(image, _random_shifting, probability=probability.get("shifting", 0.15))
-    image = _apply_augmentation(image, _random_rotation, probability=probability.get("rotation", 0.15))
+    # image = _apply_augmentation(image, _random_zoom, probability=probability.get("zoom", 0.2))
+    # image = _apply_augmentation(image, _random_shifting, probability=probability.get("shifting", 0.15))
+    image = _apply_augmentation(image, _random_rotation, probability=probability.get("rotation", 1))
     
-    image = _apply_augmentation(image, _gaussian_noise, probability=probability.get("gaussian_noise", 0.05))
-    image = _apply_augmentation(image, _random_cutout, probability=probability.get("cutout", 0.05))
+    # image = _apply_augmentation(image, _gaussian_noise, probability=probability.get("gaussian_noise", 0.05))
+    # image = _apply_augmentation(image, _random_cutout, probability=probability.get("cutout", 0.05))
     
     tf.debugging.assert_rank(image, 3, message="Output image must be a single image with shape [height, width, channels]")
     return image
@@ -47,7 +47,7 @@ def _apply_augmentation(image: tf.Tensor, augmentation_func: callable, probabili
     )
 
 @tf.function
-def _random_rotation(image: tf.Tensor, max_angle: float = 3.0) -> tf.Tensor:
+def _random_rotation(image: tf.Tensor, max_angle: float = 15.0) -> tf.Tensor:
     """
     Apply small random rotation to simulate patient positioning variations
     Mimics: Variations in scanner angle or patient position

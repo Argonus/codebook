@@ -263,3 +263,116 @@ def _mark_best_epoch(ax: plt.Axes, df: pd.DataFrame, best_epoch: int, metric: st
                     bbox=dict(boxstyle="round,pad=0.3", fc="white", alpha=0.7))
     
     return None
+
+
+def _plot_metric_comparison(ax: plt.Axes, models_path: str, model_names: list[str], metric: str, models_without_no_finding: list[str]) -> None:
+    """
+    Plot a specific metric comparison across models in a given subplot
+    
+    :param ax: Matplotlib axes to plot on
+    :param models_path: Path to the models directory
+    :param model_names: List of model names to compare
+    :param metric: Metric to compare (e.g., 'f1_score', 'precision', 'recall', 'accuracy', 'auc')
+    :param models_without_no_finding: List of model names that don't include the No Finding class
+    """
+    dfs = []
+    for model_name in model_names:
+        df = pd.read_csv(f"{models_path}/{model_name}/model_metrics.csv")
+        df['model'] = model_name
+        if model_name in models_without_no_finding:
+            df = df[df['class_name'] != 'No Finding']
+        dfs.append(df)
+    
+    combined_df = pd.concat(dfs, ignore_index=True)
+    
+    class_avg_performance = combined_df.groupby('class_name')[metric].mean().reset_index()
+    sorted_classes = class_avg_performance.sort_values(by=metric, ascending=False)['class_name'].tolist()
+    model_colors = plt.cm.tab10(np.linspace(0, 1, len(model_names)))
+    
+    num_models = len(model_names)
+    bar_width = 0.8 / num_models
+    r = np.arange(len(sorted_classes))
+    
+    best_model_idx = {}
+    for class_name in sorted_classes:
+        class_data = combined_df[combined_df['class_name'] == class_name]
+        if not class_data.empty:
+            best_model = class_data.loc[class_data[metric].idxmax()]
+            best_model_idx[(class_name, best_model['model'])] = True
+    
+    for idx, model_name in enumerate(model_names):
+        model_data = combined_df[combined_df['model'] == model_name]
+        model_data = model_data.set_index('class_name').reindex(sorted_classes).reset_index()
+        model_data = model_data.fillna(0)
+        
+        position = r + idx * bar_width
+        bars = ax.bar(position, model_data[metric], bar_width, 
+                    color=model_colors[idx], alpha=0.8)
+        
+        for i, bar in enumerate(bars):
+            height = bar.get_height()
+            if height > 0:
+                ax.text(bar.get_x() + bar.get_width()/2., height + 0.01,
+                        f'{height:.2f}', ha='center', va='bottom', fontsize=8, rotation=90)                
+                class_name = sorted_classes[i]
+                if (class_name, model_name) in best_model_idx:
+                    ax.text(bar.get_x() + bar.get_width()/2., height + 0.06,
+                            '★', ha='center', va='bottom', fontsize=12, color='gold')
+    
+    ax.grid(axis='y', linestyle='--', alpha=0.7)
+    ax.set_xlabel('Classes')
+    ax.set_ylabel(metric.replace('_', ' ').title())
+    ax.set_title(f'{metric.replace("_", " ").title()} Comparison')
+    ax.set_xticks(r + bar_width * (num_models-1)/2)
+    ax.set_xticklabels(sorted_classes, rotation=45, ha='right')
+    
+    for idx, model_name in enumerate(model_names):
+        model_mean = combined_df[combined_df['model'] == model_name][metric].mean()
+        ax.axhline(y=model_mean, color=model_colors[idx], linestyle='--', alpha=0.5)
+        ax.text(len(sorted_classes)-1, model_mean, f'{model_name} avg: {model_mean:.3f}', 
+                ha='right', va='bottom', color=model_colors[idx], fontsize=9)
+
+
+def plot_combined_model_performance(models_path: str, model_names: list[str], models_without_no_finding: list[str], output_path: str) -> None:
+    """
+    Create a combined visualization of different models' performance for multiple metrics across all classes
+    
+    :param models_path: Path to the models directory
+    :param model_names: List of model names to compare
+    :param models_without_no_finding: List of model names that don't include the No Finding class
+    :param output_path: Subdirectory name to save the visualization
+    """
+    fig = plt.figure(figsize=(20, 15))
+    plt.suptitle('Combined Model Performance Comparison', fontsize=20, fontweight='bold', y=0.98)
+    
+    model_colors = plt.cm.tab10(np.linspace(0, 1, len(model_names)))
+    legend_handles = [plt.Line2D([0], [0], color=model_colors[i], lw=4, label=model_name) 
+                     for i, model_name in enumerate(model_names)]
+    fig.legend(handles=legend_handles, loc='upper center', ncol=len(model_names), 
+               frameon=True, fontsize=12, bbox_to_anchor=(0.5, 0.94))
+    
+    gs = fig.add_gridspec(3, 2, hspace=0.6, wspace=0.3, height_ratios=[1, 1, 1])
+    
+    f1_ax = fig.add_subplot(gs[0, :])
+    _plot_metric_comparison(f1_ax, models_path, model_names, 'f1_score', models_without_no_finding)
+    
+    precision_ax = fig.add_subplot(gs[1, 0])
+    _plot_metric_comparison(precision_ax, models_path, model_names, 'precision', models_without_no_finding)
+    recall_ax = fig.add_subplot(gs[1, 1])
+    _plot_metric_comparison(recall_ax, models_path, model_names, 'recall', models_without_no_finding)
+    
+    auc_ax = fig.add_subplot(gs[2, 0])
+    _plot_metric_comparison(auc_ax, models_path, model_names, 'auc', models_without_no_finding)
+    accuracy_ax = fig.add_subplot(gs[2, 1])
+    _plot_metric_comparison(accuracy_ax, models_path, model_names, 'accuracy', models_without_no_finding)
+    
+    plt.subplots_adjust(top=0.88, bottom=0.08, left=0.08, right=0.95, wspace=0.3, hspace=0.6)
+    
+    output_dir = os.path.join(models_path, output_path)
+    os.makedirs(output_dir, exist_ok=True)
+    file_path = os.path.join(output_dir, f'combined_model_performance.png')
+    plt.savefig(file_path, dpi=300, bbox_inches='tight')
+    
+    plt.show()
+    
+    print(f"Combined model performance visualization saved to: {file_path}")
