@@ -208,7 +208,7 @@ def _random_zoom(image: tf.Tensor, zoom_range=(0.95, 1.05)) -> tf.Tensor:
     return image
 
 @tf.function
-def _random_cutout(image: tf.Tensor, mask_size_range=(5, 10), min_cutouts=1, max_cutouts=1) -> tf.Tensor:
+def _random_cutout(image: tf.Tensor, mask_size_range=(5, 10), min_cutouts=0, max_cutouts=1) -> tf.Tensor:
     """
     Randomly mask out rectangular regions of the image.
     Mimics: Purely technical variation. Forces model to look at broader context instead of specific small features.
