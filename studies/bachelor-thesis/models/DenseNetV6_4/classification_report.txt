@@ -1,0 +1,23 @@
+Note: 'No Finding' class is excluded as this model doesn't predict it.
+
+                    precision    recall  f1-score   support
+
+       Atelectasis       0.29      0.23      0.26      1719
+      Cardiomegaly       0.36      0.31      0.33       414
+     Consolidation       0.14      0.11      0.13       687
+             Edema       0.23      0.18      0.20       342
+          Effusion       0.45      0.50      0.47      1984
+         Emphysema       0.27      0.12      0.16       376
+          Fibrosis       0.16      0.07      0.10       252
+            Hernia       0.62      0.24      0.34        34
+      Infiltration       0.40      0.16      0.23      2945
+              Mass       0.27      0.18      0.22       861
+            Nodule       0.15      0.11      0.13       942
+Pleural_Thickening       0.13      0.09      0.11       504
+         Pneumonia       0.02      0.00      0.01       211
+      Pneumothorax       0.35      0.31      0.33       789
+
+         micro avg       0.32      0.23      0.27     12060
+         macro avg       0.27      0.19      0.22     12060
+      weighted avg       0.31      0.23      0.25     12060
+       samples avg       0.13      0.11      0.11     12060
