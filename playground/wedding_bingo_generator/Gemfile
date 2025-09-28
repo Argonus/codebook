@@ -1,0 +1,11 @@
+# frozen_string_literal: true
+
+source "https://rubygems.org"
+
+git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
+
+# Specify your gem's dependencies in your gemspec
+ruby "2.7.7"
+
+gem "prawn"
+gem 'prawn-emoji'
