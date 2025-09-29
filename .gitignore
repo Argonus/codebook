@@ -455,3 +455,6 @@ FodyWeavers.xsd
 
 *.keras
 *.h5
+/playground/wedding_bingo_generator/cards/
+/playground/wedding_bingo_generator/pdf_cards/
+/playground/wedding_bingo_generator/questions/
