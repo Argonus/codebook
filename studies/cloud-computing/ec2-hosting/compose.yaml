@@ -1,0 +1,44 @@
+name: koci-azyl
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "${APP_BIND_ADDRESS:-127.0.0.1}:${APP_PORT:-8080}:8080"
+    environment:
+      PGHOST: database
+      PGPORT: 5432
+      PGDATABASE: koci_azyl
+      PGUSER: koci_azyl
+      PGPASSWORD: ${POSTGRES_PASSWORD:?Ustaw POSTGRES_PASSWORD w pliku .env}
+      NODE_OPTIONS: --max-old-space-size=128
+    depends_on:
+      database:
+        condition: service_healthy
+    restart: unless-stopped
+    mem_limit: 192m
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:8080/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 10s
+      timeout: 6s
+      retries: 5
+      start_period: 10s
+  database:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: koci_azyl
+      POSTGRES_USER: koci_azyl
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Ustaw POSTGRES_PASSWORD w pliku .env}
+    command: ["postgres", "-c", "shared_buffers=32MB", "-c", "max_connections=20"]
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    restart: unless-stopped
+    mem_limit: 256m
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U koci_azyl -d koci_azyl"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+volumes:
+  postgres-data:

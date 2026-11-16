@@ -1,0 +1,16 @@
+{
+  "name": "koci-azyl-ec2",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "hostingMode": "ec2",
+  "engines": { "node": ">=24" },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "start": "node server/main.mjs",
+    "test": "node --test tests/storage.test.mjs tests/api.test.mjs",
+    "test:integration": "node --test tests/postgres.test.mjs",
+    "package": "node scripts/build.mjs && node scripts/package.mjs"
+  },
+  "dependencies": { "pg": "^8.16.3" }
+}

@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f1e6">
+  <title>Kocia adopcja — Cloud Computing</title>
+  <link rel="icon" href="./assets/paw.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./styles.css">
+  <script type="module" src="./app.mjs"></script>
+</head>
+<body>
+  <main>
+    <header>
+      <div class="title"><img src="./assets/paw.svg" width="42" height="42" alt=""><div><h1>Kocia adopcja</h1><p>Nadaj kotu imię i wypuść go z klatki. Po odświeżeniu nadal będzie na zewnątrz.</p></div></div>
+      <p id="author"></p>
+    </header>
+    <div class="version-bar"><strong id="version"></strong><span id="persistence"></span></div>
+    <div id="page-error" role="alert" hidden><span></span> <button id="retry" type="button">Spróbuj ponownie</button></div>
+    <section class="cats" id="cats" aria-label="Koty do wirtualnej adopcji"></section>
+    <section class="log-window" aria-labelledby="log-title">
+      <div class="log-header"><span class="window-dots" aria-hidden="true">● ● ●</span><h2 id="log-title">Log operacji</h2><span id="route"></span></div>
+      <ol id="logs" role="log" aria-live="polite" aria-label="Rzeczywiste operacje odczytu i zapisu"></ol>
+    </section>
+    <p class="footnote">Projekt demonstracyjny · wirtualna adopcja kotów · AWS Cloud Computing</p>
+    <p id="announcement" class="sr-only" role="status"></p>
+    <noscript>Do adopcji kotów potrzebny jest włączony JavaScript.</noscript>
+  </main>
+</body>
+</html>
