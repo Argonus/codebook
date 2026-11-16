@@ -1,10 +1,9 @@
-import random
+from random import choice, uniform
 
 
 class Master:
     def __init__(self):
         self.persons = []
-        self.random_generator = random.Random()
 
     def set_person(self, person):
         self.persons.append(person)
@@ -16,11 +15,11 @@ class Master:
 
     def play(self):
         for i in range(10):
-            person = self.random_generator.choice(self.persons)
+            person = choice(self.persons)
             print("\nWorking person:", person.describe())
             while True:
                 print(person.play())
-                if self.random_generator.uniform(0, 1) >= 0.75:
+                if uniform(0, 1) >= 0.75:
                     break
 
     def change_role(self, name, new_role):
