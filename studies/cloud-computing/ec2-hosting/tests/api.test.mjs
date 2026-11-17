@@ -18,6 +18,7 @@ test('API waliduje żądania, zapisuje i obsługuje konflikt bez nadpisania', as
   const base = await withServer(t, {
     async health() {}, async all() { return records; },
     async adopt(id, name) {
+      if (!['miso', 'luna', 'chmurka'].includes(id)) throw Object.assign(new Error('Nieznany kot'), { status: 400 });
       if (records[id]) return { created: false, adoption: records[id] };
       records[id] = { name, adoptedAt: new Date().toISOString() };
       return { created: true, adoption: records[id] };
@@ -43,6 +44,23 @@ test('API waliduje żądania, zapisuje i obsługuje konflikt bez nadpisania', as
   assert.match(page.headers.get('content-security-policy'), /default-src 'self'/);
   assert.equal((await fetch(`${base}/.env`)).status, 404);
   assert.equal((await fetch(`${base}/%2e%2e%2fpackage.json`)).status, 404);
+});
+
+test('API losowania wymaga POST, JSON, właściwego origin i identyfikatora zestawu', async t => {
+  let requested;
+  const base = await withServer(t, {
+    async state() { return { batchId: 'initial', cats: [], adoptions: {} }; },
+    async draw(batchId) { requested = batchId; return { batchId: 'new', cats: [], adoptions: {} }; },
+  });
+  assert.equal((await fetch(`${base}/api/cats`)).status, 200);
+  assert.equal((await fetch(`${base}/api/cats`, { method: 'POST' })).status, 405);
+  assert.equal((await fetch(`${base}/api/cats/draw`)).status, 405);
+  assert.equal((await fetch(`${base}/api/cats/draw`, { method: 'POST', body: '{}' })).status, 415);
+  const draw = (body, headers = {}) => fetch(`${base}/api/cats/draw`, { method: 'POST', headers: { 'Content-Type': 'application/json', ...headers }, body: JSON.stringify(body) });
+  assert.equal((await draw({})).status, 400);
+  assert.equal((await draw({ batchId: 'initial' }, { Origin: 'https://foreign.example' })).status, 403);
+  assert.equal((await draw({ batchId: 'initial' })).status, 201);
+  assert.equal(requested, 'initial');
 });
 
 test('awaria bazy daje 503 bez udawania zapisu', async t => {

@@ -24,7 +24,9 @@ Strona: <http://127.0.0.1:8080>. Gotowość aplikacji i bazy: <http://127.0.0.1:
 
 Przeglądarka → `POST /api/adoptions` → Node.js → PostgreSQL.
 
-Po zatwierdzeniu imienia API zapisuje identyfikator kota, imię i czas adopcji. Dopiero po odpowiedzi potwierdzającej zapis otwierają się drzwiczki i kot wychodzi na poduszkę. Odświeżenie wywołuje `GET /api/adoptions` i odtwarza stan z bazy. Adopcje są wspólne dla wszystkich odwiedzających. Ponowna próba adopcji tego samego kota zwraca HTTP 409 i nie zmienia pierwszego zapisu.
+Po zatwierdzeniu imienia API zapisuje identyfikator kota, imię i czas adopcji. Dopiero po odpowiedzi potwierdzającej zapis otwierają się drzwiczki i kot wychodzi na poduszkę. Odświeżenie wywołuje `GET /api/cats` i odtwarza aktualny zestaw oraz adopcje z bazy. Adopcje są wspólne dla wszystkich odwiedzających. Ponowna próba adopcji tego samego kota zwraca HTTP 409 i nie zmienia pierwszego zapisu.
+
+Przycisk „Losuj nowe koty” jest zawsze widoczny i staje się aktywny po adopcji całej trójki. `POST /api/cats/draw` tworzy trzy nowe identyfikatory, losuje imiona i kolejność wyglądów oraz zmienia aktywny zestaw. Poprzednie koty i adopcje pozostają w bazie. Operacja działa w transakcji z blokadą aktywnego zestawu: dwie równoczesne próby tworzą tylko jedną nową trójkę. Nowy zestaw jest wspólny dla odwiedzających i zachowuje się po odświeżeniu. Migracja dodaje metadane do istniejących rekordów i zachowuje dotychczasowe adopcje.
 
 Log na stronie pokazuje rzeczywiste żądania HTTP, ich status i potwierdzenie zapisu. Błąd bazy nie powoduje pozornej adopcji ani przełączenia na localStorage.
 
@@ -65,6 +67,12 @@ Wynik: `.artifacts/ec2-hosting.tar.gz`. Archiwum zawiera kod, instrukcję i goto
 
 ## Status
 
-Implementacja jest przygotowana i sprawdzona lokalnie. Zasoby AWS nie zostały utworzone, a publiczny URL i końcowy raport ze zrzutem wdrożenia powstaną po publikacji. Automatyczna weryfikacja wyglądu w przeglądarce była niedostępna; wykonane testy nie zastępują kontroli wizualnej.
+Wdrożono 16.11.2026 na prywatnym koncie AWS `123306104704`, profil `studia`, region Frankfurt (`eu-central-1`). Publiczny adres: <http://18.159.151.130>.
+
+Instancja `i-05b78cae5435002ed`: `t4g.micro` (ARM64, 1 GiB RAM), Ubuntu 24.04 LTS, szyfrowany dysk gp3 8 GiB, stały Elastic IP. HTTP 80 jest publiczny, SSH 22 ograniczony do IP komputera wdrażającego, a port bazy nie jest publikowany. To najmniejszy rozmiar pamięci w typach dostępnych w aktywnym planie FREE; typy `nano` nie są do niego kwalifikowane.
+
+Publiczne `/health` oraz `/api/adoptions` zwróciły HTTP 200. Test integracyjny wykonany na instancji potwierdził zapis, konflikt równoczesnych adopcji i odczyt po ponownym połączeniu z PostgreSQL. Oba kontenery zgłosiły stan `healthy`. Weryfikacja wyglądu w przeglądarce była niedostępna; wykonane sprawdzenia nie zastępują kontroli wizualnej.
+
+Stan wdrożenia, identyfikatory zasobów i prywatny klucz SSH znajdują się lokalnie w ignorowanym `.artifacts/deployment/`. Katalog ten jest wykluczony z archiwum z kodem. Zatrzymanie instancji zachowuje dysk i Elastic IP, które nadal podlegają rozliczeniu do czasu zwolnienia. Końcowy raport powinien zawierać powyższy link i zrzut wdrożonej strony.
 
 Źródła: [node-postgres: zapytania parametryzowane](https://node-postgres.com/features/queries), [Docker: trwałe wolumeny](https://docs.docker.com/engine/storage/volumes/), [AWS: zatrzymanie i uruchomienie EC2](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Stop_Start.html).

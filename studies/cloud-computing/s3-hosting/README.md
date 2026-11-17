@@ -1,8 +1,8 @@
-# Kocia adopcja — S3
+# Psia adopcja — S3
 
 Piotr Rybarczyk · grupa MZ101 · nr albumu 10117
 
-Samodzielny projekt: prosty landing z trzema animowanymi kotami, nadawaniem imion i widocznym logiem operacji. Nie wymaga backendu, bazy, plików projektu EC2 ani instalowania zależności npm.
+Samodzielny projekt: prosty landing z trzema animowanymi psami, nadawaniem imion i widocznym logiem operacji. Nie wymaga backendu, bazy, plików projektu EC2 ani instalowania zależności npm.
 
 ## Uruchomienie lokalne
 
@@ -20,9 +20,11 @@ S3 dostarcza statyczne pliki HTML, CSS, JavaScript i SVG. Adopcja wykonuje się 
 
 przeglądarka → `localStorage.setItem('koci-azyl.adoptions.v1.ID_KOTA', ...)`.
 
-Zapis obejmuje identyfikator kota, nadane imię i czas adopcji. Dopiero po udanym zapisie otwierają się drzwiczki, a kot wychodzi na poduszkę. Odświeżenie strony odczytuje localStorage i odtwarza stan. Log pokazuje rzeczywiste operacje `getItem` i `setItem`; adopcja nie wysyła żądań do API.
+Zapis obejmuje identyfikator psa, nadane imię i czas adopcji. Dopiero po udanym zapisie otwierają się drzwiczki, a pies wychodzi na poduszkę. Odświeżenie strony odczytuje localStorage i odtwarza stan. Log pokazuje rzeczywiste operacje `getItem` i `setItem`; adopcja nie wysyła żądań do API.
 
-Każdy odwiedzający ma własny stan. Inna przeglądarka lub urządzenie pokaże niezależny azyl. Dane są związane z adresem strony (origin): lokalny podgląd i publiczny adres S3 mają osobne zapisy. Usunięcie danych witryny usuwa adopcje. W trybie prywatnym dane mogą zniknąć po zamknięciu sesji. Zablokowany albo uszkodzony zapis powoduje komunikat błędu; kot nie wychodzi po nieudanym zapisie.
+Przycisk „Losuj nowe psy” jest zawsze widoczny i staje się aktywny po adopcji całej trójki. Przycisk tworzy nowe identyfikatory, losuje imiona i kolejność wyglądów oraz zapisuje aktualny zestaw pod kluczem `koci-azyl.adoptions.v1.batch`. Poprzednie wpisy adopcji pozostają w localStorage. Odświeżenie zachowuje nową trójkę, a log pokazuje zapis zestawu bez żądania HTTP. Dotychczasowe adopcje z pierwszej wersji strony są nadal odczytywane.
+
+Każdy odwiedzający ma własny stan. Inna przeglądarka lub urządzenie pokaże niezależny azyl. Dane są związane z adresem strony (origin): lokalny podgląd i publiczny adres S3 mają osobne zapisy. Usunięcie danych witryny usuwa adopcje. W trybie prywatnym dane mogą zniknąć po zamknięciu sesji. Zablokowany albo uszkodzony zapis powoduje komunikat błędu; pies nie wychodzi po nieudanym zapisie.
 
 ## Sprawdzenie
 
@@ -30,7 +32,7 @@ Każdy odwiedzający ma własny stan. Inna przeglądarka lub urządzenie pokaże
 npm test
 ```
 
-Ręcznie: nadaj imię, kliknij „Adoptuj”, sprawdź log, odśwież stronę i potwierdź obecność kota poza klatką. W innej przeglądarce ten kot powinien nadal czekać na adopcję. Dwie karty tej samej strony otrzymują aktualizacje przez zdarzenie `storage`.
+Ręcznie: nadaj imię, kliknij „Adoptuj”, sprawdź log, odśwież stronę i potwierdź obecność psa poza klatką. W innej przeglądarce ten pies powinien nadal czekać na adopcję. Dwie karty tej samej strony otrzymują aktualizacje przez zdarzenie `storage`.
 
 ## Przygotowanie do AWS S3
 
@@ -67,6 +69,12 @@ Wynik: `.artifacts/s3-hosting.tar.gz`. Archiwum zawiera kod, instrukcję i gotow
 
 ## Status
 
-Implementacja jest przygotowana i sprawdzona lokalnie. Bucket nie został utworzony, a publiczny URL i końcowy raport ze zrzutem wdrożenia powstaną po publikacji. Automatyczna weryfikacja wyglądu w przeglądarce była niedostępna; wykonane testy nie zastępują kontroli wizualnej.
+Wdrożono 16.11.2026 na prywatnym koncie AWS `123306104704`, profil `studia`, region Frankfurt (`eu-central-1`). Publiczny adres: <http://piotr-10117-psia-adopcja-123306104704.s3-website.eu-central-1.amazonaws.com>.
+
+Bucket: `piotr-10117-psia-adopcja-123306104704`. Opublikowano wyłącznie `dist/`, z uprawnieniem publicznego `s3:GetObject`; ACL są blokowane, a globalnych ustawień konta nie zmieniono. Sprawdzono HTTP 200 dla strony i modułów oraz prawidłowy Content-Type JavaScript. Stan wdrożenia zapisano lokalnie w ignorowanym `.artifacts/deployment/`, wykluczonym z archiwum z kodem.
+
+Po zmianie nazwy bucketa poprzednia witryna pozostaje dostępna. Nowy adres ma osobny localStorage, więc adopcje zaczynają się na nim od początku; dane spod poprzedniego adresu pozostają w przeglądarce.
+
+Weryfikacja wyglądu w przeglądarce była niedostępna; wykonane testy nie zastępują kontroli wizualnej. Końcowy raport powinien zawierać powyższy link i zrzut wdrożonej strony.
 
 Źródła: [AWS: hosting statyczny S3](https://docs.aws.amazon.com/AmazonS3/latest/userguide/WebsiteHosting.html), [AWS: Website endpoints](https://docs.aws.amazon.com/AmazonS3/latest/userguide/WebsiteEndpoints.html), [MDN: localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage).

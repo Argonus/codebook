@@ -7,7 +7,7 @@ import pg from 'pg';
 import { createRepository } from '../server/repository.mjs';
 import { createHandler } from '../server/app.mjs';
 
-test('prawdziwy PostgreSQL: adopcja, współbieżność i odczyt po ponownym połączeniu', async () => {
+test('PostgreSQL: migracja istniejących adopcji, losowanie w transakcji i trwała historia', async () => {
   const schema = `test_${randomUUID().replaceAll('-', '')}`;
   const admin = new pg.Pool({ max: 1, connectionTimeoutMillis: 5000 });
   const pool = new pg.Pool({ max: 4, connectionTimeoutMillis: 5000, options: `-c search_path=${schema}` });
@@ -15,23 +15,42 @@ test('prawdziwy PostgreSQL: adopcja, współbieżność i odczyt po ponownym po�
   let restarted;
   try {
     await admin.query(`CREATE SCHEMA ${schema}`);
+    await pool.query('CREATE TABLE cats (id text PRIMARY KEY); CREATE TABLE adoptions (cat_id text PRIMARY KEY REFERENCES cats(id), name text NOT NULL, adopted_at timestamptz NOT NULL DEFAULT now())');
+    await pool.query("INSERT INTO cats (id) VALUES ('miso'), ('luna'), ('chmurka'); INSERT INTO adoptions (cat_id, name) VALUES ('miso', 'Rudy')");
     const repository = createRepository(pool);
     await repository.initialize();
+    await repository.initialize();
+    assert.equal((await repository.state()).adoptions.miso.name, 'Rudy');
     server = createServer(createHandler(repository, fileURLToPath(new URL('../dist/', import.meta.url))));
     await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
     const base = `http://127.0.0.1:${server.address().port}`;
-    const responses = await Promise.all(['Figa', 'Łapka'].map(name => fetch(`${base}/api/adoptions`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ catId: 'luna', name }) })));
-    assert.deepEqual(responses.map(response => response.status).sort(), [201, 409]);
-    const result = await (await fetch(`${base}/api/adoptions`)).json();
-    assert.equal(Object.keys(result.adoptions).length, 1);
-    const name = result.adoptions.luna.name;
-    assert.ok(['Figa', 'Łapka'].includes(name));
+    const post = (path, body) => fetch(`${base}${path}`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+    assert.equal((await post('/api/cats/draw', { batchId: 'initial' })).status, 409);
+    const claims = await Promise.all(['Figa', 'Łapka'].map(name => post('/api/adoptions', { catId: 'luna', name })));
+    assert.deepEqual(claims.map(response => response.status).sort(), [201, 409]);
+    assert.equal((await post('/api/adoptions', { catId: 'chmurka', name: 'Kotka' })).status, 201);
+    const old = await repository.state();
+    assert.equal(Object.keys(old.adoptions).length, 3);
+    const draws = await Promise.all([post('/api/cats/draw', { batchId: 'initial' }), post('/api/cats/draw', { batchId: 'initial' })]);
+    assert.deepEqual(draws.map(response => response.status).sort(), [201, 409]);
+    const current = await (await fetch(`${base}/api/cats`)).json();
+    assert.notEqual(current.batchId, 'initial');
+    assert.equal(current.cats.length, 3);
+    assert.ok(current.cats.every(cat => !old.cats.some(previous => previous.id === cat.id)));
+    assert.deepEqual(current.adoptions, {});
+    assert.deepEqual((await (await fetch(`${base}/api/adoptions`)).json()).adoptions, {});
+    assert.equal((await post('/api/adoptions', { catId: 'miso', name: 'Inny' })).status, 409);
+    assert.equal((await post('/api/adoptions', { catId: current.cats[0].id, name: 'Nowy' })).status, 201);
+    assert.equal((await admin.query(`SELECT count(*) FROM ${schema}.cats`)).rows[0].count, '6');
+    assert.equal((await admin.query(`SELECT name FROM ${schema}.adoptions WHERE cat_id = 'miso'`)).rows[0].name, 'Rudy');
     await pool.end();
     restarted = new pg.Pool({ max: 1, options: `-c search_path=${schema}` });
     const reconnected = createRepository(restarted);
     await reconnected.initialize();
-    assert.equal((await reconnected.all()).luna.name, name);
-    assert.equal((await admin.query(`SELECT count(*) FROM ${schema}.adoptions`)).rows[0].count, '1');
+    const restored = await reconnected.state();
+    assert.equal(restored.batchId, current.batchId);
+    assert.equal(restored.adoptions[current.cats[0].id].name, 'Nowy');
+    assert.equal((await admin.query(`SELECT count(*) FROM ${schema}.adoptions`)).rows[0].count, '4');
   } finally {
     if (server) await new Promise(resolve => { server.close(resolve); server.closeAllConnections(); });
     if (!pool.ended) await pool.end();

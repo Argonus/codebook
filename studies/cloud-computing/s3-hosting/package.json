@@ -1,10 +1,12 @@
 {
-  "name": "koci-azyl-s3",
+  "name": "psia-adopcja-s3",
   "version": "1.0.0",
   "private": true,
   "type": "module",
   "hostingMode": "s3",
-  "engines": { "node": ">=24" },
+  "engines": {
+    "node": ">=24"
+  },
   "scripts": {
     "build": "node scripts/build.mjs",
     "dev": "node scripts/build.mjs && node scripts/preview.mjs",

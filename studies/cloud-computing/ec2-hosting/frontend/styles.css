@@ -13,6 +13,7 @@ h1 { font: 400 34px Georgia, serif; letter-spacing: -.7px; }
 .version-bar strong { background: #e3e8d7; padding: 5px 10px; border-radius: 5px; white-space: nowrap; font-weight: 500; }
 #persistence { color: #777f6b; text-align: right; }
 .cats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+.draw-controls { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 13px; margin-top: 18px; font-size: 12px; }
 .cat-card { background: #fbf8ef; border: 1px solid #d9ddca; border-radius: 8px; overflow: hidden; }
 .cat-card.is-adopted { border-color: #9bad88; }
 .cat-picture { overflow: hidden; }

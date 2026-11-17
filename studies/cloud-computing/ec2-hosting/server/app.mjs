@@ -1,4 +1,4 @@
-import { validateAdoption } from '../frontend/cats.mjs';
+import { normalizeName, validId } from '../frontend/cats.mjs';
 import { securityHeaders, serveStatic } from '../scripts/http.mjs';
 
 function json(response, status, body) {
@@ -33,6 +33,18 @@ export function createHandler(repository, directory) {
         await repository.health();
         return json(response, 200, { status: 'ok', storage: 'postgresql' });
       }
+      if (pathname === '/api/cats') {
+        if (request.method !== 'GET') { response.setHeader('Allow', 'GET'); return json(response, 405, { error: 'Dozwolone jest GET.' }); }
+        return json(response, 200, await repository.state());
+      }
+      if (pathname === '/api/cats/draw') {
+        if (request.method !== 'POST') { response.setHeader('Allow', 'POST'); return json(response, 405, { error: 'Dozwolone jest POST.' }); }
+        if (request.headers.origin && ![`http://${request.headers.host}`, `https://${request.headers.host}`].includes(request.headers.origin)) return json(response, 403, { error: 'Żądanie musi pochodzić z tej strony.' });
+        if (request.headers['content-type']?.split(';')[0].trim() !== 'application/json') return json(response, 415, { error: 'Wymagany typ application/json.' });
+        const body = await readBody(request);
+        if (!validId(body?.batchId)) return json(response, 400, { error: 'Nieprawidłowy zestaw kotów.' });
+        return json(response, 201, await repository.draw(body.batchId));
+      }
       if (pathname === '/api/adoptions') {
         if (request.method === 'GET') return json(response, 200, { adoptions: await repository.all() });
         if (request.method !== 'POST') { response.setHeader('Allow', 'GET, POST'); return json(response, 405, { error: 'Dozwolone są GET i POST.' }); }
@@ -40,7 +52,10 @@ export function createHandler(repository, directory) {
         if (request.headers['content-type']?.split(';')[0].trim() !== 'application/json') return json(response, 415, { error: 'Wymagany typ application/json.' });
         const body = await readBody(request);
         let name;
-        try { name = validateAdoption(body?.catId, body?.name); }
+        try {
+          if (!validId(body?.catId)) throw new Error('Nieprawidłowy identyfikator kota.');
+          name = normalizeName(body?.name);
+        }
         catch (error) { return json(response, 400, { error: error.message }); }
         const result = await repository.adopt(body.catId, name);
         return json(response, result.created ? 201 : 409, result.created ? { adoption: result.adoption } : { error: 'Ten kot znalazł już dom.', adoption: result.adoption });
